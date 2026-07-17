@@ -10,7 +10,7 @@ Projeto em fase de **pesquisa e planejamento** (pré-desenvolvimento). Nenhum c�
 
 Toda decisão de produto, design e arquitetura é registrada em `docs/` antes da implementação:
 
-- [`docs/COMPETITOR_ANALYSIS.md`](docs/COMPETITOR_ANALYSIS.md) — análise de ~20 apps concorrentes/inspiradores e matriz de funcionalidades.
+- [`docs/COMPETITOR_ANALYSIS.md`](docs/COMPETITOR_ANALYSIS.md) — análise de 20 apps concorrentes/inspiradores, ranking, matrizes de funcionalidades e lacunas de mercado. ✅ concluído.
 - `docs/VISION.md` — visão, missão e posicionamento *(a criar)*.
 - `docs/PEDAGOGY.md` — princípios pedagógicos *(a criar)*.
 - `docs/GAME_DESIGN.md` — Game Design Document *(a criar)*.
