@@ -1,0 +1,281 @@
+# Game Design Document (GDD)
+
+> Subordinado ao [`VISION.md`](VISION.md) (Princípio Fundamental §2, Filosofia de Crescimento §2.1, fases §16.2) e ao [`LEARNING_DESIGN.md`](LEARNING_DESIGN.md) (estados de nó §6, afirmações §1). **Nenhum sistema deste documento existe por si — cada um declara qual passo do Core Loop fortalece.** Se um sistema não fortalece passo nenhum, ele não pertence ao jogo (VISION §2.1).
+>
+> Todos os números deste documento são **hipóteses de calibração** — valores iniciais para o piloto, instrumentados desde o dia 1 e ajustados com dados reais. Nenhum número aqui é decisão final.
+
+---
+
+## 1. Core Gameplay Loop
+
+O produto inteiro é este loop. Tudo o mais é reforço.
+
+```
+                    Entrar no app
+                         ↓
+              Receber uma missão          ◄─── Missões (§3)
+                         ↓
+             Aprender um conceito         ◄─── Lição LDD §3 (gancho → narrativa)
+                         ↓
+             Responder desafios           ◄─── Interações LDD §7
+                         ↓
+              Receber feedback            ◄─── Feedback e celebração (§9)
+                         ↓
+             Avançar na Timeline          ◄─── Corredor do Tempo (§4)
+                         ↓
+              Ver Thoth evoluir           ◄─── Companheiro (§7)
+                         ↓
+            Desbloquear próximo nó        ◄─── Progressão (§5)
+                         ↓
+               Sair satisfeito            ◄─── Fecho de sessão (§3.3)
+                         ↓
+   Receber missão de revisão no futuro    ◄─── Agendador SRS (§6)
+                         ↓
+                    Retornar              ◄─── Streak compassivo (§8)
+                         ↺
+```
+
+### 1.1 Os três loops aninhados
+
+O diagrama acima opera em três escalas de tempo simultâneas — a progressão precisa recompensar nas três (VISION §13):
+
+| Loop | Escala | Pergunta do usuário | Recompensa central |
+|---|---|---|---|
+| **Sessão** | 3-10 min | "Valeu a pena abrir o app agora?" | Conceito compreendido + feedback emocional imediato |
+| **Hábito** | dias | "Por que volto amanhã?" | Missão de revisão que só existe amanhã + streak + Thoth |
+| **Maestria** | semanas/meses | "Para onde tudo isso vai?" | Timeline acendendo, jornadas completas, títulos, momentos compartilháveis |
+
+### 1.2 Regra de ouro do documento
+
+> Para cada sistema abaixo, a primeira linha declara **[Loop: passo que fortalece]**. Sistema sem passo declarado não entra no produto.
+
+---
+
+## 2. A sessão ideal (3-10 minutos)
+
+**[Loop: "Entrar no app" → "Sair satisfeito"]**
+
+1. **Abertura (5s):** Thoth recebe o usuário; o Corredor do Tempo mostra onde ele parou. Zero menus antes de contexto.
+2. **A missão do dia** já está montada (§3) — um toque para começar.
+3. **1-2 lições** (LDD §3) e/ou uma missão de revisão (§6).
+4. **Fecho de sessão (§3.3):** progressão visível + gancho do amanhã.
+
+Sem paredes de escolha: o usuário *pode* explorar livremente o Corredor, mas o caminho de menor esforço é sempre "jogar a missão do dia". (Referência: a fricção de "muitos cliques entre vídeos" é reclamação documentada contra o Coursera na Etapa 1.)
+
+## 3. Missões
+
+**[Loop: "Receber uma missão"]**
+
+Missão é a embalagem universal de qualquer atividade — aprender algo novo e revisar algo antigo chegam ao usuário com a mesma cara: um chamado do Arquivo.
+
+### 3.1 Composição da missão diária (MVP)
+
+| Slot | Conteúdo | Fonte |
+|---|---|---|
+| 1 | Próxima lição da jornada ativa | Progressão normal |
+| 2 | Revisões pendentes do dia (se houver), vestidas de "memória se apagando" | Agendador SRS §6 |
+| 3 (opcional) | "Explorar": lição de outra jornada disponível, ou aprofundamento (LDD §4, camada 2) | Escolha do usuário |
+
+Completar o slot 1 **ou** o slot 2 conta para o streak — revisar vale tanto quanto aprender coisa nova (é aprendizado igual, pelo Princípio Fundamental).
+
+### 3.2 Missões especiais
+
+- **"Memória se apagando" urgente:** nó Dominado em regressão (LDD §6) gera missão destacada com XP em dobro (§10). É o único caso de "urgência" no produto — e é urgência de conhecimento, não de FOMO comercial.
+- **Desafio da semana (V1)** e **eventos temáticos (V2)**: VISION §15 — reutilizam esta mesma estrutura de missão.
+
+### 3.3 Fecho de sessão
+
+**[Loop: "Sair satisfeito" + "Retornar"]**
+
+Ao fim da última atividade: (1) resumo emocional — o que acendeu, o que Thoth ganhou, conexões reveladas; (2) **o gancho do amanhã**, sempre concreto: "Amanhã: por que Roma copiou os gregos — e o que ela se recusou a copiar." Nunca terminar numa tela morta; a última imagem é o motivo do retorno.
+
+## 4. Corredor do Tempo (Timeline)
+
+**[Loop: "Avançar na Timeline" + "Desbloquear próximo nó"]**
+
+- **Estrutura:** eras em sequência cronológica (Pré-História → ... → Era da Informação); dentro de cada era, os nós posicionados onde pertencem. As civilizações paralelas (China, Américas, África — LDD §8) aparecem como trilhos paralelos da mesma era, não como apêndice.
+- **Estados visuais do nó** = estados do LDD §6: apagado (bloqueado) → tênue (disponível) → **aceso** (Compreendido) → **chama firme** (Dominado) → **constelação** (Mestre). Nó em regressão: a chama visivelmente vacila — sem texto de culpa, o visual conta a história.
+- **Desbloqueio é por jornada, não estritamente linear:** concluir um nó de uma jornada libera o próximo nó *daquela jornada*, mesmo que salte séculos (o arco "Nascimento da Democracia" pula da Grécia ao Iluminismo). O Corredor mostra o salto como um **fio de conexão** atravessando as eras — a visualização literal do conhecimento conectado.
+- **MVP:** apenas as eras cobertas pelas 2-3 jornadas de lançamento existem visualmente; o resto do Corredor aparece como "salas ainda seladas" no horizonte — promessa visível de futuro sem custo de conteúdo.
+
+## 5. XP, níveis e títulos
+
+**[Loop: "Receber feedback" + "Desbloquear próximo nó" (escala de maestria)]**
+
+### 5.1 Fontes de XP (hipóteses iniciais)
+
+| Evento | XP | Justificativa |
+|---|---|---|
+| Interação correta (1ª tentativa) | 10 | Compreensão demonstrada |
+| Interação correta após caminho do erro | 5 | Compreensão recuperada — vale, e vale menos que domínio imediato; **errar nunca zera nem desconta** |
+| Lição concluída | +20 | Fecho da unidade mínima |
+| Nó → Compreendido | +50 | Marco da timeline |
+| Nó → Dominado | +100 | Marco da North Star |
+| Nó → Mestre | +150 | Conexões entre eras |
+| Revisão em missão "memória se apagando" | ×2 sobre a interação | Resgatar memória em risco é o comportamento mais valioso do produto |
+
+**O que deliberadamente NÃO dá XP:** abrir o app, assistir/ler sem interagir, manter streak, compartilhar cards. XP é medida de compreensão, não de presença (VISION §2). Streak e compartilhamento têm recompensas próprias (celebração, cosméticos §11) — nunca XP.
+
+### 5.2 Níveis
+
+Curva de custo crescente: XP para o nível *n* ≈ `100 × n^1.5` (nível 2: ~283; nível 5: ~1.118; nível 10: ~3.162; nível 20: ~8.944 XP acumulados). Hipótese a calibrar no piloto com a meta: usuário engajado (1 sessão/dia) sobe de nível ~2×/semana no início, desacelerando suavemente.
+
+### 5.3 Títulos do Arquivo
+
+**Títulos não são compráveis com XP** — cada um tem um portão de compreensão (Princípio Fundamental aplicado à progressão):
+
+| Título | Requisito (hipótese) |
+|---|---|
+| Curioso | Início |
+| Aprendiz | Nível 3 + 1 nó Dominado |
+| Escriba | Nível 6 + 5 nós Dominados |
+| Cronista | Nível 10 + 1 jornada completa + 12 nós Dominados |
+| Historiador | Nível 16 + 3 jornadas + 30 nós Dominados |
+| Sábio | Nível 25 + 60 nós Dominados + 10 nós Mestre |
+| Guardião da Memória | Nível 40 + domínio de eras inteiras + 30 nós Mestre |
+
+Sem nós dominados, não há título — impossível "grindar" título com presença.
+
+## 6. Agendador de repetição espaçada (SRS)
+
+**[Loop: "Receber missão de revisão no futuro" — o passo que transforma sessões em memória]**
+
+### 6.1 O que é agendado
+
+**Afirmações (claims), não lições** (LDD §1). Cada afirmação de um nó Compreendido entra no agendador individualmente — é o que permite à "memória se apagando" ser cirúrgica ("você está esquecendo *o sorteio de cargos*", não "revise Grécia inteira").
+
+### 6.2 Ciclo de vida de uma afirmação (parâmetros iniciais, inspirados em FSRS simplificado)
+
+```
+Compreendida (na lição)
+   → revisão 1 em ~3 dias   ─ acerto → revisão 2 em ~14 dias ─ acerto → DOMINADA
+                             ─ erro   → reapresenta amanhã (com caminho do erro)
+Dominada (manutenção)
+   → ~45 dias → ~120 dias → ... (intervalo cresce a cada acerto)
+   → erro em manutenção → volta a ~7 dias
+   → 2 erros consecutivos → afirmação EM RISCO
+Nó com ≥30% das afirmações em risco → nó em REGRESSÃO (silenciosa)
+   → dispara missão "memória se apagando" (XP ×2)
+   → resgate completo → nó volta a Dominado, intervalo recalculado
+```
+
+Um nó é **Dominado** quando ≥80% de suas afirmações estão Dominadas (operacionaliza LDD §6 e a North Star).
+
+### 6.3 Regras de humanidade do agendador
+
+- **Teto diário de revisão: ~15 afirmações.** Excedente é priorizado por risco e adiado — o produto jamais recebe o usuário com uma pilha de 200 revisões (o colapso clássico do Anki, documentado na Etapa 1). O algoritmo absorve o atraso; o usuário nunca vê dívida.
+- **Invisibilidade total:** nenhum intervalo, porcentagem de retenção ou nome de algoritmo aparece na interface. O usuário vê apenas missões e chamas vacilando.
+- **Pausas longas são bem-vindas de volta:** após ausência de semanas, a primeira sessão é uma missão de resgate curta e generosa (as 10 memórias mais em risco), não um muro de revisões — reencontro, não cobrança.
+
+## 7. Companheiro (Thoth)
+
+**[Loop: "Ver Thoth evoluir" — o eixo emocional do loop inteiro]**
+
+### 7.1 Evolução (3 estágios no MVP)
+
+Gatilhos são **marcos de compreensão**, nunca XP bruto:
+
+| Estágio | Gatilho (hipótese) | Mudança visível |
+|---|---|---|
+| 1. Aprendiz de tinta | Início | Pequeno, pena simples, pergaminho em branco |
+| 2. Escriba iniciado | 1ª jornada completa | Cresce; pena ornamentada; 1º selo de cera no pergaminho |
+| 3. Escriba do Arquivo | 10 nós Dominados + 2ª jornada | Vestes; o pergaminho dele exibe as eras que *vocês* dominaram |
+
+Regra narrativa: **Thoth aprende com o usuário** — o pergaminho dele é o diário da dupla. Cada era dominada adiciona um desenho ao pergaminho; itens de época (toga romana etc.) vêm de marcos específicos. É "aprendemos juntos", não "alimente o bichinho".
+
+### 7.2 Estados emocionais
+
+- **Celebrando** (marco recente), **concentrado** (durante lições), **solene** (nós de tragédia — LDD §8: sem confete em genocídio), **saudade** (ausência de 3+ dias).
+- **Saudade sem culpa** — a diferença para o Duo é de tom, e é inegociável: *"Thoth guardou uma memória para mostrar a você"* (presente que espera), nunca *"Thoth está triste porque você o abandonou"* (dívida emocional). Notificações seguem a mesma regra (§12).
+- **Aniversário** (data de início da dupla) — pequeno ritual anual, precursor da Retrospectiva (VISION §14.2).
+
+## 8. Streak compassivo
+
+**[Loop: "Retornar"]**
+
+- **O que conta:** completar qualquer lição **ou** missão de revisão (≥1 slot da missão diária). ~3 minutos honestos, sem exigir "meta de XP".
+- **Proteção automática:** a cada 7 dias de streak, o usuário **ganha** 1 "Selo do Tempo" (máx. 2 guardados) — consumido sozinho ao faltar um dia. Ganho, não comprado: proteção é recompensa de consistência, nunca produto (diferença deliberada frente ao Duolingo, onde streak freeze é mercadoria).
+- **Reacender:** streak quebrado pode ser restaurado completando uma missão dupla nas 48h seguintes — o retorno é sempre mais celebrado que a falha é lamentada.
+- **Marcos de streak** (7, 30, 100, 365): celebração + cosmético para Thoth. **Nunca XP** (§5.1).
+
+## 9. Feedback e celebração
+
+**[Loop: "Receber feedback" — o passo que transforma progresso em emoção]**
+
+Ordem fixa da celebração de marco (VISION §14.1 — "nenhum marco é comunicado apenas por número"):
+
+1. O nó **acende** no Corredor (animação própria).
+2. **Thoth reage** (e ganha o que tiver que ganhar).
+3. **Conexões reveladas:** "Agora você entende melhor: ✔ ..."
+4. **Card compartilhável** oferecido (só nos marcos que têm card — §11).
+5. **XP por último** — o número é o registro; a emoção é a recompensa.
+
+Calibração de tom por conteúdo (LDD §8): nós de tragédia fecham com solenidade — mesma progressão mecânica, celebração substituída por reflexão.
+
+**Feedback de erro:** imediato, caloroso, e abre o caminho do erro (LDD §3). Sem som "de errado" humilhante, sem vermelho agressivo, sem contador de vidas — erro é o melhor momento da lição, e a interface precisa acreditar nisso.
+
+## 10. Economia
+
+**[Loop: nenhum — e é exatamente por isso que o MVP não tem moeda.]**
+
+Decisão deliberada: **o MVP não tem moeda gastável.** Toda tentativa de moeda passou pelo filtro da VISION §2.1 e falhou — loja de power-ups não melhora compreensão, curiosidade nem memória; e power-up de aprendizado (ex.: "pular revisão") seria *contra* o produto.
+
+- **MVP:** XP (medida), Selos do Tempo (proteção de streak, ganhos), colecionáveis de marco (não gastáveis).
+- **V1, se os dados pedirem:** cosméticos para Thoth/museu destravados por conquistas (nunca por grind de presença); a assinatura premium pode incluir cosméticos raros (VISION §18).
+- **Nunca:** moeda que compre progresso, atalho de domínio ou proteção além dos Selos ganhos.
+
+## 11. Momentos compartilháveis (MVP: 2)
+
+**[Loop: "Sair satisfeito" + aquisição orgânica]**
+
+Especificação dos dois cards do MVP (VISION §14.2):
+
+1. **Conclusão de era:** trecho do Corredor totalmente aceso + nome da era + estatística-síntese ("47 memórias dominadas") + marca. Legível em 3 segundos por quem nunca viu o app.
+2. **Evolução de Thoth:** o novo estágio + o pergaminho-diário com as eras da dupla.
+
+Geração automática no momento da celebração (passo 4 do §9), compartilhamento em 1 toque, nunca obrigatório. Taxa de compartilhamento é métrica de marca (VISION §20).
+
+## 12. Notificações
+
+**[Loop: "Retornar" — a extensão do fecho de sessão para fora do app]**
+
+- **Máximo 1/dia** no MVP; o conteúdo é sempre **conhecimento ou missão concreta**, nunca cobrança: *"A memória de Roma está vacilando — 3 minutos a resgatam"*, *"Hoje em 1789: a Bastilha caiu. Thoth separou essa história"* (o gatilho de efeméride validado na Etapa 1 como feature, não produto).
+- **Proibido:** culpa ("você vai perder seu streak!!"), pressão em série, notificação comercial vestida de missão.
+- O gancho do amanhã (§3.3) e a notificação do dia seguinte são o mesmo conteúdo — o fecho de sessão planta o que a notificação colhe.
+
+## 13. Sistemas de fases futuras (resumo de intenção)
+
+Especificação completa quando a fase chegar (VISION §16.2); intenções registradas para não redesenhar do zero:
+
+- **V1 — Salão do Guardião (museu):** cada era dominada ergue um artefato; visitável e compartilhável. **Atlas Vivo:** regiões pintadas por domínio geográfico do conteúdo. **Desafio da semana:** missão comum global assíncrona. **Ranking semanal simples:** por XP semanal, opt-in.
+- **V2 — Ordens (ligas):** grupos de ~30, subida/descida semanal, nomeadas como ordens do Arquivo (estrutura validada por Duolingo/Brilliant/Elevate na Etapa 1); entrada opt-in, invisível até o usuário estar em ritmo (VISION §16.2, revelação progressiva). **Eventos temáticos** e **Retrospectiva anual**.
+- **V3+ — Quiz mundial síncrono; personagens de IA persistentes** (VISION §22).
+
+## 14. O que este GDD recusa (anti-mecânicas)
+
+Contrato negativo permanente, derivado das falhas documentadas na Etapa 1:
+
+- ❌ Vidas/corações/energia limitando tentativas (fricção mais odiada do Duolingo).
+- ❌ Streak punitivo ou culpabilizador (Habitica/Duo) — só o modelo compassivo do §8.
+- ❌ Moeda de progresso / pay-to-win em qualquer forma.
+- ❌ XP por presença sem compreensão (VISION §2).
+- ❌ Anúncios dentro do loop de aprendizado (HISTORY Channel/Nibble).
+- ❌ Dark patterns de assinatura (trial confuso do Paladin, cobranças criticadas de Brilliant/Lumosity).
+- ❌ Pilha de revisões visível como dívida (colapso do Anki).
+- ❌ Celebração festiva em conteúdo trágico (LDD §8).
+
+---
+
+## Apêndice A — Painel de calibração do piloto
+
+Valores a instrumentar e revisar após o piloto (todos os números deste documento):
+
+| Parâmetro | Valor inicial | Sinal de recalibração |
+|---|---|---|
+| XP por interação / curva de nível | 10 / `100×n^1.5` | Ritmo de subida ≠ ~2 níveis/semana no 1º mês |
+| Intervalos SRS | 3d → 14d → 45d → 120d | Taxa de acerto em revisão fora de 80-90% |
+| Limiar de Dominado | 80% das afirmações | North Star inflada ou inatingível |
+| Teto diário de revisões | 15 afirmações | Abandono correlacionado a dias de revisão pesada |
+| Gatilhos de estágio do Thoth | 1ª jornada / 10 nós + 2ª jornada | % de usuários que veem o estágio 2 antes do D30 (meta: maioria dos retidos) |
+| Selos do Tempo | 1 a cada 7 dias, máx. 2 | Quebras de streak seguidas de churn |
+| Banda de dificuldade por interação | 60-85% acerto (LDD §9.3) | Interações fora da banda |

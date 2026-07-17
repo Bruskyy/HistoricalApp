@@ -1,6 +1,6 @@
 # HistoricalApp
 
-Aplicativo educacional gamificado para ensino de História — "o Duolingo do conhecimento histórico".
+A primeira plataforma que transforma conhecimento profundo em jogo — História é o primeiro domínio. (Ver [`docs/VISION.md`](docs/VISION.md).)
 
 ## Status
 
@@ -13,7 +13,7 @@ Toda decisão de produto, design e arquitetura é registrada em `docs/` antes da
 - [`docs/COMPETITOR_ANALYSIS.md`](docs/COMPETITOR_ANALYSIS.md) — análise de 20 apps concorrentes/inspiradores, ranking, matrizes de funcionalidades e lacunas de mercado. ✅ concluído.
 - [`docs/VISION.md`](docs/VISION.md) — Product Vision Document (v3): mantra, Princípio Fundamental + Filosofia de Crescimento, universo do produto (com regra da moldura), visão de plataforma, USP, posicionamento, personas, progressão unificada, momentos memoráveis, comunidade, introdução gradual de sistemas (MVP→V1→V2→V3+), retenção, monetização, papel da IA, identidade de marca (nomes como títulos de trabalho), métricas e riscos. ✅ concluído.
 - [`docs/LEARNING_DESIGN.md`](docs/LEARNING_DESIGN.md) — Learning Design Document (LDD): modelo de conteúdo, pipeline editorial de jornadas, anatomia de lição, camadas de profundidade, definição de "aprendido", taxonomia de perguntas de compreensão, diretrizes de sensibilidade, papéis editoriais/produção/dificuldade. Substitui o planejado `PEDAGOGY.md`. ✅ concluído.
-- `docs/GAME_DESIGN.md` — Game Design Document *(a criar)*.
+- [`docs/GAME_DESIGN.md`](docs/GAME_DESIGN.md) — Game Design Document: Core Gameplay Loop (3 loops aninhados), missões, timeline, XP/níveis/títulos, agendador SRS, companheiro, streak compassivo, feedback/celebração, economia (sem moeda no MVP), cards compartilháveis, notificações, anti-mecânicas e painel de calibração. ✅ concluído.
 - `docs/PRD.md` — Product Requirements Document *(a criar)*.
 - `docs/ARCHITECTURE.md` — decisões técnicas *(a criar)*.
 - `docs/ROADMAP.md` — planejamento de versões *(a criar)*.
