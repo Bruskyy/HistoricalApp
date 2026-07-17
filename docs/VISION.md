@@ -3,6 +3,8 @@
 > Este documento define a identidade do produto antes de qualquer decisão técnica. Toda decisão aqui é justificada por uma lacuna de mercado identificada em [`COMPETITOR_ANALYSIS.md`](COMPETITOR_ANALYSIS.md) ou por um objetivo de produto explícito — nenhuma funcionalidade é proposta apenas "porque um concorrente tem". Onde uma decisão é estratégica (nome, posicionamento, monetização), ela é marcada como **provisória** e deve ser validada pelo fundador antes de virar compromisso de engenharia.
 >
 > **v2** — revisado após feedback do fundador: adicionados mantra, Princípio Fundamental, universo do produto, progressão unificada, momentos memoráveis, camada de emoção e comunidade/eventos; timeline promovida para o coração do propósito; roadmap alterado para incluir um Learning Design Document (LDD) antes do GDD.
+>
+> **v3** — segunda rodada de feedback: adicionada a Filosofia de Crescimento do Produto (seção 2.1), separação explícita entre visão e primeira versão utilizável com introdução gradual de sistemas (seção 16), guardrail contra o universo competir com o conteúdo (seção 9), seção dedicada ao papel da IA (seção 22) e alertas de validação sobre os nomes Mneme/Thoth (seção 19).
 
 ---
 
@@ -25,6 +27,21 @@ Consequências não-negociáveis desse princípio, que todo sistema do produto d
 - Nenhuma métrica central (North Star, nível, título) pode ser inflada só com presença/cliques — todas exigem evidência de compreensão retida (ver seções 16 e 21).
 - Não existem "vidas", "corações" ou qualquer punição por erro. Um erro dispara explicação e agenda revisão — nunca cobra um recurso do usuário. (Rejeição deliberada da mecânica mais criticada do Duolingo na Etapa 1.)
 - Perguntas de "pegadinha" e memorização de data solta não são portões de progresso — avaliação mede entendimento causal, não decoreba (detalhado no [`LEARNING_DESIGN.md`](LEARNING_DESIGN.md)).
+
+### 2.1 Filosofia de crescimento do produto
+
+> **O produto nunca adiciona uma funcionalidade apenas porque aumenta retenção.**
+
+Toda funcionalidade nova — do MVP ao ano 5 — deve responder **sim** a pelo menos uma destas perguntas:
+
+1. Melhora a compreensão?
+2. Aumenta a curiosidade?
+3. Fortalece a memória?
+4. Aproxima o usuário do conhecimento?
+
+Se a resposta for não às quatro, **ela não entra** — não importa quão boa seja a métrica de engajamento que otimize. Retenção é consequência aceitável de uma boa feature; nunca é justificativa suficiente para uma.
+
+Este filtro se aplica inclusive aos sistemas já descritos neste documento: cada um só é introduzido na fase em que prova servir ao aprendizado (seção 16.2), e qualquer sistema que na prática se revele "engajamento vazio" é candidato a remoção, por mais que retenha.
 
 ## 3. Propósito do produto
 
@@ -52,7 +69,7 @@ O único concorrente que tentou os dois ao mesmo tempo (Paladin, 7/10) falhou ex
 Implicações práticas:
 
 - **História não é "o produto"; é o primeiro domínio de conteúdo publicado sobre a engine.** Todo conceito de produto abaixo (jornada, nó, missão, companheiro, museu) é nomeado e desenhado de forma domínio-agnóstica, mesmo que o MVP só tenha um domínio ativo.
-- Isso é uma decisão de **arquitetura de conteúdo e produto**, não de escopo do MVP — o MVP continua sendo só História (seção 15). O banco de conteúdo, a progressão e a IA não podem ser hardcoded para "história".
+- Isso é uma decisão de **arquitetura de conteúdo e produto**, não de escopo do MVP — o MVP continua sendo só História (seção 16.1). O banco de conteúdo, a progressão e a IA não podem ser hardcoded para "história".
 - O nome da marca (seção 19) precisa funcionar para a plataforma inteira.
 
 ## 6. Proposta única de valor (USP)
@@ -104,6 +121,14 @@ Como o universo amarra os sistemas do produto (cada um deixa de ser "feature" e 
 | Missões de revisão (SRS) | **Memórias se apagando** — "a chama de Roma está enfraquecendo, Guardião" |
 
 Esse enquadramento resolve a crítica de "parece um app de estudos, não um universo": a repetição espaçada, por exemplo, deixa de ser "revisão pendente" (tarefa) e vira "uma memória do Arquivo está se apagando e só você pode reacendê-la" (aventura) — mesmo sistema, emoção oposta, exatamente o mantra da seção 1.
+
+### 9.1 Regra da moldura: o universo serve ao conhecimento, nunca compete com ele
+
+História já é fascinante por si só — o universo é a **moldura**, o conteúdo real é o quadro. Guardrails permanentes:
+
+- **O conteúdo real está sempre em primeiro plano.** As telas lideram com os nomes verdadeiros do conhecimento (Grécia, Sócrates, Revolução Francesa); o vocabulário do universo (Corredor, Salão, Guardião) é ambientação e nunca esconde o que o usuário está de fato aprendendo.
+- **Teste de remoção:** se tirarmos toda a ficção do Arquivo, as lições, as jornadas e o valor de aprendizado precisam continuar de pé, intactos. Se algo só faz sentido "dentro da ficção", é ornamento — e ornamento não pode ser estrutural.
+- **Sinal de fracasso definido:** se usuários descreverem o produto como "um RPG genérico com skin de história", a dosagem do universo passou do ponto. Monitorar essa percepção em testes com usuários desde o MVP.
 
 ## 10. Personas
 
@@ -214,28 +239,40 @@ Comunidade ≠ rede social. O MVP não tem feed, chat nem guildas (seção 16) �
 
 *Justificativa: retenção de longo prazo precisa de motivos coletivos de retorno (validado pelos eventos sazonais do Duolingo e desafios do Habitica na Etapa 1), mas mecânica social profunda antes de validar o loop individual é risco de escopo — este é o meio-termo deliberado.*
 
-## 16. Diferenciais obrigatórios do MVP — e o que fica de fora
+## 16. Visão vs. primeira versão utilizável: introdução gradual de sistemas
 
-### Obrigatórios (o que torna o produto defensável no dia 1)
+> **Alerta incorporado do fundador:** este documento descreve dezenas de sistemas — museu, atlas, ligas, eventos, IA, coleções, títulos... A visão é o mapa; **o MVP é o primeiro passo, não a miniatura do mapa inteiro.** O risco real de um documento grandioso é o MVP virar um AAA. Esta seção é a defesa contra isso: cada sistema tem uma fase, e só entra quando a fase anterior provou sua tese (filtro da seção 2.1).
 
-1. Timeline navegável (Corredor do Tempo) como tela central de progresso.
-2. Companheiro com pelo menos 3 estágios visuais de evolução ligados a marcos reais.
-3. Repetição espaçada de ponta a ponta, vestida de "memórias se apagando"/missões — nunca exposta como configuração.
-4. Nível de consenso acadêmico nas afirmações disputadas do conteúdo de lançamento.
-5. Conteúdo em jornadas narrativas — 2 a 3 jornadas completas no lançamento.
-6. Modelo de dados domínio-agnóstico desde o schema inicial (seção 5).
-7. Progressão unificada mínima: cada marco visível em ≥3 eixos (seção 13), incluindo museu simples (Salão do Guardião v1: galeria de artefatos conquistados) e Atlas Vivo v1.
-8. Pelo menos 2 momentos memoráveis compartilháveis funcionando no lançamento (conclusão de era + evolução do companheiro).
+### 16.1 MVP — o mínimo que valida a tese central ("aprender assim vicia?")
 
-### Excluídos do MVP (boas ideias, momento errado)
+1. Corredor do Tempo navegável como tela central de progresso.
+2. 2-3 jornadas completas, produzidas pelo pipeline do LDD.
+3. Lições + repetição espaçada de ponta a ponta, vestidas de "memórias se apagando" — nunca expostas como configuração.
+4. Thoth com 3 estágios visuais de evolução ligados a marcos reais.
+5. Streak compassivo.
+6. Nível de consenso acadêmico nas afirmações disputadas do conteúdo de lançamento.
+7. XP, níveis e títulos básicos.
+8. 2 momentos memoráveis compartilháveis (conclusão de era + evolução do companheiro).
+9. Estatísticas essenciais (nós dominados, precisão, streak).
+10. Modelo de dados domínio-agnóstico desde o schema inicial (seção 5).
 
-- **Personagens de IA com memória persistente** (Sócrates que lembra conversas de semanas atrás — o "divisor de águas") — alto custo de infra/moderação; validar o loop central primeiro. Fica como aposta de longo prazo (seção 17).
-- **Segundo domínio de conhecimento ativo** — a arquitetura nasce pronta, o conteúdo espera validação de retenção.
-- **Ligas em tempo real** — começar com ranking semanal assíncrono simples.
-- **Guildas/mecânicas sociais profundas** — a camada coletiva do MVP são os eventos da seção 15.
-- **Quiz mundial síncrono** — pós-MVP (seção 15).
-- **B2B escolar** — canal e produto distintos; não compete com o MVP consumer por engenharia.
-- **Monetização por pacotes de conteúdo** — decidir granularidade só com dados reais de uso.
+**O que saiu do MVP em relação à v2 deste documento:** Salão do Guardião (museu) e Atlas Vivo, adiados para a V1. A regra dos ≥3 eixos por marco (seção 13) continua satisfeita no MVP com timeline + companheiro + card compartilhável + XP.
+
+### 16.2 O produto cresce em camadas
+
+| Fase | Pergunta que a fase valida | Sistemas introduzidos |
+|---|---|---|
+| **MVP** | O loop de aprendizado vicia? | Lista da seção 16.1 |
+| **V1** | A identidade aprofunda a retenção? | Salão do Guardião (museu), Atlas Vivo, coleções, hierarquia completa de títulos do Arquivo, desafio da semana, ranking semanal assíncrono, IA explicativa (seção 22) |
+| **V2** | A camada coletiva multiplica o hábito? | Ordens (ligas), eventos temáticos mensais, retrospectiva anual, IA de conexões personalizadas |
+| **V3+** | A plataforma escala além do primeiro domínio? | Quiz mundial síncrono, personagens de IA persistentes, segundo domínio de conhecimento, B2B educação |
+
+**Revelação progressiva dentro do produto:** a mesma lógica vale para cada usuário individual — ninguém vê ranking no dia 1; o museu se revela quando a primeira era é concluída. O novo usuário conhece o Arquivo como se explora um lugar: uma sala por vez. Isso resolve simultaneamente o excesso de gamificação percebida e o custo cognitivo do onboarding.
+
+### 16.3 Fora de qualquer fase planejada (até segunda ordem)
+
+- **Guildas/mecânicas sociais profundas** — a camada coletiva do produto são os eventos sincronizados (seção 15); social profundo só se os dados de V2 pedirem.
+- **Monetização por pacotes de conteúdo** — decidir granularidade de cobrança só com dados reais de uso.
 
 ## 17. Estratégia de retenção
 
@@ -260,8 +297,9 @@ Validar lógica → depois preços, com dados reais.
 
 > Nomes **provisórios** — sujeitos a validação de disponibilidade de marca/domínio antes de investimento visual.
 
-- **Plataforma: Mneme** (deusa grega da memória; raiz de "mnemônico"). Funciona para todos os domínios; conecta à USP de retenção real; curto e pronunciável. Alternativas descartadas: *Lyceum* (soa curso tradicional), *Chronis* (menos distintivo). **A validar:** domínio/lojas/trademark.
-- **Companheiro: Thoth** (deus egípcio da escrita, escriba dos deuses). Um jovem escriba de **pergaminho vivo e tinta animada**, pena que se ornamenta com a evolução — unifica "pergaminho vivo", "pequeno escriba" e "pena que evolui" numa criatura só. Evolução expressa em selos de cera e vestes de época (toga ao concluir Roma), extensível a outros domínios. *"Clio" descartado por conflito de marca (software jurídico, automóvel).*
+- **Plataforma: Mneme** (deusa grega da memória; raiz de "mnemônico"). Conceitualmente forte: funciona para todos os domínios e conecta à USP de retenção real. **Alerta de marketing registrado:** o teste que importa não é conceitual, é prático — alguém que ouviu "baixa o Mneme" numa conversa consegue lembrar, pronunciar, escrever e pesquisar o nome no dia seguinte? Antes de fechar: rodar teste de naming com usuários reais (recall após 24h, teste de grafia por áudio, busca na loja) contra 2-3 alternativas. Até lá, **Mneme é título de trabalho**, não decisão. Alternativas já descartadas: *Lyceum* (soa curso tradicional), *Chronis* (menos distintivo).
+- **Companheiro: Thoth** (deus egípcio da escrita, escriba dos deuses). Um jovem escriba de **pergaminho vivo e tinta animada**, pena que se ornamenta com a evolução — unifica "pergaminho vivo", "pequeno escriba" e "pena que evolui" numa criatura só. Evolução em selos de cera e vestes de época (toga ao concluir Roma). *"Clio" descartado por conflito de marca (software jurídico, automóvel).*
+  **Alerta de domínio registrado:** um deus egípcio faz sentido ensinando História — mas por que continuaria sendo Thoth quando o app ensinar Economia? Três respostas possíveis, decisão adiada para o mesmo teste de naming: (a) manter Thoth — o *arquétipo* (escriba do conhecimento humano) é domínio-neutro mesmo que a origem do nome não seja; (b) manter a criatura de pergaminho-e-tinta com um nome inventado, sem ancoragem mitológica; (c) companheiro neutro + guias temáticos por domínio. A criatura em si (pergaminho/tinta/pena) já é domínio-neutra por design — o risco está só no nome.
 - **Universo: O Grande Arquivo** (seção 9) — é ele que transforma marca em mundo, respondendo à crítica "parece app de estudos": o usuário não abre um app, ele *entra num lugar*.
 - **Tom de voz:** "amigo erudito" — curioso, caloroso, respeitoso com a inteligência do adulto; celebra entendimento genuíno; nunca usa culpa/ironia para cobrar engajamento (rejeição ao tom sarcástico do Duo, já em desgaste segundo a Etapa 1).
 - **Identidade visual conceitual:** pergaminho/sépia e tinta (terrosos, dourado envelhecido, azul-tinta) como base; cada era da timeline com cor de destaque própria (a sensação visual de "viajar no tempo"); iconografia de objetos de conhecimento (selos, pergaminhos, ampulhetas, constelações). Precisa ser reconhecível a distância como o verde Duolingo ou os hexágonos do Brilliant.
@@ -283,13 +321,38 @@ Validar lógica → depois preços, com dados reais.
 |---|---|
 | Imprecisão de conteúdo (fraqueza fatal do Paladin) | Processo editorial com revisão especializada (LDD) + nível de consenso transparente. |
 | Custo/complexidade de IA persistente | Fora do MVP; validar loop central primeiro. |
-| Scope creep (plataforma + gamificação + IA de uma vez) | MVP de um domínio, lista explícita de exclusões (seção 16). |
+| Scope creep (plataforma + gamificação + IA de uma vez) | MVP de um domínio, introdução gradual de sistemas por fase validada (seção 16). |
+| Universo roubar atenção do conteúdo ("RPG com skin de história") | Regra da moldura (seção 9.1): conteúdo real sempre em primeiro plano + teste de remoção da ficção + monitorar percepção em testes de usuário. |
+| Excesso de gamificação (sistemas demais competindo por atenção) | Filosofia de crescimento (seção 2.1) como filtro de entrada + revelação progressiva por usuário (seção 16.2). |
 | Monetização corroer a marca (caso Duolingo 2026) | Loop de hábito 100% gratuito por princípio, não por pricing. |
 | Universo/narrativa soar infantil para a persona Beatriz | Tom "amigo erudito"; universo apresentado com sobriedade (Arquivo/Guardião, não "mundo mágico dos amiguinhos"); testar recepção por persona. |
 | Gamificar tragédias históricas gerar repulsa/reputação | Celebração calibrada ao conteúdo (seção 14.1) + diretrizes de sensibilidade no LDD. |
 | Concorrência de marcas gigantes | Nicho defensável (profundidade > amplitude) antes de expansão horizontal. |
 | Claims de eficácia sem evidência (multa FTC/Lumosity) | Comunicar mecanismo e cobertura, nunca "melhora sua memória/inteligência" sem estudo. |
 | Nomes provisórios sem disponibilidade | Validar domínio/trademark antes de produção visual. |
+
+## 22. O papel da IA na plataforma
+
+> **A IA nunca substitui o conteúdo. Ela o serve.**
+
+O conteúdo da plataforma é o conjunto de afirmações curadas, classificadas por consenso e revisadas por humanos (LDD, seções 1-2). A IA opera **exclusivamente sobre essa base** — este é o contrato que diferencia nosso uso de IA do "quiz gerado por IA" genérico que já existe no mercado (Quizlet e afins, ver Etapa 1).
+
+O que a IA faz, em ordem de chegada ao produto (fases da seção 16.2):
+
+| Papel | O que faz | Fase |
+|---|---|---|
+| **Assistente de produção** | Extrai claims de fontes, rascunha variações de pergunta e sugestões de conexão — sempre com revisão humana antes de publicar (LDD §9) | Desde já (bastidores) |
+| **Explica** | Caminho do erro personalizado: por que *a sua* resposta parecia certa, no seu nível | V1 |
+| **Questiona** | Follow-ups socráticos quando o usuário demonstra curiosidade — guia com perguntas, não entrega respostas | V1 |
+| **Gera analogias** | Conecta o conceito ao repertório individual do usuário | V1+ |
+| **Adapta** | Dificuldade, ritmo e prioridade de revisão por usuário (alimenta o agendador SRS) | V1+ |
+| **Liga assuntos** | Conexões personalizadas entre nós dominados ("você percebeu que isso ecoa aquilo que estudou mês passado?") | V2 |
+| **Personifica** | Personagens históricos persistentes, com memória de conversas anteriores | Visão (V3+) |
+
+**Guardrails permanentes:**
+- A IA responde ancorada nos claims e fontes do nó; quando extrapola o conteúdo curado, sinaliza isso explicitamente ao usuário.
+- O sistema de nível de consenso vale também para respostas de IA — a IA não afirma como certo o que a historiografia disputa.
+- Nenhuma resposta de IA vira "fato novo" do catálogo sem passar pelo pipeline editorial completo (LDD §2).
 
 ---
 

@@ -121,7 +121,33 @@ Um nó Dominado pode **regredir** silenciosamente se as revisões passarem a fal
 - **Presente como destino, não como palanque.** Conectar ao hoje (regra do arco narrativo) sem tomar partido em disputa política contemporânea; quando o presente é ele próprio disputado, aplicar o mesmo sistema de consenso usado para o passado.
 - **Tom "amigo erudito" em tudo** (VISION §19): entusiasmo por entender, nunca condescendência nem ironia à custa do usuário.
 
-## 9. Checklist de publicação de um nó
+## 9. Papéis editoriais, produção e dificuldade
+
+### 9.1 Quem escreve
+
+| Papel | Responsabilidade | Pode ser acumulado? |
+|---|---|---|
+| **Editor de jornada** | Dono do arco: pergunta central, seleção de nós, tom, coerência narrativa | Sim, com Redator |
+| **Redator de aprendizagem** | Escreve lições, interações e caminhos do erro conforme as seções 3-5 e 7 | Sim, com Editor |
+| **Revisor especialista** | Formação na área: valida precisão, classificação de consenso e legitimidade das simplificações | **Não** — precisa ser independente de quem escreveu |
+| **IA assistente de produção** | Extrai claims de fontes, rascunha variações de pergunta e de revisão SRS, sugere conexões | Acelera qualquer papel; **não aprova nada** |
+
+Realidade de time pequeno: no início, duas pessoas bastam (editor+redator numa, revisor na outra) com IA acelerando a produção. O único papel inegociável em qualquer configuração é a **revisão especializada independente** — cortar isso é repetir o erro que definiu a reputação do Paladin.
+
+### 9.2 Quanto tempo dura produzir
+
+Alvo inicial (hipótese a validar): uma jornada de 6-10 nós (~20-40 lições) em **3-6 semanas** com uma dupla + IA assistente. A primeira jornada produzida é o **piloto de processo**: medir o tempo real de cada etapa do pipeline (seção 2), descobrir onde a IA realmente acelera e recalibrar a estimativa **antes** de planejar o catálogo de lançamento (2-3 jornadas, VISION §16.1). Nenhum plano de conteúdo é confiável antes desse piloto.
+
+### 9.3 Como medir dificuldade
+
+Dificuldade é **medida, não intuída**:
+
+- Instrumentar cada interação: taxa de erro + tempo de resposta, agregados por lição e por nó.
+- Banda alvo de acerto: 60-85% (seção 2, passo 8). Fora da banda → volta para reescrita. Exceção: perguntas de nível Mestre (seção 7, tipo 5) podem ficar abaixo da banda por design.
+- Curva dentro da jornada: os primeiros nós mais acessíveis, dificuldade crescendo com o arco — a jornada ensina o usuário a jogá-la.
+- Monitorar por persona: o que é trivial para Beatriz pode ser opaco para Marina; divergência grande entre personas numa mesma interação é sinal de problema de linguagem, não de conteúdo.
+
+## 10. Checklist de publicação de um nó
 
 Antes de qualquer nó ir ao ar:
 
