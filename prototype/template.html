@@ -218,6 +218,8 @@
 
   .mission-card { border: 1.5px solid var(--gold); }
   .mission-card .mn { font-family: Georgia, serif; font-size: 17px; }
+  .flame.waver { animation: flicker .55s infinite ease-in-out; }
+  .mission-card.rescue { border-color: var(--flame); }
   .node-card.pulse { animation: glowPulse 2.2s ease-in-out infinite; border-color: var(--era); }
   @keyframes glowPulse {
     0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--era) 34%, transparent); }
@@ -245,7 +247,7 @@
   </header>
   <div class="progress-track" id="ptrack" hidden><div class="progress-fill" id="pfill" style="width:0%"></div></div>
   <main id="screen"></main>
-  <footer class="note">Gerado de <code>content/</code> pelo pipeline editorial · celebração na ordem do GDD §9 · nenhum dado sai desta página</footer>
+  <footer class="note">Gerado de <code>content/</code> pelo pipeline editorial · progresso salvo só neste aparelho<br><a href="#" id="skipDays" style="color:var(--ink-faint)">⏩ pular 3 dias (atalho de teste do protótipo)</a></footer>
 </div>
 
 <script>
@@ -266,13 +268,24 @@ const prettify = (slug) =>
   slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
       .replace('Constituicao Brasileira 1988', 'Constituição de 1988');
 
-/* ---------- estado ---------- */
-const S = {
+/* ---------- estado (persistente — o protótipo sobrevive a dias) ---------- */
+const DAY = 24 * 60 * 60 * 1000;
+const STORE_KEY = 'mneme-proto-v1';
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORE_KEY)) ?? {}; } catch { return {}; }
+}
+const S = Object.assign({
   xp: 0,
   lit: {},           // nodeId -> true
   lessonsDone: {},   // nodeId -> n
   nodeXp: 0,
-};
+  reviews: {},       // claimId -> { nodeId, dueAt, step }
+  timeShift: 0,      // atalho de teste "pular dias"
+}, loadState());
+function persist() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); } catch {}
+}
+const now = () => Date.now() + S.timeShift;
 
 const $ = (id) => document.getElementById(id);
 const screen = () => $('screen');
@@ -286,7 +299,7 @@ function refreshXp() {
   $('xpChip').textContent = S.xp + ' XP';
 }
 function gainXp(n, host) {
-  S.xp += n; S.nodeXp += n; refreshXp();
+  S.xp += n; S.nodeXp += n; refreshXp(); persist();
   if (host) {
     const el = document.createElement('div');
     el.className = 'stamp'; el.textContent = '+' + n;
@@ -357,15 +370,28 @@ const verdictRight = () => `<div class="verdict right">✓ ${RIGHT_WORDS[rightIx
 const verdictMiss = () => `<div class="verdict miss">✕ Ainda não…</div>`;
 
 /* ---------- Corredor ---------- */
+function dueReviews() {
+  return Object.entries(S.reviews)
+    .filter(([, r]) => r.dueAt <= now())
+    .map(([claimId, r]) => ({ claimId, nodeId: r.nodeId, step: r.step ?? 0 }));
+}
+
 function renderCorridor() {
   setProgress(null);
+  closeTermBox();
   const done = litCount();
   const allLit = done === NODES.length;
-  const say = allLit
-    ? 'O fio inteiro está aceso, Guardião. Atenas, Roma… e o eco chega até você. Descansa — eu vigio as chamas.'
-    : done === 0
-      ? 'Bem-vindo ao Corredor do Tempo, Guardião. Os salões estão apagados — mas encontrei uma porta aberta na Grécia. Vamos?'
-      : 'A Grécia está acesa… e olha: a porta de Roma acabou de se abrir. Ela conhecia Atenas. E discordou.';
+  const due = dueReviews();
+  const dueNodeIds = new Set(due.map((d) => d.nodeId));
+  const duePlaces = NODES.filter((n) => dueNodeIds.has(n.id)).map((n) => n.place).join(' e ');
+
+  const say = due.length
+    ? `Guardião… sinto chamas vacilando em ${duePlaces}. Não é urgência do mundo — é da memória. Três minutos bastam.`
+    : allLit
+      ? 'O fio inteiro está aceso, Guardião. Atenas, Roma… e o eco chega até você. Eu vigio as chamas — e te chamo quando alguma vacilar.'
+      : done === 0
+        ? 'Bem-vindo ao Corredor do Tempo, Guardião. Os salões estão apagados — mas encontrei uma porta aberta na Grécia. Vamos?'
+        : 'A Grécia está acesa… e olha: a porta de Roma acabou de se abrir. Ela conhecia Atenas. E discordou.';
 
   let rows = SEALED_BEFORE.map((era) => eraRow(era, 'sealed')).join('');
 
@@ -378,8 +404,13 @@ function renderCorridor() {
       return;
     }
     const doneLessons = S.lessonsDone[node.id] ?? 0;
+    const nodeDue = dueNodeIds.has(node.id);
+    const scheduled = node.claims.filter((c) => S.reviews[c.id]).map((c) => S.reviews[c.id].dueAt);
+    const nextDue = scheduled.length ? Math.min(...scheduled) : null;
     const status = lit
-      ? 'Compreendido · chama acesa · revisão em 3 dias'
+      ? nodeDue
+        ? 'memória vacilando — reacenda'
+        : `Compreendido · chama acesa${nextDue ? ` · revisão em ${Math.max(1, Math.ceil((nextDue - now()) / DAY))}d` : ''}`
       : doneLessons > 0
         ? `Lição ${doneLessons + 1} de ${node.lessons.length} · continuar`
         : `Missão · lição 1 de ${node.lessons.length}`;
@@ -387,28 +418,36 @@ function renderCorridor() {
       <div class="node-card ${lit ? 'lit' : ''}" data-node="${node.id}" role="button" tabindex="0" aria-label="${node.name}">
         <div>
           <div class="nm">${node.name}</div>
-          <div class="st">${status}</div>
+          <div class="st"${nodeDue ? ' style="color:var(--flame)"' : ''}>${status}</div>
         </div>
-        <div class="flame ${lit ? 'on' : ''}" style="font-size:22px">${lit ? '🔥' : '🕯️'}</div>
+        <div class="flame ${lit ? (nodeDue ? 'waver' : 'on') : ''}" style="font-size:22px">${lit ? '🔥' : '🕯️'}</div>
       </div>`);
   });
 
   rows += eraRow('Iluminismo', 'sealed',
     `<div class="sealed-note">${allLit ? JOURNEY.comingNext : 'selada'}</div>`);
 
-  // Missão do dia: o caminho de menor esforço é sempre um único toque (GDD §2)
+  // Missão do dia: o caminho de menor esforço é sempre um único toque (GDD §2);
+  // resgatar memória em risco vem antes de conteúdo novo (GDD §3.1).
   const target = NODES.find((n, i) => !S.lit[n.id] && (i === 0 || S.lit[NODES[i - 1].id]));
+  const rescueCard = due.length ? `
+    <div class="card mission-card rescue">
+      <p class="eyebrow">memória se apagando</p>
+      <div class="mn">${due.length === 1 ? '1 memória vacilando' : due.length + ' memórias vacilando'} — ${duePlaces}</div>
+      <button class="cta gold" id="rescueBtn">🔥 reacender agora — XP em dobro</button>
+    </div>` : '';
   const missionCard = !allLit && target ? `
     <div class="card mission-card">
-      <p class="eyebrow">missão de hoje</p>
+      <p class="eyebrow">${due.length ? 'depois, se quiser' : 'missão de hoje'}</p>
       <div class="mn">${target.name}</div>
-      <button class="cta gold" id="missionBtn">▶ ${
+      <button class="cta ${due.length ? 'ghost' : 'gold'}" id="missionBtn">▶ ${
         (S.lessonsDone[target.id] ?? 0) > 0 ? 'continuar de onde parei' : 'começar agora'
       }</button>
     </div>` : '';
 
   screen().innerHTML = `
-    ${thoth(say, allLit)}
+    ${thoth(say, allLit && !due.length)}
+    ${rescueCard}
     ${missionCard}
     <div class="card journey-head">
       <p class="eyebrow">jornada</p>
@@ -416,23 +455,63 @@ function renderCorridor() {
       <div class="prog">${JOURNEY.title} · ${done} de ${NODES.length} salões acesos</div>
     </div>
     <div role="list">${rows}</div>
-    ${allLit ? '<button class="cta ghost" id="againBtn">recomeçar o protótipo</button>' : ''}
+    ${allLit && !due.length ? '<button class="cta ghost" id="againBtn">recomeçar o protótipo</button>' : ''}
   `;
 
+  const rescueBtn = $('rescueBtn');
+  if (rescueBtn) rescueBtn.addEventListener('click', () => startReviewMission(due));
   const missionBtn = $('missionBtn');
   if (missionBtn && target) missionBtn.addEventListener('click', () => startNode(target.id));
 
   screen().querySelectorAll('.node-card:not(.lit)').forEach((card) => {
-    if (target && card.dataset.node === target.id) card.classList.add('pulse');
+    if (target && card.dataset.node === target.id && !due.length) card.classList.add('pulse');
     const go = () => startNode(card.dataset.node);
     card.addEventListener('click', go);
     card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') go(); });
   });
   const again = $('againBtn');
   if (again) again.addEventListener('click', () => {
-    Object.assign(S, { xp: 0, lit: {}, lessonsDone: {}, nodeXp: 0 });
+    Object.assign(S, { xp: 0, lit: {}, lessonsDone: {}, nodeXp: 0, reviews: {}, timeShift: 0 });
+    try { localStorage.removeItem(STORE_KEY); } catch {}
     refreshXp(); renderCorridor();
   });
+}
+
+/* ---------- missão de revisão (memória se apagando — GDD §3.2/§6) ---------- */
+function startReviewMission(due) {
+  S.nodeXp = 0;
+  let ix = 0;
+  const nextOne = () => {
+    if (ix >= due.length) { finishReviewMission(); return; }
+    const item = due[ix++];
+    const node = NODES.find((n) => n.id === item.nodeId);
+    const claim = node.claims.find((c) => c.id === item.claimId);
+    const variant = claim.reviewVariants[0]; // formato ≠ da lição (GDD §6.4)
+    setProgress(Math.round((ix / (due.length + 1)) * 100));
+    stepScreen(`<p class="eyebrow">${node.place} · memória se apagando · ${ix} de ${due.length}</p><div class="card" id="ic"></div>`);
+    renderInteraction(variant, node, $('ic'), () => {
+      const r = S.reviews[item.claimId];
+      r.step = (r.step ?? 0) + 1;
+      r.dueAt = now() + (r.step === 1 ? 14 : 45) * DAY; // intervalo cresce a cada resgate
+      persist();
+      nextOne();
+    }, 2);
+  };
+  nextOne();
+}
+
+function finishReviewMission() {
+  setProgress(null);
+  stepScreen(`
+    <div class="celebrate">
+      <div class="big-flame flame on">🔥</div>
+      <h1 class="fade-in" style="animation-delay:.3s">Chamas firmes novamente</h1>
+      <div class="fade-in" style="animation-delay:1s; width:100%; text-align:left">${thoth('É assim que uma memória vira sua para sempre: voltando a ela na hora certa. As próximas revisões ficam cada vez mais raras — sinal de que ela está segura.', true)}</div>
+      <div class="fade-in" style="animation-delay:1.7s"><span class="xp-chip">+${S.nodeXp} XP — em dobro</span></div>
+      <button class="cta fade-in" style="animation-delay:2.1s" id="go">voltar ao Corredor</button>
+    </div>`);
+  S.nodeXp = 0; persist();
+  $('go').addEventListener('click', renderCorridor);
 }
 
 function eraRow(name, state, inner = '') {
@@ -503,6 +582,7 @@ function startLesson(node, lessonIx) {
   list.push(() => {
     const lessonsDone = lessonIx + 1;
     S.lessonsDone[node.id] = lessonsDone;
+    persist();
     const last = lessonsDone >= node.lessons.length;
     stepScreen(`
       <p class="eyebrow">${node.place} · lição ${lessonsDone} concluída</p>
@@ -547,7 +627,7 @@ function renderSituated(inter, host, onDone) {
     }));
 }
 
-function renderInteraction(inter, node, host, onDone) {
+function renderInteraction(inter, node, host, onDone, xpMult = 1) {
   const claim = node.claims.find((c) => c.id === inter.claimId);
 
   if (!inter.objective && claim && claim.debate) {
@@ -584,7 +664,7 @@ function renderInteraction(inter, node, host, onDone) {
         host.querySelectorAll('.opt').forEach((x) => (x.disabled = true));
         b.classList.add('picked-right');
         fb.innerHTML = verdictRight();
-        gainXp(attempts === 0 ? 10 : 5, fb); // GDD §5.1: recuperar vale, e vale menos
+        gainXp((attempts === 0 ? 10 : 5) * xpMult, fb); // GDD §5.1: recuperar vale, e vale menos
         fb.insertAdjacentHTML('beforeend', '<button class="cta" id="go">continuar</button>');
         host.querySelector('#go').addEventListener('click', onDone);
       } else {
@@ -598,6 +678,13 @@ function renderInteraction(inter, node, host, onDone) {
 /* ---------- celebrações (ordem GDD §9) ---------- */
 function celebrateNode(node) {
   S.lit[node.id] = true;
+  // Nó compreendido: afirmações objetivas entram no agendador (revisão em ~3 dias)
+  for (const c of node.claims) {
+    if (c.reviewVariants && c.reviewVariants.length && !S.reviews[c.id]) {
+      S.reviews[c.id] = { nodeId: node.id, dueAt: now() + 3 * DAY, step: 0 };
+    }
+  }
+  persist();
   setProgress(100);
   const isLast = litCount() === NODES.length;
   const say = litCount() === 1
@@ -684,5 +771,12 @@ function renderSessionClose() {
   $('go').addEventListener('click', renderCorridor);
 }
 
+refreshXp();
+document.getElementById('skipDays').addEventListener('click', (e) => {
+  e.preventDefault();
+  S.timeShift += 3 * DAY;
+  persist();
+  renderCorridor();
+});
 renderCorridor();
 </script>

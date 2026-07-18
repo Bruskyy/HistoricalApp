@@ -232,6 +232,21 @@
               "type": "academic_book",
               "ref": "Hansen, M. H. The Athenian Democracy in the Age of Demosthenes. Blackwell, 1991."
             }
+          ],
+          "reviewVariants": [
+            {
+              "id": "rv1",
+              "type": "application",
+              "objective": true,
+              "prompt": "Uma cidade moderna decide escolher seu conselho de orçamento por sorteio entre cidadãos comuns. Um ateniense clássico diria que isso é…",
+              "options": [
+                "Profundamente democrático — era exatamente assim que Atenas preenchia a maioria dos cargos",
+                "Uma loteria irresponsável, coisa que Atenas jamais faria",
+                "Aristocrático demais para o gosto ateniense"
+              ],
+              "correct": 0,
+              "errorPath": "Atenas preenchia a maioria dos cargos públicos por sorteio — para eles, o acaso entre iguais era a marca da democracia; a eleição é que cheirava a aristocracia."
+            }
           ]
         },
         {
@@ -244,6 +259,21 @@
               "type": "academic_book",
               "ref": "Hansen, M. H. The Athenian Democracy in the Age of Demosthenes. Blackwell, 1991."
             }
+          ],
+          "reviewVariants": [
+            {
+              "id": "rv1",
+              "type": "application",
+              "objective": true,
+              "prompt": "Na Atenas clássica, quem destes podia votar na assembleia: um meteco rico, uma mulher de família ateniense, ou um cidadão pobre?",
+              "options": [
+                "Só o cidadão pobre — a porta não era renda: era nascimento cidadão (e ser homem)",
+                "O meteco rico — dinheiro comprava participação",
+                "A mulher de família ateniense — o nascimento dela contava"
+              ],
+              "correct": 0,
+              "errorPath": "A porta da política ateniense não era riqueza: era o status de cidadão — que excluía mulheres, metecos e pessoas escravizadas, sempre, não importava a fortuna."
+            }
           ]
         },
         {
@@ -255,6 +285,21 @@
             {
               "type": "academic_book",
               "ref": "Ober, J. The Rise and Fall of Classical Greece. Princeton University Press, 2015."
+            }
+          ],
+          "reviewVariants": [
+            {
+              "id": "rv1",
+              "type": "causal",
+              "objective": true,
+              "prompt": "O que as reformas de Clístenes fizeram com o poder das grandes famílias aristocráticas?",
+              "options": [
+                "Enfraqueceram: as novas tribos misturavam regiões e quebravam os blocos de lealdade familiar",
+                "Fortaleceram: cada família ganhou uma tribo própria",
+                "Nada: as tribos eram apenas divisões religiosas"
+              ],
+              "correct": 0,
+              "errorPath": "O golpe de Clístenes foi de engenharia social: tribos novas que misturavam cidade, costa e interior — impossível para um clã dominar uma tribo inteira. É por isso que 508 a.C. é o marco."
             }
           ]
         },
@@ -418,6 +463,21 @@
               "type": "academic_book",
               "ref": "Lintott, A. The Constitution of the Roman Republic. Oxford University Press, 1999."
             }
+          ],
+          "reviewVariants": [
+            {
+              "id": "rv1",
+              "type": "application",
+              "objective": true,
+              "prompt": "Um jovem romano ambicioso quer chegar a cônsul. O caminho dele é…",
+              "options": [
+                "Subir o cursus honorum: ser eleito cargo a cargo, provando serviço em cada degrau",
+                "Esperar seu nome ser sorteado entre os cidadãos",
+                "Comprar um assento vitalício no Senado"
+              ],
+              "correct": 0,
+              "errorPath": "Roma recusou o sorteio ateniense: magistraturas eram conquistadas por eleição, numa escada obrigatória de experiência. Antes de mandar, era preciso ter servido."
+            }
           ]
         },
         {
@@ -429,6 +489,21 @@
             {
               "type": "academic_book",
               "ref": "Lintott, A. The Constitution of the Roman Republic. Oxford University Press, 1999."
+            }
+          ],
+          "reviewVariants": [
+            {
+              "id": "rv1",
+              "type": "counterfactual",
+              "objective": true,
+              "prompt": "Um cônsul romano decide governar sozinho e atropelar o colega. O sistema previa que…",
+              "options": [
+                "O colega podia simplesmente vetar seus atos — e em um ano os dois saíam de qualquer jeito",
+                "O Senado o coroaria rei para resolver o impasse",
+                "As assembleias eram dissolvidas até ele se acalmar"
+              ],
+              "correct": 0,
+              "errorPath": "O desenho era à prova de ambição: dois cônsules com veto mútuo e mandato de um ano. Ninguém segurava o poder por tempo suficiente para virar o rei que Roma jurou nunca mais ter."
             }
           ]
         },
@@ -445,6 +520,21 @@
             {
               "type": "academic_book",
               "ref": "Lintott, A. The Constitution of the Roman Republic. Oxford University Press, 1999. (cap. sobre Políbio e a recepção moderna)"
+            }
+          ],
+          "reviewVariants": [
+            {
+              "id": "rv1",
+              "type": "connection",
+              "objective": true,
+              "prompt": "Quando a Constituição de 1988 permite que o Congresso barre atos do Executivo, ela ecoa diretamente…",
+              "options": [
+                "A tese do governo misto: poder só é contido por outro poder (Políbio, relido por Montesquieu)",
+                "O sorteio ateniense de magistrados",
+                "O caráter vitalício do Senado romano"
+              ],
+              "correct": 0,
+              "errorPath": "O freio entre poderes vem da leitura que o Iluminismo fez de Roma: Políbio descreveu a máquina de equilíbrios, Montesquieu a transformou em doutrina, e 1988 a herdou."
             }
           ]
         },

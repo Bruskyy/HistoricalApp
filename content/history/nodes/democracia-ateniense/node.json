@@ -22,6 +22,21 @@
           "type": "academic_book",
           "ref": "Hansen, M. H. The Athenian Democracy in the Age of Demosthenes. Blackwell, 1991."
         }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "application",
+          "objective": true,
+          "prompt": "Uma cidade moderna decide escolher seu conselho de orçamento por sorteio entre cidadãos comuns. Um ateniense clássico diria que isso é…",
+          "options": [
+            "Profundamente democrático — era exatamente assim que Atenas preenchia a maioria dos cargos",
+            "Uma loteria irresponsável, coisa que Atenas jamais faria",
+            "Aristocrático demais para o gosto ateniense"
+          ],
+          "correct": 0,
+          "errorPath": "Atenas preenchia a maioria dos cargos públicos por sorteio — para eles, o acaso entre iguais era a marca da democracia; a eleição é que cheirava a aristocracia."
+        }
       ]
     },
     {
@@ -34,6 +49,21 @@
           "type": "academic_book",
           "ref": "Hansen, M. H. The Athenian Democracy in the Age of Demosthenes. Blackwell, 1991."
         }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "application",
+          "objective": true,
+          "prompt": "Na Atenas clássica, quem destes podia votar na assembleia: um meteco rico, uma mulher de família ateniense, ou um cidadão pobre?",
+          "options": [
+            "Só o cidadão pobre — a porta não era renda: era nascimento cidadão (e ser homem)",
+            "O meteco rico — dinheiro comprava participação",
+            "A mulher de família ateniense — o nascimento dela contava"
+          ],
+          "correct": 0,
+          "errorPath": "A porta da política ateniense não era riqueza: era o status de cidadão — que excluía mulheres, metecos e pessoas escravizadas, sempre, não importava a fortuna."
+        }
       ]
     },
     {
@@ -45,6 +75,21 @@
         {
           "type": "academic_book",
           "ref": "Ober, J. The Rise and Fall of Classical Greece. Princeton University Press, 2015."
+        }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "causal",
+          "objective": true,
+          "prompt": "O que as reformas de Clístenes fizeram com o poder das grandes famílias aristocráticas?",
+          "options": [
+            "Enfraqueceram: as novas tribos misturavam regiões e quebravam os blocos de lealdade familiar",
+            "Fortaleceram: cada família ganhou uma tribo própria",
+            "Nada: as tribos eram apenas divisões religiosas"
+          ],
+          "correct": 0,
+          "errorPath": "O golpe de Clístenes foi de engenharia social: tribos novas que misturavam cidade, costa e interior — impossível para um clã dominar uma tribo inteira. É por isso que 508 a.C. é o marco."
         }
       ]
     },

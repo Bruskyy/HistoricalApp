@@ -103,6 +103,23 @@ function validateNode(dir: string): void {
     }
     if (NON_OBJECTIVE_CLASSES.has(claim.epistemicClass) && !claim.debate?.positions?.length)
       fail(nodeId, `claim ${claim.id}: interpretação/debate sem as posições do debate ("quem defende / quem discorda / por quê")`);
+
+    // Variantes de revisão (GDD §6.4: revisão nunca repete a pergunta da lição)
+    const variants = (claim as Claim & { reviewVariants?: Interaction[] }).reviewVariants;
+    if (!NON_OBJECTIVE_CLASSES.has(claim.epistemicClass)) {
+      if (!variants?.length)
+        fail(nodeId, `claim ${claim.id}: sem reviewVariants — afirmação objetiva precisa de ≥1 pergunta de revisão em formato novo (GDD §6.4)`);
+    } else if (variants?.some((v) => v.objective)) {
+      fail(nodeId, `claim ${claim.id}: variante de revisão objetiva em interpretação/debate — proibido (EDITORIAL_POLICY §3)`);
+    }
+    for (const v of variants ?? []) {
+      if (!INTERACTION_TYPES.includes(v.type as never))
+        fail(nodeId, `claim ${claim.id}: variante ${v.id} com tipo inválido "${v.type}"`);
+      if (v.objective && v.correct === undefined)
+        fail(nodeId, `claim ${claim.id}: variante objetiva ${v.id} sem gabarito`);
+      if (!v.errorPath?.trim())
+        fail(nodeId, `claim ${claim.id}: variante ${v.id} sem caminho do erro`);
+    }
   }
 
   // --- Lições ---

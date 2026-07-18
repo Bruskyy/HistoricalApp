@@ -5,8 +5,12 @@
   "place": "Roma",
   "name": "A República Romana",
   "sensitive": false,
-  "journeys": ["nascimento-da-democracia"],
-  "positionInJourney": { "nascimento-da-democracia": 2 },
+  "journeys": [
+    "nascimento-da-democracia"
+  ],
+  "positionInJourney": {
+    "nascimento-da-democracia": 2
+  },
   "claims": [
     {
       "id": "recusa-sorteio",
@@ -17,6 +21,21 @@
         {
           "type": "academic_book",
           "ref": "Lintott, A. The Constitution of the Roman Republic. Oxford University Press, 1999."
+        }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "application",
+          "objective": true,
+          "prompt": "Um jovem romano ambicioso quer chegar a cônsul. O caminho dele é…",
+          "options": [
+            "Subir o cursus honorum: ser eleito cargo a cargo, provando serviço em cada degrau",
+            "Esperar seu nome ser sorteado entre os cidadãos",
+            "Comprar um assento vitalício no Senado"
+          ],
+          "correct": 0,
+          "errorPath": "Roma recusou o sorteio ateniense: magistraturas eram conquistadas por eleição, numa escada obrigatória de experiência. Antes de mandar, era preciso ter servido."
         }
       ]
     },
@@ -29,6 +48,21 @@
         {
           "type": "academic_book",
           "ref": "Lintott, A. The Constitution of the Roman Republic. Oxford University Press, 1999."
+        }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "counterfactual",
+          "objective": true,
+          "prompt": "Um cônsul romano decide governar sozinho e atropelar o colega. O sistema previa que…",
+          "options": [
+            "O colega podia simplesmente vetar seus atos — e em um ano os dois saíam de qualquer jeito",
+            "O Senado o coroaria rei para resolver o impasse",
+            "As assembleias eram dissolvidas até ele se acalmar"
+          ],
+          "correct": 0,
+          "errorPath": "O desenho era à prova de ambição: dois cônsules com veto mútuo e mandato de um ano. Ninguém segurava o poder por tempo suficiente para virar o rei que Roma jurou nunca mais ter."
         }
       ]
     },
@@ -45,6 +79,21 @@
         {
           "type": "academic_book",
           "ref": "Lintott, A. The Constitution of the Roman Republic. Oxford University Press, 1999. (cap. sobre Políbio e a recepção moderna)"
+        }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "connection",
+          "objective": true,
+          "prompt": "Quando a Constituição de 1988 permite que o Congresso barre atos do Executivo, ela ecoa diretamente…",
+          "options": [
+            "A tese do governo misto: poder só é contido por outro poder (Políbio, relido por Montesquieu)",
+            "O sorteio ateniense de magistrados",
+            "O caráter vitalício do Senado romano"
+          ],
+          "correct": 0,
+          "errorPath": "O freio entre poderes vem da leitura que o Iluminismo fez de Roma: Políbio descreveu a máquina de equilíbrios, Montesquieu a transformou em doutrina, e 1988 a herdou."
         }
       ]
     },
@@ -79,12 +128,27 @@
     }
   ],
   "connections": [
-    { "to": "iluminismo", "type": "influence" },
-    { "to": "constituicao-brasileira-1988", "type": "echo" },
-    { "to": "democracia-ateniense", "type": "contrast" }
+    {
+      "to": "iluminismo",
+      "type": "influence"
+    },
+    {
+      "to": "constituicao-brasileira-1988",
+      "type": "echo"
+    },
+    {
+      "to": "democracia-ateniense",
+      "type": "contrast"
+    }
   ],
   "lessons": [
-    { "id": "nao-obrigado-atenas", "file": "lesson-1.md" },
-    { "id": "maquina-de-equilibrios", "file": "lesson-2.md" }
+    {
+      "id": "nao-obrigado-atenas",
+      "file": "lesson-1.md"
+    },
+    {
+      "id": "maquina-de-equilibrios",
+      "file": "lesson-2.md"
+    }
   ]
 }
