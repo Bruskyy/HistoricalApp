@@ -189,6 +189,11 @@
   .jcard .stat b { font-size: 18px; font-variant-numeric: tabular-nums; color: var(--gold); }
   .jcard .stat span { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
 
+  .shift { gap: 8px; }
+  .shift-row.before p { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--annotate) 55%, transparent); text-decoration-thickness: 1px; }
+  .shift-arrow { text-align: center; color: var(--gold); font-size: 18px; }
+  .shift-row.after { border-left: 3px solid var(--gold); padding-left: 12px; }
+
   .progress-track { height: 5px; background: var(--line); border-radius: 999px; overflow: hidden; margin: 0 18px; }
   .progress-fill { height: 100%; background: var(--gold); border-radius: 999px; transition: width .5s ease; }
   footer.note { text-align: center; font-size: 11px; color: var(--ink-faint); padding: 12px; }
@@ -503,10 +508,38 @@ function celebrateNode(node) {
           `<div class="cx" style="animation-delay:${2.1 + i * 0.3}s"><span class="tick">✔</span> ${prettify(c.to)}</div>`).join('')}
       </div>
       <div class="fade-in" style="animation-delay:3.1s"><span class="xp-chip">+${S.nodeXp} XP neste salão</span></div>
-      <button class="cta fade-in" style="animation-delay:3.5s" id="go">${isLast ? 'ver a jornada' : 'voltar ao Corredor'}</button>
+      <button class="cta fade-in" style="animation-delay:3.5s" id="go">${isLast ? 'a pergunta final' : 'voltar ao Corredor'}</button>
     </div>`);
   S.nodeXp = 0;
-  $('go').addEventListener('click', () => (isLast ? celebrateJourney() : renderCorridor()));
+  $('go').addEventListener('click', () => (isLast ? renderSynthesis() : renderCorridor()));
+}
+
+/* ---------- momento de síntese (regra de prontidão da jornada) ----------
+   A jornada não termina em celebração: termina em compreensão.
+   Pergunta que atravessa os nós → reenquadramento → só então a festa. */
+function renderSynthesis() {
+  const syn = JOURNEY.synthesis;
+  if (!syn) { celebrateJourney(); return; }
+  setProgress(null);
+  stepScreen(`
+    <p class="eyebrow">síntese · a pergunta que atravessa a jornada</p>
+    <div class="card" id="ic"></div>`);
+  renderInteraction(syn.question, { claims: [] }, $('ic'), renderReframe);
+}
+
+function renderReframe() {
+  const syn = JOURNEY.synthesis;
+  stepScreen(`
+    <p class="eyebrow">síntese · o que mudou no seu olhar</p>
+    ${syn.reframe.map((p, i) =>
+      `<div class="card fade-in" style="animation-delay:${i * 0.5}s"><p class="serif">${p}</p></div>`).join('')}
+    <div class="card shift fade-in" style="animation-delay:${syn.reframe.length * 0.5 + 0.3}s">
+      <div class="shift-row before"><span class="eyebrow">como você chegou</span><p>${syn.shift.before}</p></div>
+      <div class="shift-arrow">↓</div>
+      <div class="shift-row after"><span class="eyebrow">como você sai</span><p class="serif"><b>${syn.shift.after}</b></p></div>
+    </div>
+    <button class="cta gold fade-in" style="animation-delay:${syn.reframe.length * 0.5 + 0.9}s" id="go">agora sim — ver a jornada</button>`);
+  $('go').addEventListener('click', celebrateJourney);
 }
 
 function celebrateJourney() {

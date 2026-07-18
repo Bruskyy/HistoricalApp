@@ -44,6 +44,18 @@ Toda jornada passa por este funil, nesta ordem:
 7. **Revisão especializada.** Nenhuma jornada publica sem revisão por pessoa com formação na área (resposta direta à fraqueza fatal do Paladin). O revisor valida: precisão factual, classificação de consenso, e se as simplificações são omissões legítimas ou distorções (seção 4).
 8. **Teste de calibração.** Rodar com usuários reais antes do lançamento: taxa de acerto por interação entre 60-85% (abaixo: lição não ensinou ou pergunta mal escrita; acima: pergunta trivial demais para gerar aprendizado).
 
+### 2.1 O momento de síntese (regra de prontidão — diretriz do fundador)
+
+> **Toda jornada termina com um momento de síntese. Se a conclusão não provocar o "agora tudo faz sentido", a jornada não está pronta — independentemente das métricas de engajamento.**
+
+O usuário não deve apenas concluir uma sequência de lições; deve perceber que **enxerga um pedaço da História de forma diferente**. Estrutura obrigatória do momento (campo `synthesis` da jornada, exigido pelo validador — jornada sem síntese não publica):
+
+1. **Pergunta final** que só pode ser respondida cruzando os nós da jornada (tipo conexão — a primeira pergunta "nível Mestre" que o usuário encontra). É o clique ativo: ele *faz* a síntese antes de lê-la.
+2. **Reenquadramento**: 1-3 parágrafos que devolvem a pergunta central respondida e reorganizam o que foi visto numa ideia única e memorável — idealmente ancorada num gesto da vida do usuário ("da próxima vez que você votar…").
+3. **Mudança de olhar explícita**: "como você chegou" vs. "como você sai" — a crença inicial riscada, a nova compreensão em destaque.
+
+Só depois da síntese vem a celebração (card, estatísticas, tease da próxima jornada). Celebrar antes de compreender inverte a recompensa: a festa é pelo entendimento, não pelo término.
+
 ## 3. Anatomia de uma lição de ~3 minutos
 
 Estrutura padrão (variável em conteúdo, fixa em ritmo):
@@ -174,6 +186,7 @@ Antes de qualquer nó ir ao ar:
 - [ ] Conexões mapeadas (o que este nó desbloqueia de compreensão)
 - [ ] Tom/celebração calibrados ao conteúdo (seção 8)
 - [ ] Calibração testada: acerto entre 60-85% por interação
+- [ ] (Para jornadas) Momento de síntese completo: pergunta de conexão + reenquadramento + mudança de olhar (seção 2.1) — **sem síntese, a jornada não publica**
 
 ---
 

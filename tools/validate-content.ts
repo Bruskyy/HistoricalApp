@@ -170,23 +170,66 @@ function validateNode(dir: string): void {
     fail(nodeId, `nó usa só ${typesInNode.size} tipo(s) de interação — LDD §7 pede ≥3`);
 }
 
+/**
+ * Jornadas: regra de prontidão do fundador — toda jornada termina com um
+ * momento de síntese ("agora tudo faz sentido"). Sem síntese, a jornada
+ * NÃO está pronta, independentemente de métricas (LDD §2.1).
+ */
+function validateJourney(file: string, nodeIds: Set<string>): void {
+  const j = JSON.parse(readFileSync(file, 'utf-8'));
+  const id = j.id ?? file;
+
+  for (const field of ['id', 'title', 'centralQuestion', 'nodeOrder', 'comingNext']) {
+    if (j[field] === undefined) fail(id, `jornada: campo obrigatório ausente: ${field}`);
+  }
+  for (const n of j.nodeOrder ?? []) {
+    if (!nodeIds.has(n)) fail(id, `jornada referencia nó inexistente: ${n}`);
+  }
+
+  const s = j.synthesis;
+  if (!s) {
+    fail(id, 'jornada SEM momento de síntese — não está pronta para publicar (LDD §2.1)');
+    return;
+  }
+  const q = s.question;
+  if (!q || q.objective !== true || q.correct === undefined || !q.errorPath?.trim())
+    fail(id, 'síntese: pergunta final inválida (precisa ser objetiva, com gabarito e caminho do erro)');
+  if (q && !INTERACTION_TYPES.includes(q.type as never))
+    fail(id, `síntese: tipo de pergunta inválido "${q?.type}"`);
+  if (q && (q.options?.length ?? 0) < 2)
+    fail(id, 'síntese: pergunta final precisa de ≥2 opções');
+  if (!Array.isArray(s.reframe) || s.reframe.length === 0)
+    fail(id, 'síntese: reenquadramento (reframe) ausente — o usuário precisa sair enxergando diferente');
+  if (!s.shift?.before?.trim() || !s.shift?.after?.trim())
+    fail(id, 'síntese: faltam "como você chegou / como você sai" (shift.before/after)');
+}
+
 // --- main ---
 const root = process.argv[2] ?? 'content';
 const nodeDirs: string[] = [];
+const journeyFiles: string[] = [];
 
 function walk(dir: string): void {
   for (const entry of readdirSync(dir)) {
     const full = join(dir, entry);
-    if (!statSync(full).isDirectory()) continue;
-    if (existsSync(join(full, 'node.json'))) nodeDirs.push(full);
-    else walk(full);
+    if (statSync(full).isDirectory()) {
+      if (existsSync(join(full, 'node.json'))) nodeDirs.push(full);
+      else walk(full);
+    } else if (full.includes('/journeys/') && full.endsWith('.json')) {
+      journeyFiles.push(full);
+    }
   }
 }
 
 walk(root);
 
-console.log(`Validando ${nodeDirs.length} nó(s) em ${root}/ ...`);
+const allNodeIds = new Set(
+  nodeDirs.map((d) => JSON.parse(readFileSync(join(d, 'node.json'), 'utf-8')).id as string),
+);
+
+console.log(`Validando ${nodeDirs.length} nó(s) e ${journeyFiles.length} jornada(s) em ${root}/ ...`);
 for (const dir of nodeDirs) validateNode(dir);
+for (const f of journeyFiles) validateJourney(f, allNodeIds);
 
 if (failures > 0) {
   console.error(`\n${failures} problema(s). Publicação bloqueada.`);

@@ -3,5 +3,28 @@
   "title": "O Nascimento da Democracia",
   "centralQuestion": "De onde veio a ideia de que o povo pode governar?",
   "nodeOrder": ["democracia-ateniense", "republica-romana"],
-  "comingNext": "Iluminismo — quando a ideia renasce, mil anos depois"
+  "comingNext": "Iluminismo — quando a ideia renasce, mil anos depois",
+  "synthesis": {
+    "question": {
+      "id": "sintese-democracia",
+      "type": "connection",
+      "objective": true,
+      "prompt": "Última pergunta — e ela atravessa a jornada inteira. O sistema em que você vive (eleições, mandatos, três poderes — e o nome \"democracia\") é…",
+      "options": [
+        "Um híbrido de 2.500 anos: de Atenas, a ideia de que o poder nasce do povo; de Roma, a máquina de eleições, mandatos e poderes que se freiam",
+        "A democracia ateniense, modernizada com tecnologia",
+        "Uma invenção do século XX, sem relação real com a Antiguidade"
+      ],
+      "correct": 0,
+      "errorPath": "Repare no que você atravessou: o nome e a justificativa (o povo como fonte do poder) vêm de Atenas — mas Atenas sorteava, não elegia. A máquina que usamos (eleição, mandato com prazo, poderes se vigiando) é a resposta de Roma, relida pelo Iluminismo. Nosso sistema não copia nenhuma das duas cidades: ele é a conversa entre elas."
+    },
+    "reframe": [
+      "Você começou com uma pergunta: de onde veio a ideia de que o povo pode governar? A resposta que você atravessou é mais estranha — e mais bonita — do que parece: a democracia não foi inventada uma vez. Ela foi proposta por Atenas (com sorteio e exclusões), recusada e remontada por Roma (com eleições e freios), e refundida pelo Iluminismo na fórmula que a Constituição de 1988 herda.",
+      "Da próxima vez que você votar, repare: o gesto é romano, a justificativa é ateniense — e a discussão sobre se isso basta continua aberta, 2.500 anos depois. A partir de hoje, você está dentro dela."
+    ],
+    "shift": {
+      "before": "Democracia: um sistema que a Grécia inventou",
+      "after": "Democracia: uma discussão de 2.500 anos sobre quem merece o poder — ainda em aberto, e agora com você dentro"
+    }
+  }
 }
