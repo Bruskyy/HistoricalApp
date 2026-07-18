@@ -15,8 +15,8 @@ Toda decisão de produto, design e arquitetura é registrada em `docs/` antes da
 - [`docs/LEARNING_DESIGN.md`](docs/LEARNING_DESIGN.md) — Learning Design Document (LDD): modelo de conteúdo, pipeline editorial de jornadas, anatomia de lição, camadas de profundidade, definição de "aprendido", taxonomia de perguntas de compreensão, diretrizes de sensibilidade, papéis editoriais/produção/dificuldade. Substitui o planejado `PEDAGOGY.md`. ✅ concluído.
 - [`docs/GAME_DESIGN.md`](docs/GAME_DESIGN.md) — Game Design Document (v2): Core Gameplay Loop (3 loops aninhados), emoção dominante (descoberta) + definição de diversão, núcleo irredutível de 4 sistemas, missões com agência, timeline, XP como registro sob teste, títulos como hipótese, agendador SRS + loop de dificuldade (Descoberta→Aplicação→Transferência→Domínio), companheiro, streak compassivo, feedback/celebração, economia sem moeda, anti-mecânicas e painel de calibração. ✅ concluído.
 - [`docs/PRD.md`](docs/PRD.md) — Product Requirements Document: objetivos do MVP com metas de piloto, escopo dentro/fora, 13 blocos de requisitos funcionais, requisitos não funcionais (offline-first, LGPD, acessibilidade), fluxos de usuário, 12 histórias com critérios de aceitação, métricas, plano de releases (R0→R2) e riscos de entrega. ✅ concluído.
-- `docs/ARCHITECTURE.md` — decisões técnicas *(a criar)*.
-- `docs/ROADMAP.md` — planejamento de versões *(a criar)*.
-- `docs/BACKLOG.md` — backlog priorizado *(a criar)*.
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — arquitetura técnica: monólito modular ASP.NET Core + Expo/TS, log de eventos como fonte da verdade, motor SRS compartilhado (TS+C#), pipeline de conteúdo Git+CDN, flags/experimentos, LGPD, custos e ADRs. ✅ concluído.
+- [`docs/ROADMAP.md`](docs/ROADMAP.md) — fases (R0→R2, V1→V3+), trilhos paralelos e regras de passagem entre fases. ✅ concluído.
+- [`docs/BACKLOG.md`](docs/BACKLOG.md) — backlog priorizado: épicos E0-E6 com dependências, loop vertical fino como primeira fatia jogável, e o caminho crítico (jornada-piloto de conteúdo). ✅ concluído.
 
 Ver `docs/research/` para as notas brutas de pesquisa por categoria, usadas como insumo para a análise consolidada.
