@@ -1,0 +1,30 @@
+{
+  "name": "Regressão de nó: ≥30% em risco → memória se apagando com XP em dobro",
+  "description": "LDD §6 + GDD §3.2/§6.2: nó com 4/5 afirmações Dominadas conta como Dominado (≥80%); 2/5 em risco (≥30%) o põe em regressão; as revisões devidas do nó saem com doubleXp.",
+  "steps": [
+    { "type": "understood", "claimId": "c1", "nodeId": "n1", "atDay": 0 },
+    { "type": "understood", "claimId": "c2", "nodeId": "n1", "atDay": 0 },
+    { "type": "understood", "claimId": "c3", "nodeId": "n1", "atDay": 0 },
+    { "type": "understood", "claimId": "c4", "nodeId": "n1", "atDay": 0 },
+    { "type": "understood", "claimId": "c5", "nodeId": "n1", "atDay": 0 },
+    { "type": "nodeUnderstood", "nodeId": "n1" },
+
+    { "type": "review", "claimId": "c1", "correct": true, "atDay": 3 },
+    { "type": "review", "claimId": "c2", "correct": true, "atDay": 3 },
+    { "type": "review", "claimId": "c3", "correct": true, "atDay": 3 },
+    { "type": "review", "claimId": "c4", "correct": true, "atDay": 3 },
+    { "type": "review", "claimId": "c1", "correct": true, "atDay": 17 },
+    { "type": "review", "claimId": "c2", "correct": true, "atDay": 17 },
+    { "type": "review", "claimId": "c3", "correct": true, "atDay": 17 },
+    { "type": "review", "claimId": "c4", "correct": true, "atDay": 17 },
+    { "type": "assertNode", "nodeId": "n1", "expect": { "state": "dominated", "regressing": false, "dominatedClaims": 4 } },
+
+    { "type": "review", "claimId": "c1", "correct": false, "atDay": 62 },
+    { "type": "review", "claimId": "c2", "correct": false, "atDay": 62 },
+    { "type": "review", "claimId": "c1", "correct": false, "atDay": 69 },
+    { "type": "review", "claimId": "c2", "correct": false, "atDay": 69 },
+    { "type": "assertNode", "nodeId": "n1", "expect": { "state": "dominated", "regressing": true, "atRiskClaims": 2 } },
+
+    { "type": "assertMission", "input": { "nextLessonId": "l9", "lastActivityAtDay": 69, "atDay": 70 }, "expect": { "rescue": false, "lessonSlot": "l9", "reviewCount": 3, "allDoubleXp": true } }
+  ]
+}

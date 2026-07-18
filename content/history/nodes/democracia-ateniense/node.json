@@ -1,0 +1,84 @@
+{
+  "id": "democracia-ateniense",
+  "domain": "history",
+  "era": "antiguidade",
+  "name": "A democracia ateniense",
+  "sensitive": false,
+  "journeys": ["nascimento-da-democracia"],
+  "claims": [
+    {
+      "id": "sorteio-magistrados",
+      "text": "Na democracia ateniense clássica, a maioria dos cargos públicos era preenchida por sorteio, não por eleição.",
+      "epistemicClass": "established_fact",
+      "consensusPct": 95,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Hansen, M. H. The Athenian Democracy in the Age of Demosthenes. Blackwell, 1991."
+        }
+      ]
+    },
+    {
+      "id": "exclusao-politica",
+      "text": "Mulheres, estrangeiros residentes (metecos) e pessoas escravizadas eram excluídos da cidadania ateniense.",
+      "epistemicClass": "established_fact",
+      "consensusPct": 98,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Hansen, M. H. The Athenian Democracy in the Age of Demosthenes. Blackwell, 1991."
+        }
+      ]
+    },
+    {
+      "id": "clistenes-marco",
+      "text": "As reformas de Clístenes (c. 508 a.C.) são o marco convencional do nascimento da democracia ateniense.",
+      "epistemicClass": "accepted_hypothesis",
+      "consensusPct": 85,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Ober, J. The Rise and Fall of Classical Greece. Princeton University Press, 2015."
+        }
+      ]
+    },
+    {
+      "id": "motivacao-reformas",
+      "text": "O peso relativo do conflito entre elites e da pressão popular na origem das reformas democráticas é objeto de interpretações concorrentes.",
+      "epistemicClass": "historiographical_interpretation",
+      "consensusPct": 55,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Ober, J. The Athenian Revolution. Princeton University Press, 1996."
+        },
+        {
+          "type": "peer_reviewed_article",
+          "ref": "Anderson, G. 'The Personality of the Greek State'. Journal of Hellenic Studies 129, 2009."
+        }
+      ],
+      "debate": {
+        "question": "A democracia nasceu de cima (disputa entre elites) ou de baixo (ação popular)?",
+        "positions": [
+          {
+            "view": "Revolução popular: a ação coletiva do demos foi decisiva (Ober).",
+            "acceptance": "ampla, mas não unânime"
+          },
+          {
+            "view": "Subproduto da competição entre facções aristocráticas, formalizado por Clístenes.",
+            "acceptance": "minoritária relevante"
+          }
+        ]
+      }
+    }
+  ],
+  "connections": [
+    { "to": "republica-romana", "type": "influence" },
+    { "to": "iluminismo", "type": "influence" },
+    { "to": "constituicao-brasileira-1988", "type": "echo" }
+  ],
+  "lessons": [
+    { "id": "sorteio-escandaloso", "file": "lesson-1.md" },
+    { "id": "quem-ficava-de-fora", "file": "lesson-2.md" }
+  ]
+}

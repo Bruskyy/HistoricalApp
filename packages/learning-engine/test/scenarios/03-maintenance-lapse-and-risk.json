@@ -1,0 +1,19 @@
+{
+  "name": "Lapso em manutenção: resgate em 7d; 2 erros seguidos marcam risco; acerto sana",
+  "description": "GDD §6.2: erro em manutenção reduz o intervalo (7d); dois erros consecutivos colocam a afirmação em risco; um acerto limpa o risco e retoma a manutenção.",
+  "steps": [
+    { "type": "understood", "claimId": "c1", "nodeId": "n1", "atDay": 0 },
+    { "type": "review", "claimId": "c1", "correct": true, "atDay": 3 },
+    { "type": "review", "claimId": "c1", "correct": true, "atDay": 17 },
+    { "type": "assertClaim", "claimId": "c1", "expect": { "stage": "dominated", "dueAtDay": 62 } },
+
+    { "type": "review", "claimId": "c1", "correct": false, "atDay": 62 },
+    { "type": "assertClaim", "claimId": "c1", "expect": { "stage": "dominated", "intervalIndex": 0, "dueAtDay": 69, "consecutiveFailures": 1, "atRisk": false } },
+
+    { "type": "review", "claimId": "c1", "correct": false, "atDay": 69 },
+    { "type": "assertClaim", "claimId": "c1", "expect": { "stage": "dominated", "dueAtDay": 76, "consecutiveFailures": 2, "atRisk": true } },
+
+    { "type": "review", "claimId": "c1", "correct": true, "atDay": 76 },
+    { "type": "assertClaim", "claimId": "c1", "expect": { "stage": "dominated", "intervalIndex": 1, "dueAtDay": 196, "consecutiveFailures": 0, "atRisk": false } }
+  ]
+}

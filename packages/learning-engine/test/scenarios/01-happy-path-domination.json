@@ -1,0 +1,23 @@
+{
+  "name": "Caminho feliz: compreendida → 3d → 14d → Dominada → manutenção",
+  "description": "GDD §6.2: o funil completo de uma afirmação que nunca erra.",
+  "steps": [
+    { "type": "understood", "claimId": "c1", "nodeId": "n1", "atDay": 0 },
+    { "type": "assertClaim", "claimId": "c1", "expect": { "stage": "review", "intervalIndex": 0, "dueAtDay": 3, "atRisk": false } },
+
+    { "type": "review", "claimId": "c1", "correct": true, "atDay": 3 },
+    { "type": "assertClaim", "claimId": "c1", "expect": { "stage": "review", "intervalIndex": 1, "dueAtDay": 17 } },
+
+    { "type": "review", "claimId": "c1", "correct": true, "atDay": 17 },
+    { "type": "assertClaim", "claimId": "c1", "expect": { "stage": "dominated", "intervalIndex": 0, "dueAtDay": 62, "atRisk": false } },
+
+    { "type": "review", "claimId": "c1", "correct": true, "atDay": 62 },
+    { "type": "assertClaim", "claimId": "c1", "expect": { "stage": "dominated", "intervalIndex": 1, "dueAtDay": 182 } },
+
+    { "type": "review", "claimId": "c1", "correct": true, "atDay": 182 },
+    { "type": "assertClaim", "claimId": "c1", "expect": { "stage": "dominated", "intervalIndex": 2, "dueAtDay": 482 } },
+
+    { "type": "review", "claimId": "c1", "correct": true, "atDay": 482 },
+    { "type": "assertClaim", "claimId": "c1", "expect": { "stage": "dominated", "intervalIndex": 2, "dueAtDay": 782 } }
+  ]
+}

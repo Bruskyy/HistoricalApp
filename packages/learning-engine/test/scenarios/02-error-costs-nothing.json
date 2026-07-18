@@ -1,0 +1,16 @@
+{
+  "name": "Errar nunca custa progresso: reapresenta amanhã, sem regredir índice",
+  "description": "Princípio Fundamental (VISION §2) aplicado ao SRS: o erro no funil de revisão reapresenta no dia seguinte sem perder o estágio alcançado.",
+  "steps": [
+    { "type": "understood", "claimId": "c1", "nodeId": "n1", "atDay": 0 },
+
+    { "type": "review", "claimId": "c1", "correct": false, "atDay": 3 },
+    { "type": "assertClaim", "claimId": "c1", "expect": { "stage": "review", "intervalIndex": 0, "dueAtDay": 4, "consecutiveFailures": 1, "atRisk": false } },
+
+    { "type": "review", "claimId": "c1", "correct": true, "atDay": 4 },
+    { "type": "assertClaim", "claimId": "c1", "expect": { "stage": "review", "intervalIndex": 1, "dueAtDay": 18, "consecutiveFailures": 0 } },
+
+    { "type": "review", "claimId": "c1", "correct": true, "atDay": 18 },
+    { "type": "assertClaim", "claimId": "c1", "expect": { "stage": "dominated", "dueAtDay": 63 } }
+  ]
+}

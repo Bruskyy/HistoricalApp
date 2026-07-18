@@ -1,0 +1,16 @@
+{
+  "name": "@mneme/learning-engine",
+  "version": "0.1.0",
+  "description": "Especificação executável do motor de aprendizado: SRS por afirmação (GDD §6.2), estados de nó (LDD §6) e montagem da missão diária (GDD §3.1). Zero dependências de runtime — a porta C# valida contra a mesma suíte de cenários em test/scenarios (ADR-4).",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}

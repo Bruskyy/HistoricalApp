@@ -1,0 +1,30 @@
+{
+  "name": "Teto diário de 15 revisões; ausência longa vira resgate curto sem lição nova",
+  "description": "GDD §6.3: 20 afirmações devidas nunca chegam ao usuário de uma vez (teto 15, excedente invisível); após 35 dias de ausência a missão é de resgate (≤10 itens, sem lição nova — reencontro, não cobrança).",
+  "steps": [
+    { "type": "understood", "claimId": "c01", "nodeId": "n1", "atDay": 0 },
+    { "type": "understood", "claimId": "c02", "nodeId": "n1", "atDay": 0 },
+    { "type": "understood", "claimId": "c03", "nodeId": "n1", "atDay": 0 },
+    { "type": "understood", "claimId": "c04", "nodeId": "n1", "atDay": 0 },
+    { "type": "understood", "claimId": "c05", "nodeId": "n1", "atDay": 0 },
+    { "type": "understood", "claimId": "c06", "nodeId": "n2", "atDay": 0 },
+    { "type": "understood", "claimId": "c07", "nodeId": "n2", "atDay": 0 },
+    { "type": "understood", "claimId": "c08", "nodeId": "n2", "atDay": 0 },
+    { "type": "understood", "claimId": "c09", "nodeId": "n2", "atDay": 0 },
+    { "type": "understood", "claimId": "c10", "nodeId": "n2", "atDay": 0 },
+    { "type": "understood", "claimId": "c11", "nodeId": "n3", "atDay": 0 },
+    { "type": "understood", "claimId": "c12", "nodeId": "n3", "atDay": 0 },
+    { "type": "understood", "claimId": "c13", "nodeId": "n3", "atDay": 0 },
+    { "type": "understood", "claimId": "c14", "nodeId": "n3", "atDay": 0 },
+    { "type": "understood", "claimId": "c15", "nodeId": "n3", "atDay": 0 },
+    { "type": "understood", "claimId": "c16", "nodeId": "n4", "atDay": 0 },
+    { "type": "understood", "claimId": "c17", "nodeId": "n4", "atDay": 0 },
+    { "type": "understood", "claimId": "c18", "nodeId": "n4", "atDay": 0 },
+    { "type": "understood", "claimId": "c19", "nodeId": "n4", "atDay": 0 },
+    { "type": "understood", "claimId": "c20", "nodeId": "n4", "atDay": 0 },
+
+    { "type": "assertMission", "input": { "nextLessonId": "l1", "lastActivityAtDay": 4, "atDay": 5 }, "expect": { "rescue": false, "lessonSlot": "l1", "reviewCount": 15 } },
+
+    { "type": "assertMission", "input": { "nextLessonId": "l1", "lastActivityAtDay": 5, "atDay": 40 }, "expect": { "rescue": true, "lessonSlot": null, "reviewCount": 10 } }
+  ]
+}

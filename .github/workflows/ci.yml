@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+jobs:
+  engine-and-content:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Suíte de cenários do motor (ADR-4)
+        run: npm test
+      - name: Validação de conteúdo (LDD §10 / EDITORIAL_POLICY)
+        run: npm run validate:content
