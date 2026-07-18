@@ -221,6 +221,14 @@
   .flame.waver { animation: flicker .55s infinite ease-in-out; }
   .mission-card.rescue { border-color: var(--flame); }
   .card.eco { border-left: 3px solid var(--flame); }
+  .nav-back {
+    background: none; border: 1.5px solid var(--line); border-radius: 10px;
+    color: var(--ink-soft); font-size: 16px; line-height: 1; padding: 6px 11px;
+    cursor: pointer; font-family: inherit;
+  }
+  .nav-back:hover { border-color: var(--era); color: var(--era); }
+  .pips { font-size: 11px; letter-spacing: 2px; margin-top: 3px; }
+  .milestone-pips { font-size: 26px; letter-spacing: 6px; }
   .node-card.pulse { animation: glowPulse 2.2s ease-in-out infinite; border-color: var(--era); }
   @keyframes glowPulse {
     0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--era) 34%, transparent); }
@@ -243,7 +251,10 @@
 
 <div class="phone">
   <header class="bar">
-    <div class="brand">Mneme<small>protótipo · jornada completa</small></div>
+    <div style="display:flex; align-items:center; gap:10px">
+      <button class="nav-back" id="backBtn" hidden aria-label="voltar ao Corredor">←</button>
+      <div class="brand">Mneme<small id="navChip">protótipo</small></div>
+    </div>
     <div class="xp-chip" id="xpChip" hidden>0 XP</div>
   </header>
   <div class="progress-track" id="ptrack" hidden><div class="progress-fill" id="pfill" style="width:0%"></div></div>
@@ -298,6 +309,10 @@ const now = () => Date.now() + S.timeShift;
 const $ = (id) => document.getElementById(id);
 const screen = () => $('screen');
 
+function nav(back, chip) {
+  $('backBtn').hidden = !back;
+  $('navChip').textContent = chip ?? 'protótipo';
+}
 function setProgress(pct) {
   $('ptrack').hidden = pct === null;
   if (pct !== null) $('pfill').style.width = pct + '%';
@@ -391,6 +406,7 @@ function nodeUnlockedInJourney(node) {
 }
 
 function renderCorridor() {
+  nav(false, null);
   setProgress(null);
   closeTermBox();
   const due = dueReviews();
@@ -444,6 +460,7 @@ function renderCorridor() {
         <div class="node-card ${lit ? 'lit' : ''}" data-node="${node.id}" role="button" tabindex="0" aria-label="${node.name}">
           <div>
             <div class="nm">${node.name}</div>
+            ${lit ? '' : `<div class="pips">${'🔥'.repeat(doneLessons)}${'🕯️'.repeat(node.lessons.length - doneLessons)}</div>`}
             <div class="st"${nodeDue ? ' style="color:var(--flame)"' : ''}>${status}</div>
           </div>
           <div class="flame ${lit ? (nodeDue ? 'waver' : 'on') : ''}" style="font-size:22px">${lit ? '🔥' : '🕯️'}</div>
@@ -515,6 +532,7 @@ function startReviewMission(due) {
     const claim = node.claims.find((c) => c.id === item.claimId);
     const variant = claim.reviewVariants[0]; // formato ≠ da lição (GDD §6.4)
     setProgress(Math.round((ix / (due.length + 1)) * 100));
+    nav(true, `resgate · ${ix}/${due.length}`);
     stepScreen(`<p class="eyebrow">${node.place} · memória se apagando · ${ix} de ${due.length}</p><div class="card" id="ic"></div>`);
     renderInteraction(variant, node, $('ic'), () => {
       const r = S.reviews[item.claimId];
@@ -528,6 +546,7 @@ function startReviewMission(due) {
 }
 
 function finishReviewMission() {
+  nav(false, null);
   setProgress(null);
   stepScreen(`
     <div class="celebrate">
@@ -566,17 +585,26 @@ function startNode(nodeId) {
 
 function startLesson(node, lessonIx) {
   const lesson = node.lessons[lessonIx];
+  const j = journeyOfNode(node.id);
+  const chip = `salão ${j.nodeOrder.indexOf(node.id) + 1}/${j.nodeOrder.length} · lição ${lessonIx + 1}/${node.lessons.length}`;
+  // Retorno perfeito: o Arquivo lembra exatamente onde você está
+  S.resume = { nodeId: node.id, lessonIx };
+  persist();
+
   const eyebrow = `${node.place} · lição ${lessonIx + 1} de ${node.lessons.length}`;
 
-  // Se a 1ª interação é decisão situada, ela vive junto do gancho —
-  // o usuário age ANTES de qualquer explicação (LDD §3).
   const first = lesson.interactions[0];
   const hookDecision = first && first.type === 'situated_decision' ? first : null;
-  const restInteractions = hookDecision ? lesson.interactions.slice(1) : lesson.interactions;
+  const rest = hookDecision ? lesson.interactions.slice(1) : lesson.interactions;
+  // Ritmo (feedback do playtest): nunca três telas de leitura seguidas —
+  // a primeira pergunta entra ANTES dos ecos, quebrando o bloco de leitura.
+  const firstInter = rest.length ? [rest[0]] : [];
+  const remaining = rest.slice(1);
 
   const list = [];
+  const withNav = (fn) => () => { nav(true, chip); fn(); };
 
-  list.push(() => {
+  list.push(withNav(() => {
     stepScreen(`
       <p class="eyebrow">${eyebrow}</p>
       <h1>${lesson.title}</h1>
@@ -587,20 +615,27 @@ function startLesson(node, lessonIx) {
       ${hookDecision ? '' : '<button class="cta" id="go">continuar</button>'}`);
     if (hookDecision) renderSituated(hookDecision, $('hd'), nextStep);
     else $('go').addEventListener('click', nextStep);
-  });
+  }));
 
   for (const paragraph of lesson.narrative) {
-    list.push(() => {
+    list.push(withNav(() => {
       stepScreen(`
         <p class="eyebrow">${eyebrow}</p>
         <div class="card"><p class="serif">${gloss(paragraph)}</p></div>
         <button class="cta" id="go">continuar</button>`);
       $('go').addEventListener('click', nextStep);
-    });
+    }));
+  }
+
+  for (const inter of firstInter) {
+    list.push(withNav(() => {
+      stepScreen(`<p class="eyebrow">${node.place} · ${interactionEyebrow(inter)}</p><div class="card" id="ic"></div>`);
+      renderInteraction(inter, node, $('ic'), nextStep);
+    }));
   }
 
   if (lesson.echoes && lesson.echoes.length) {
-    list.push(() => {
+    list.push(withNav(() => {
       stepScreen(`
         <p class="eyebrow">${node.place} · ecos do Corredor</p>
         ${lesson.echoes.map((e, i) => {
@@ -612,34 +647,72 @@ function startLesson(node, lessonIx) {
         }).join('')}
         <button class="cta" id="go">continuar</button>`);
       $('go').addEventListener('click', nextStep);
-    });
+    }));
   }
 
-  for (const inter of restInteractions) {
-    list.push(() => {
+  for (const inter of remaining) {
+    list.push(withNav(() => {
       stepScreen(`<p class="eyebrow">${node.place} · ${interactionEyebrow(inter)}</p><div class="card" id="ic"></div>`);
       renderInteraction(inter, node, $('ic'), nextStep);
-    });
+    }));
   }
 
-  list.push(() => {
-    const lessonsDone = lessonIx + 1;
-    S.lessonsDone[node.id] = lessonsDone;
-    persist();
-    const last = lessonsDone >= node.lessons.length;
+  list.push(withNav(() => {
     stepScreen(`
-      <p class="eyebrow">${node.place} · lição ${lessonsDone} concluída</p>
+      <p class="eyebrow">${node.place} · lição ${lessonIx + 1} concluída</p>
       <h2>Agora você entende melhor:</h2>
       <div class="card connections">
         ${lesson.connection.split('✔').map((x) => x.trim()).filter(Boolean)
           .map((x, i) => `<div class="cx" style="animation-delay:${0.1 + i * 0.35}s"><span class="tick">✔</span> ${x}</div>`).join('')}
       </div>
-      <button class="cta ${last ? 'gold' : ''}" id="go">${last ? 'concluir o salão' : 'próxima lição'}</button>`);
-    $('go').addEventListener('click', () =>
-      last ? celebrateNode(node) : startLesson(node, lessonsDone));
-  });
+      <button class="cta gold" id="go">acender esta chama</button>`);
+    $('go').addEventListener('click', () => renderLessonComplete(node, lessonIx));
+  }));
 
   playSteps(list);
+}
+
+/* Marco por lição (feedback do playtest): a cada poucos minutos, um lugar
+   alcançado — e a câmera SEMPRE volta ao Corredor entre lições. */
+function renderLessonComplete(node, lessonIx) {
+  const done = lessonIx + 1;
+  S.lessonsDone[node.id] = done;
+  const total = node.lessons.length;
+  if (done >= total) {
+    S.resume = null;
+    persist();
+    celebrateNode(node);
+    return;
+  }
+  S.resume = { nodeId: node.id, lessonIx: done };
+  persist();
+  nav(false, null);
+  setProgress(null);
+  stepScreen(`
+    <div class="celebrate">
+      <div class="milestone-pips fade-in">${'🔥'.repeat(done)}${'🕯️'.repeat(total - done)}</div>
+      <h2 class="fade-in" style="animation-delay:.3s">Chama ${done} de ${total} acesa<br>no salão de ${node.place}</h2>
+      <div class="fade-in" style="animation-delay:.9s; width:100%; text-align:left">${thoth('Marco registrado no pergaminho, Guardião. Respira — o Corredor guarda seu lugar.', true)}</div>
+      <button class="cta gold fade-in" style="animation-delay:1.4s" id="go">voltar ao Corredor</button>
+    </div>`);
+  $('go').addEventListener('click', renderCorridor);
+}
+
+/* Retorno perfeito: quem volta nunca precisa descobrir onde parou. */
+function renderWelcomeBack() {
+  const r = S.resume;
+  const node = nodeOf(r.nodeId);
+  const j = journeyOfNode(node.id);
+  const remainingSaloes = journeyNodes(j).filter((n) => !S.lit[n.id]).length;
+  nav(false, null);
+  setProgress(null);
+  stepScreen(`
+    <p class="eyebrow">bem-vindo de volta, Guardião</p>
+    ${thoth(`Guardei tudo exatamente onde você deixou: <b>${node.place}</b>, lição ${r.lessonIx + 1} de ${node.lessons.length}. ${remainingSaloes === 1 ? 'Falta só este salão para concluir a jornada.' : `Faltam ${remainingSaloes} salões nesta jornada.`}`)}
+    <button class="cta gold" id="go">▶ continuar de onde parei</button>
+    <button class="cta ghost" id="map">ver o Corredor</button>`);
+  $('go').addEventListener('click', () => startNode(node.id));
+  $('map').addEventListener('click', renderCorridor);
 }
 
 function interactionEyebrow(inter) {
@@ -720,6 +793,7 @@ function renderInteraction(inter, node, host, onDone, xpMult = 1) {
 
 /* ---------- celebrações (ordem GDD §9) ---------- */
 function celebrateNode(node) {
+  nav(false, null);
   S.lit[node.id] = true;
   // Nó compreendido: afirmações objetivas entram no agendador (revisão em ~3 dias)
   for (const c of node.claims) {
@@ -759,6 +833,7 @@ function celebrateNode(node) {
 function renderSynthesis(j) {
   const syn = j.synthesis;
   if (!syn) { celebrateJourney(j); return; }
+  nav(false, 'síntese');
   setProgress(null);
   stepScreen(`
     <p class="eyebrow">síntese · a pergunta que atravessa a jornada</p>
@@ -825,7 +900,7 @@ function celebrateJourney(j) {
   if (discover && nextJ) discover.addEventListener('click', () => {
     S.events.push({ t: Date.now(), e: 'next_journey_via_provocation', j: nextJ.id });
     persist();
-    startNode(journeyNodes(nextJ)[0].id);
+    renderCorridor(); // a nova ala se revela no Corredor — o cérebro vê o mapa crescer
   });
   const go = $('go');
   if (go) go.addEventListener('click', () => {
@@ -850,5 +925,7 @@ document.getElementById('skipDays').addEventListener('click', (e) => {
   persist();
   renderCorridor();
 });
-renderCorridor();
+$('backBtn').addEventListener('click', renderCorridor);
+if (S.resume && !S.lit[S.resume.nodeId]) renderWelcomeBack();
+else renderCorridor();
 </script>
