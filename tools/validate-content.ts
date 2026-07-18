@@ -231,6 +231,20 @@ console.log(`Validando ${nodeDirs.length} nó(s) e ${journeyFiles.length} jornad
 for (const dir of nodeDirs) validateNode(dir);
 for (const f of journeyFiles) validateJourney(f, allNodeIds);
 
+// Glossários por domínio (termos sublinhados nas lições)
+for (const domain of readdirSync(root)) {
+  const g = join(root, domain, 'glossary.json');
+  if (!existsSync(g)) continue;
+  const entries = JSON.parse(readFileSync(g, 'utf-8'));
+  const seen = new Set<string>();
+  for (const e of entries) {
+    if (!e.id || !e.term?.trim() || !e.definition?.trim() || !e.match?.length)
+      fail(`glossario-${domain}`, `entrada inválida: ${JSON.stringify(e.id ?? e.term)}`);
+    if (seen.has(e.id)) fail(`glossario-${domain}`, `id duplicado: ${e.id}`);
+    seen.add(e.id);
+  }
+}
+
 if (failures > 0) {
   console.error(`\n${failures} problema(s). Publicação bloqueada.`);
   process.exit(1);

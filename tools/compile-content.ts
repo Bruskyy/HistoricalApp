@@ -79,7 +79,12 @@ function compileDomain(root: string): Record<string, unknown> {
     }
   }
 
-  return { compiledAt: new Date().toISOString().slice(0, 10), journeys, nodes };
+  const glossaryFile = join(root, 'glossary.json');
+  const glossary = existsSync(glossaryFile)
+    ? JSON.parse(readFileSync(glossaryFile, 'utf-8'))
+    : [];
+
+  return { compiledAt: new Date().toISOString().slice(0, 10), glossary, journeys, nodes };
 }
 
 const contentRoot = process.argv[2] ?? 'content';

@@ -189,6 +189,41 @@
   .jcard .stat b { font-size: 18px; font-variant-numeric: tabular-nums; color: var(--gold); }
   .jcard .stat span { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
 
+  .term {
+    text-decoration: underline dotted;
+    text-decoration-color: var(--gold);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+  .term-box {
+    position: absolute; z-index: 30; max-width: min(320px, calc(100% - 36px));
+    background: var(--paper-raised); border: 1.5px solid var(--gold);
+    border-radius: 12px; padding: 14px; box-shadow: var(--shadow);
+    animation: rise .25s ease;
+  }
+  .term-box .tt { font-family: Georgia, serif; font-weight: 600; font-size: 15px; margin-bottom: 6px; color: var(--ink); }
+  .term-box .td { font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
+
+  .verdict {
+    display: flex; align-items: center; gap: 8px;
+    font-weight: 600; font-size: 14px; padding: 10px 12px; border-radius: 10px;
+    animation: rise .3s ease;
+  }
+  .verdict.right { color: var(--era); background: color-mix(in srgb, var(--era) 12%, transparent); }
+  .verdict.miss { color: var(--annotate); background: color-mix(in srgb, var(--annotate) 10%, transparent); }
+  .opt.picked-right::before { content: '✓  '; color: var(--era); font-weight: 700; }
+  .opt.picked-annotate { animation: nudge .35s ease; }
+  @keyframes nudge { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 55%{transform:translateX(4px)} 80%{transform:translateX(-2px)} }
+
+  .mission-card { border: 1.5px solid var(--gold); }
+  .mission-card .mn { font-family: Georgia, serif; font-size: 17px; }
+  .node-card.pulse { animation: glowPulse 2.2s ease-in-out infinite; border-color: var(--era); }
+  @keyframes glowPulse {
+    0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--era) 34%, transparent); }
+    50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--era) 0%, transparent); }
+  }
+
   .shift { gap: 8px; }
   .shift-row.before p { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--annotate) 55%, transparent); text-decoration-thickness: 1px; }
   .shift-arrow { text-align: center; color: var(--gold); font-size: 18px; }
@@ -266,6 +301,61 @@ function thoth(text, bounce = false) {
 }
 const litCount = () => NODES.filter((n) => S.lit[n.id]).length;
 
+/* ---------- glossário (termos pontilhados + caixa flutuante) ---------- */
+const GLOSSARY = PACKAGE.glossary ?? [];
+const GLOSS_INDEX = new Map(GLOSSARY.map((g) => [g.id, g]));
+
+/** Marca a 1ª ocorrência de cada termo do glossário no bloco de texto
+ *  (fora de tags HTML), com sublinhado pontilhado clicável. */
+function gloss(html) {
+  const parts = String(html).split(/(<[^>]+>)/);
+  for (const entry of GLOSSARY) {
+    let done = false;
+    for (let i = 0; i < parts.length && !done; i++) {
+      if (parts[i].startsWith('<')) continue;
+      for (const m of entry.match) {
+        const re = new RegExp(`(^|[^\\p{L}])(${escapeRe(m)})(?=[^\\p{L}]|$)`, 'iu');
+        if (re.test(parts[i])) {
+          parts[i] = parts[i].replace(re,
+            (_, pre, word) => `${pre}<span class="term" data-term="${entry.id}" role="button" tabindex="0">${word}</span>`);
+          done = true;
+          break;
+        }
+      }
+    }
+  }
+  return parts.join('');
+}
+const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+function closeTermBox() {
+  document.querySelectorAll('.term-box').forEach((b) => b.remove());
+}
+document.addEventListener('click', (e) => {
+  const term = e.target.closest?.('.term');
+  if (!term) { closeTermBox(); return; }
+  e.stopPropagation();
+  closeTermBox();
+  const entry = GLOSS_INDEX.get(term.dataset.term);
+  if (!entry) return;
+  const phone = document.querySelector('.phone');
+  const box = document.createElement('div');
+  box.className = 'term-box';
+  box.innerHTML = `<div class="tt">${entry.term}</div><div class="td">${entry.definition}</div>`;
+  phone.appendChild(box);
+  const tr = term.getBoundingClientRect();
+  const pr = phone.getBoundingClientRect();
+  const below = tr.bottom - pr.top + 8;
+  box.style.left = Math.max(18, Math.min(tr.left - pr.left, pr.width - box.offsetWidth - 18)) + 'px';
+  box.style.top = (below + box.offsetHeight > pr.height - 20 ? tr.top - pr.top - box.offsetHeight - 8 : below) + 'px';
+});
+
+/* ---------- veredito de acerto/erro ---------- */
+const RIGHT_WORDS = ['Exato.', 'Bem visto.', 'Isso.', 'Você pegou a ideia.'];
+let rightIx = 0;
+const verdictRight = () => `<div class="verdict right">✓ ${RIGHT_WORDS[rightIx++ % RIGHT_WORDS.length]}</div>`;
+const verdictMiss = () => `<div class="verdict miss">✕ Ainda não…</div>`;
+
 /* ---------- Corredor ---------- */
 function renderCorridor() {
   setProgress(null);
@@ -306,8 +396,20 @@ function renderCorridor() {
   rows += eraRow('Iluminismo', 'sealed',
     `<div class="sealed-note">${allLit ? JOURNEY.comingNext : 'selada'}</div>`);
 
+  // Missão do dia: o caminho de menor esforço é sempre um único toque (GDD §2)
+  const target = NODES.find((n, i) => !S.lit[n.id] && (i === 0 || S.lit[NODES[i - 1].id]));
+  const missionCard = !allLit && target ? `
+    <div class="card mission-card">
+      <p class="eyebrow">missão de hoje</p>
+      <div class="mn">${target.name}</div>
+      <button class="cta gold" id="missionBtn">▶ ${
+        (S.lessonsDone[target.id] ?? 0) > 0 ? 'continuar de onde parei' : 'começar agora'
+      }</button>
+    </div>` : '';
+
   screen().innerHTML = `
     ${thoth(say, allLit)}
+    ${missionCard}
     <div class="card journey-head">
       <p class="eyebrow">jornada</p>
       <div class="q">${JOURNEY.centralQuestion}</div>
@@ -317,7 +419,11 @@ function renderCorridor() {
     ${allLit ? '<button class="cta ghost" id="againBtn">recomeçar o protótipo</button>' : ''}
   `;
 
+  const missionBtn = $('missionBtn');
+  if (missionBtn && target) missionBtn.addEventListener('click', () => startNode(target.id));
+
   screen().querySelectorAll('.node-card:not(.lit)').forEach((card) => {
+    if (target && card.dataset.node === target.id) card.classList.add('pulse');
     const go = () => startNode(card.dataset.node);
     card.addEventListener('click', go);
     card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') go(); });
@@ -369,7 +475,7 @@ function startLesson(node, lessonIx) {
       <p class="eyebrow">${eyebrow}</p>
       <h1>${lesson.title}</h1>
       <div class="card">
-        <p class="serif">${lesson.hook}</p>
+        <p class="serif">${gloss(lesson.hook)}</p>
         ${hookDecision ? `<div id="hd"></div>` : ''}
       </div>
       ${hookDecision ? '' : '<button class="cta" id="go">continuar</button>'}`);
@@ -381,7 +487,7 @@ function startLesson(node, lessonIx) {
     list.push(() => {
       stepScreen(`
         <p class="eyebrow">${eyebrow}</p>
-        <div class="card"><p class="serif">${paragraph}</p></div>
+        <div class="card"><p class="serif">${gloss(paragraph)}</p></div>
         <button class="cta" id="go">continuar</button>`);
       $('go').addEventListener('click', nextStep);
     });
@@ -427,7 +533,7 @@ function interactionEyebrow(inter) {
 
 function renderSituated(inter, host, onDone) {
   host.innerHTML = `
-    <p><b>${inter.prompt}</b></p>
+    <p><b>${gloss(inter.prompt)}</b></p>
     ${(inter.options ?? []).map((o, i) => `<button class="opt" data-i="${i}">${o}</button>`).join('')}
     <div id="sfb"></div>`;
   host.querySelectorAll('.opt').forEach((b) =>
@@ -435,7 +541,7 @@ function renderSituated(inter, host, onDone) {
       host.querySelectorAll('.opt').forEach((x) => (x.disabled = true));
       b.classList.add('picked-right');
       host.querySelector('#sfb').innerHTML = `
-        <div class="annotation">${inter.errorPath}</div>
+        <div class="annotation">${gloss(inter.errorPath)}</div>
         <button class="cta" id="sgo">continuar</button>`;
       host.querySelector('#sgo').addEventListener('click', onDone);
     }));
@@ -447,7 +553,7 @@ function renderInteraction(inter, node, host, onDone) {
   if (!inter.objective && claim && claim.debate) {
     host.innerHTML = `
       <span class="chip">Interpretação historiográfica</span>
-      <p class="serif">${claim.debate.question}</p>
+      <p class="serif">${gloss(claim.debate.question)}</p>
       <div class="consensus-badge">Nível de consenso <span class="pct">${claim.consensusPct}%</span></div>
       <button class="debate-btn" id="whyBtn">Por que existe debate sobre este assunto?</button>
       <div id="panel"></div>`;
@@ -455,7 +561,7 @@ function renderInteraction(inter, node, host, onDone) {
       host.querySelector('#panel').innerHTML = `
         <div class="debate-panel">
           ${claim.debate.positions.map((p) =>
-            `<div class="position">${p.view}<span class="acc">${p.acceptance}</span></div>`).join('')}
+            `<div class="position">${gloss(p.view)}<span class="acc">${p.acceptance}</span></div>`).join('')}
           <button class="cta" id="dgo">fascinante — seguir</button>
         </div>`;
       host.querySelector('#dgo').addEventListener('click', onDone);
@@ -467,7 +573,7 @@ function renderInteraction(inter, node, host, onDone) {
 
   let attempts = 0;
   host.innerHTML = `
-    <p><b>${inter.prompt}</b></p>
+    <p><b>${gloss(inter.prompt)}</b></p>
     ${(inter.options ?? []).map((o, i) => `<button class="opt" data-i="${i}">${o}</button>`).join('')}
     <div id="fb"></div>`;
   host.querySelectorAll('.opt').forEach((b) =>
@@ -477,13 +583,14 @@ function renderInteraction(inter, node, host, onDone) {
       if (i === inter.correct) {
         host.querySelectorAll('.opt').forEach((x) => (x.disabled = true));
         b.classList.add('picked-right');
+        fb.innerHTML = verdictRight();
         gainXp(attempts === 0 ? 10 : 5, fb); // GDD §5.1: recuperar vale, e vale menos
         fb.insertAdjacentHTML('beforeend', '<button class="cta" id="go">continuar</button>');
         host.querySelector('#go').addEventListener('click', onDone);
       } else {
         attempts++;
         b.classList.add('picked-annotate'); b.disabled = true;
-        fb.innerHTML = `<div class="annotation"><b>Ainda não — e aqui está o porquê:</b> ${inter.errorPath} Tente de novo.</div>`;
+        fb.innerHTML = `${verdictMiss()}<div class="annotation"><b>O porquê:</b> ${gloss(inter.errorPath)} Tente de novo.</div>`;
       }
     }));
 }
@@ -532,7 +639,7 @@ function renderReframe() {
   stepScreen(`
     <p class="eyebrow">síntese · o que mudou no seu olhar</p>
     ${syn.reframe.map((p, i) =>
-      `<div class="card fade-in" style="animation-delay:${i * 0.5}s"><p class="serif">${p}</p></div>`).join('')}
+      `<div class="card fade-in" style="animation-delay:${i * 0.5}s"><p class="serif">${gloss(p)}</p></div>`).join('')}
     <div class="card shift fade-in" style="animation-delay:${syn.reframe.length * 0.5 + 0.3}s">
       <div class="shift-row before"><span class="eyebrow">como você chegou</span><p>${syn.shift.before}</p></div>
       <div class="shift-arrow">↓</div>
