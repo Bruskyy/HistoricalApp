@@ -21,3 +21,13 @@ jobs:
         run: npm test
       - name: Validação de conteúdo (LDD §10 / EDITORIAL_POLICY)
         run: npm run validate:content
+
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Porta C# contra a suíte compartilhada (ADR-4)
+        run: dotnet test backend
