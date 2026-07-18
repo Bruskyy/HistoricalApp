@@ -1,15 +1,31 @@
 {
   "compiledAt": "2026-07-18",
+  "journeys": [
+    {
+      "id": "nascimento-da-democracia",
+      "title": "O Nascimento da Democracia",
+      "centralQuestion": "De onde veio a ideia de que o povo pode governar?",
+      "nodeOrder": [
+        "democracia-ateniense",
+        "republica-romana"
+      ],
+      "comingNext": "Iluminismo — quando a ideia renasce, mil anos depois"
+    }
+  ],
   "nodes": [
     {
       "id": "democracia-ateniense",
       "domain": "history",
       "era": "antiguidade",
+      "place": "Grécia",
       "name": "A democracia ateniense",
       "sensitive": false,
       "journeys": [
         "nascimento-da-democracia"
       ],
+      "positionInJourney": {
+        "nascimento-da-democracia": 1
+      },
       "claims": [
         {
           "id": "sorteio-magistrados",
@@ -180,6 +196,195 @@
             }
           ],
           "connection": "Agora você entende melhor: ✔ por que \"democracia\" antiga e moderna não são a mesma coisa ✔ os séculos de lutas por sufrágio que viriam ✔ por que a Constituição de 1988 diz \"todos\"."
+        }
+      ]
+    },
+    {
+      "id": "republica-romana",
+      "domain": "history",
+      "era": "antiguidade",
+      "place": "Roma",
+      "name": "A República Romana",
+      "sensitive": false,
+      "journeys": [
+        "nascimento-da-democracia"
+      ],
+      "positionInJourney": {
+        "nascimento-da-democracia": 2
+      },
+      "claims": [
+        {
+          "id": "recusa-sorteio",
+          "text": "As magistraturas principais da República Romana eram preenchidas por eleição em assembleias, não por sorteio, dentro de uma carreira hierárquica de cargos (cursus honorum).",
+          "epistemicClass": "established_fact",
+          "consensusPct": 95,
+          "sources": [
+            {
+              "type": "academic_book",
+              "ref": "Lintott, A. The Constitution of the Roman Republic. Oxford University Press, 1999."
+            }
+          ]
+        },
+        {
+          "id": "poder-fatiado",
+          "text": "O poder executivo republicano era deliberadamente limitado: dois cônsules, mandato de um ano, com poder de veto entre si.",
+          "epistemicClass": "established_fact",
+          "consensusPct": 96,
+          "sources": [
+            {
+              "type": "academic_book",
+              "ref": "Lintott, A. The Constitution of the Roman Republic. Oxford University Press, 1999."
+            }
+          ]
+        },
+        {
+          "id": "governo-misto",
+          "text": "A descrição de Políbio da constituição romana como 'governo misto' (cônsules, Senado, assembleias) influenciou a doutrina moderna da separação de poderes, via Montesquieu.",
+          "epistemicClass": "accepted_hypothesis",
+          "consensusPct": 85,
+          "sources": [
+            {
+              "type": "primary_source",
+              "ref": "Políbio. Histórias, Livro VI (séc. II a.C.)."
+            },
+            {
+              "type": "academic_book",
+              "ref": "Lintott, A. The Constitution of the Roman Republic. Oxford University Press, 1999. (cap. sobre Políbio e a recepção moderna)"
+            }
+          ]
+        },
+        {
+          "id": "quao-democratica",
+          "text": "O grau em que a República Romana era efetivamente democrática — e não uma oligarquia com fachada eleitoral — é objeto de debate historiográfico ativo.",
+          "epistemicClass": "historiographical_interpretation",
+          "consensusPct": 50,
+          "sources": [
+            {
+              "type": "academic_book",
+              "ref": "Millar, F. The Crowd in Rome in the Late Republic. University of Michigan Press, 1998."
+            },
+            {
+              "type": "academic_book",
+              "ref": "Mouritsen, H. Plebs and Politics in the Late Roman Republic. Cambridge University Press, 2001."
+            }
+          ],
+          "debate": {
+            "question": "A República era uma oligarquia disfarçada — ou uma democracia que não reconhecemos?",
+            "positions": [
+              {
+                "view": "Democracia real: as assembleias populares votavam leis e elegiam magistrados; a política se fazia na rua, diante da multidão (Millar).",
+                "acceptance": "minoritária influente"
+              },
+              {
+                "view": "Oligarquia de fato: riqueza, clientelas e o Senado controlavam os resultados; eleição não bastava para haver democracia (tradição de Gelzer e Syme; Mouritsen).",
+                "acceptance": "majoritária, com nuances"
+              }
+            ]
+          }
+        }
+      ],
+      "connections": [
+        {
+          "to": "iluminismo",
+          "type": "influence"
+        },
+        {
+          "to": "constituicao-brasileira-1988",
+          "type": "echo"
+        },
+        {
+          "to": "democracia-ateniense",
+          "type": "contrast"
+        }
+      ],
+      "lessons": [
+        {
+          "id": "nao-obrigado-atenas",
+          "title": "Não, obrigado, Atenas",
+          "hook": "Ano 509 a.C. Roma acaba de expulsar seu último rei — e jurou nunca mais ter outro. A cidade precisa decidir o que fazer com o poder que sobrou. O que você faria com ele?",
+          "narrative": [
+            "Roma escolheu algo que nenhum rei aprovaria: **fatiou o poder e colocou prazo de validade nele**. No lugar do rei, dois cônsules — eleitos, por um ano, cada um com poder de **vetar** o outro. Ninguém seguraria o poder por tempo suficiente para virar tirano.",
+            "E o sorteio ateniense, que tratava qualquer cidadão como capaz de governar? Roma conhecia a ideia — e recusou. Cargos públicos eram conquistados por **eleição**, subindo degrau por degrau uma escada obrigatória de carreira, o *cursus honorum*. Antes de mandar, era preciso ter servido.",
+            "Mas havia um detalhe que os romanos não gostavam de anunciar: quem de fato dava o tom era o **Senado** — um conselho de ex-magistrados, aristocrático, vitalício, que ninguém elegia diretamente."
+          ],
+          "interactions": [
+            {
+              "id": "i1",
+              "type": "situated_decision",
+              "claimId": "poder-fatiado",
+              "objective": false,
+              "prompt": "O rei caiu. O poder está nas suas mãos. O que você faz com ele?",
+              "options": [
+                "Entrego ao povo, com sorteio, como Atenas fará",
+                "Divido entre dois chefes eleitos, com mandato de um ano",
+                "Escolho um rei melhor, com conselheiros"
+              ],
+              "errorPath": "Não há resposta errada — mas repare no que Roma escolheu: dividir, encurtar e vigiar o poder. O medo de Roma não era só de reis; era de qualquer pessoa com poder demais."
+            },
+            {
+              "id": "i2",
+              "type": "causal",
+              "claimId": "recusa-sorteio",
+              "objective": true,
+              "prompt": "Por que Roma recusou o sorteio ateniense para seus cargos principais?",
+              "options": [
+                "Desconfiava do cidadão comum no comando: preferia eleição, hierarquia e experiência comprovada (cursus honorum)",
+                "Copiou o modelo espartano de reis duplos, que não usava sorteio",
+                "O sorteio exigia registros escritos que Roma ainda não tinha"
+              ],
+              "correct": 0,
+              "errorPath": "A comparação com Esparta é tentadora (dois cônsules, dois reis…), mas o motivo registrado é outro: para a elite romana, governar exigia mérito demonstrado em serviço — cada degrau do cursus honorum era um teste. O sorteio tratava todos como iguais; Roma achava isso perigoso."
+            },
+            {
+              "id": "i3",
+              "type": "source_interpretation",
+              "claimId": "quao-democratica",
+              "objective": false,
+              "prompt": "As assembleias romanas votavam leis e elegiam cônsules. Então… era uma democracia? Historiadores discordam — explore o debate.",
+              "errorPath": "Debate historiográfico real, sem resposta fechada: o valor está em entender por que eleger não é o mesmo que governar."
+            }
+          ],
+          "connection": "Agora você entende melhor: ✔ por que \"república\" e \"democracia\" não são sinônimos ✔ de onde vem a palavra veto ✔ por que mandatos têm prazo ✔ o que Atenas e Roma discordavam sobre você."
+        },
+        {
+          "id": "maquina-de-equilibrios",
+          "title": "A máquina de equilíbrios",
+          "hook": "Um grego levado a Roma como refém passou dezessete anos observando a máquina romana por dentro. Políbio saiu convencido: era o governo mais estável que o mundo já tinha visto. O que ele viu?",
+          "narrative": [
+            "Políbio viu **três governos dentro de um**: os cônsules agiam como reis (por um ano), o Senado como aristocracia, as assembleias como democracia — e cada um podia **frear** os outros. Nenhuma das três formas puras sobrevivia sozinha, ele argumentou; misturadas e em tensão, se corrigiam.",
+            "Essa ideia — **poder só é contido por outro poder** — hibernou por séculos. Até que, no Iluminismo, Montesquieu releu os antigos e a transformou na doutrina da **separação de poderes**: Executivo, Legislativo, Judiciário. De lá, ela saltou para as constituições modernas — inclusive a que vale sobre você hoje."
+          ],
+          "interactions": [
+            {
+              "id": "i1",
+              "type": "counterfactual",
+              "claimId": "poder-fatiado",
+              "objective": true,
+              "prompt": "Se os cônsules não tivessem prazo de um ano nem veto mútuo, o que Políbio preveria?",
+              "options": [
+                "Deriva para a tirania — para ele, era o freio entre os poderes que estabilizava Roma",
+                "Nada mudaria: o Senado mandava de qualquer forma",
+                "As assembleias populares tomariam o poder imediatamente"
+              ],
+              "correct": 0,
+              "errorPath": "O Senado era fortíssimo — mas é exatamente esse o ponto de Políbio: nenhuma das três forças bastava sozinha nem podia ser deixada sem freio. Um cônsul sem prazo e sem veto era, na prática, o rei que Roma tinha jurado nunca mais ter."
+            },
+            {
+              "id": "i2",
+              "type": "causal",
+              "claimId": "governo-misto",
+              "objective": true,
+              "prompt": "Por que a Constituição de 1988 separa Executivo, Legislativo e Judiciário?",
+              "options": [
+                "Herda, via Montesquieu, a tese antiga de que poder só é contido por outro poder",
+                "Foi uma exigência da ONU para constituições do século XX",
+                "Copiou diretamente o modelo ateniense de sorteio entre os três poderes"
+              ],
+              "correct": 0,
+              "errorPath": "Atenas é o ancestral da ideia de que o povo decide — mas a arquitetura de poderes separados que se vigiam vem da leitura que Montesquieu fez de Roma (e de Políbio). O fio é real: Antiguidade → Iluminismo → 1988. Você acabou de percorrê-lo."
+            }
+          ],
+          "connection": "Agora você entende melhor: ✔ a separação de poderes que estrutura o Brasil ✔ por que o seu voto elege, e não sorteia ✔ o fio completo Atenas → Roma → Iluminismo → 1988."
         }
       ]
     }

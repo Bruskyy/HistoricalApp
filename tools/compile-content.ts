@@ -69,8 +69,17 @@ function compileDomain(root: string): Record<string, unknown> {
     }
   }
 
-  walk(root);
-  return { compiledAt: new Date().toISOString().slice(0, 10), nodes };
+  walk(join(root, 'nodes'));
+
+  const journeys: unknown[] = [];
+  const journeysDir = join(root, 'journeys');
+  if (existsSync(journeysDir)) {
+    for (const f of readdirSync(journeysDir).filter((f) => f.endsWith('.json'))) {
+      journeys.push(JSON.parse(readFileSync(join(journeysDir, f), 'utf-8')));
+    }
+  }
+
+  return { compiledAt: new Date().toISOString().slice(0, 10), journeys, nodes };
 }
 
 const contentRoot = process.argv[2] ?? 'content';

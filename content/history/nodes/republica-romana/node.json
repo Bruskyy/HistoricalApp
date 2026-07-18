@@ -1,0 +1,90 @@
+{
+  "id": "republica-romana",
+  "domain": "history",
+  "era": "antiguidade",
+  "place": "Roma",
+  "name": "A República Romana",
+  "sensitive": false,
+  "journeys": ["nascimento-da-democracia"],
+  "positionInJourney": { "nascimento-da-democracia": 2 },
+  "claims": [
+    {
+      "id": "recusa-sorteio",
+      "text": "As magistraturas principais da República Romana eram preenchidas por eleição em assembleias, não por sorteio, dentro de uma carreira hierárquica de cargos (cursus honorum).",
+      "epistemicClass": "established_fact",
+      "consensusPct": 95,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Lintott, A. The Constitution of the Roman Republic. Oxford University Press, 1999."
+        }
+      ]
+    },
+    {
+      "id": "poder-fatiado",
+      "text": "O poder executivo republicano era deliberadamente limitado: dois cônsules, mandato de um ano, com poder de veto entre si.",
+      "epistemicClass": "established_fact",
+      "consensusPct": 96,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Lintott, A. The Constitution of the Roman Republic. Oxford University Press, 1999."
+        }
+      ]
+    },
+    {
+      "id": "governo-misto",
+      "text": "A descrição de Políbio da constituição romana como 'governo misto' (cônsules, Senado, assembleias) influenciou a doutrina moderna da separação de poderes, via Montesquieu.",
+      "epistemicClass": "accepted_hypothesis",
+      "consensusPct": 85,
+      "sources": [
+        {
+          "type": "primary_source",
+          "ref": "Políbio. Histórias, Livro VI (séc. II a.C.)."
+        },
+        {
+          "type": "academic_book",
+          "ref": "Lintott, A. The Constitution of the Roman Republic. Oxford University Press, 1999. (cap. sobre Políbio e a recepção moderna)"
+        }
+      ]
+    },
+    {
+      "id": "quao-democratica",
+      "text": "O grau em que a República Romana era efetivamente democrática — e não uma oligarquia com fachada eleitoral — é objeto de debate historiográfico ativo.",
+      "epistemicClass": "historiographical_interpretation",
+      "consensusPct": 50,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Millar, F. The Crowd in Rome in the Late Republic. University of Michigan Press, 1998."
+        },
+        {
+          "type": "academic_book",
+          "ref": "Mouritsen, H. Plebs and Politics in the Late Roman Republic. Cambridge University Press, 2001."
+        }
+      ],
+      "debate": {
+        "question": "A República era uma oligarquia disfarçada — ou uma democracia que não reconhecemos?",
+        "positions": [
+          {
+            "view": "Democracia real: as assembleias populares votavam leis e elegiam magistrados; a política se fazia na rua, diante da multidão (Millar).",
+            "acceptance": "minoritária influente"
+          },
+          {
+            "view": "Oligarquia de fato: riqueza, clientelas e o Senado controlavam os resultados; eleição não bastava para haver democracia (tradição de Gelzer e Syme; Mouritsen).",
+            "acceptance": "majoritária, com nuances"
+          }
+        ]
+      }
+    }
+  ],
+  "connections": [
+    { "to": "iluminismo", "type": "influence" },
+    { "to": "constituicao-brasileira-1988", "type": "echo" },
+    { "to": "democracia-ateniense", "type": "contrast" }
+  ],
+  "lessons": [
+    { "id": "nao-obrigado-atenas", "file": "lesson-1.md" },
+    { "id": "maquina-de-equilibrios", "file": "lesson-2.md" }
+  ]
+}

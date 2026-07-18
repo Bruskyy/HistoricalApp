@@ -10,6 +10,7 @@
     "test": "npm run test --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "validate:content": "node --experimental-strip-types tools/validate-content.ts content",
-    "compile:content": "node --experimental-strip-types tools/compile-content.ts content"
+    "compile:content": "node --experimental-strip-types tools/compile-content.ts content",
+    "build:prototype": "npm run compile:content && node --experimental-strip-types tools/build-prototype.ts"
   }
 }
