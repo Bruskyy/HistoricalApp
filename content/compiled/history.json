@@ -1,0 +1,187 @@
+{
+  "compiledAt": "2026-07-18",
+  "nodes": [
+    {
+      "id": "democracia-ateniense",
+      "domain": "history",
+      "era": "antiguidade",
+      "name": "A democracia ateniense",
+      "sensitive": false,
+      "journeys": [
+        "nascimento-da-democracia"
+      ],
+      "claims": [
+        {
+          "id": "sorteio-magistrados",
+          "text": "Na democracia ateniense clássica, a maioria dos cargos públicos era preenchida por sorteio, não por eleição.",
+          "epistemicClass": "established_fact",
+          "consensusPct": 95,
+          "sources": [
+            {
+              "type": "academic_book",
+              "ref": "Hansen, M. H. The Athenian Democracy in the Age of Demosthenes. Blackwell, 1991."
+            }
+          ]
+        },
+        {
+          "id": "exclusao-politica",
+          "text": "Mulheres, estrangeiros residentes (metecos) e pessoas escravizadas eram excluídos da cidadania ateniense.",
+          "epistemicClass": "established_fact",
+          "consensusPct": 98,
+          "sources": [
+            {
+              "type": "academic_book",
+              "ref": "Hansen, M. H. The Athenian Democracy in the Age of Demosthenes. Blackwell, 1991."
+            }
+          ]
+        },
+        {
+          "id": "clistenes-marco",
+          "text": "As reformas de Clístenes (c. 508 a.C.) são o marco convencional do nascimento da democracia ateniense.",
+          "epistemicClass": "accepted_hypothesis",
+          "consensusPct": 85,
+          "sources": [
+            {
+              "type": "academic_book",
+              "ref": "Ober, J. The Rise and Fall of Classical Greece. Princeton University Press, 2015."
+            }
+          ]
+        },
+        {
+          "id": "motivacao-reformas",
+          "text": "O peso relativo do conflito entre elites e da pressão popular na origem das reformas democráticas é objeto de interpretações concorrentes.",
+          "epistemicClass": "historiographical_interpretation",
+          "consensusPct": 55,
+          "sources": [
+            {
+              "type": "academic_book",
+              "ref": "Ober, J. The Athenian Revolution. Princeton University Press, 1996."
+            },
+            {
+              "type": "peer_reviewed_article",
+              "ref": "Anderson, G. 'The Personality of the Greek State'. Journal of Hellenic Studies 129, 2009."
+            }
+          ],
+          "debate": {
+            "question": "A democracia nasceu de cima (disputa entre elites) ou de baixo (ação popular)?",
+            "positions": [
+              {
+                "view": "Revolução popular: a ação coletiva do demos foi decisiva (Ober).",
+                "acceptance": "ampla, mas não unânime"
+              },
+              {
+                "view": "Subproduto da competição entre facções aristocráticas, formalizado por Clístenes.",
+                "acceptance": "minoritária relevante"
+              }
+            ]
+          }
+        }
+      ],
+      "connections": [
+        {
+          "to": "republica-romana",
+          "type": "influence"
+        },
+        {
+          "to": "iluminismo",
+          "type": "influence"
+        },
+        {
+          "to": "constituicao-brasileira-1988",
+          "type": "echo"
+        }
+      ],
+      "lessons": [
+        {
+          "id": "sorteio-escandaloso",
+          "title": "O sorteio que escandalizaria hoje",
+          "hook": "Você é um cidadão de Atenas, 450 a.C. Amanhã a cidade escolhe quem vai administrar o tesouro público. Como você prefere escolher?",
+          "narrative": [
+            "Se você respondeu \"votando no melhor candidato\", os atenienses discordariam de você — com veemência.",
+            "Para a democracia ateniense, **eleição era coisa de aristocrata**: quem vence eleições é quem tem nome, dinheiro e boa oratória. O método verdadeiramente democrático, para eles, era o **sorteio**. Qualquer cidadão podia ser sorteado para a maioria dos cargos públicos — do conselho que preparava as leis aos tribunais populares.",
+            "A lógica: se todo cidadão é capaz de participar do governo, o acaso é mais justo que a fama. Eleições existiam, mas eram reservadas às poucas funções que exigiam técnica comprovada — como generais."
+          ],
+          "interactions": [
+            {
+              "id": "i1",
+              "type": "situated_decision",
+              "claimId": "sorteio-magistrados",
+              "objective": false,
+              "prompt": "Como você escolheria o administrador do tesouro?",
+              "options": [
+                "Eleição com candidatos",
+                "Sorteio entre os cidadãos",
+                "Indicação pelos mais ricos"
+              ],
+              "errorPath": "Não há resposta errada aqui — mas a escolha ateniense vai te surpreender."
+            },
+            {
+              "id": "i2",
+              "type": "causal",
+              "claimId": "sorteio-magistrados",
+              "objective": true,
+              "prompt": "Por que os atenienses viam o sorteio como MAIS democrático que a eleição?",
+              "options": [
+                "Porque a eleição favorece quem tem fama, dinheiro e oratória",
+                "Porque o sorteio era mais rápido de organizar",
+                "Porque os deuses escolhiam os sorteados"
+              ],
+              "correct": 0,
+              "errorPath": "A rapidez não era o ponto — o argumento era de igualdade: a eleição premia vantagens que nem todo cidadão tem (nome, riqueza, retórica); o sorteio trata todos os cidadãos como igualmente capazes de governar."
+            },
+            {
+              "id": "i3",
+              "type": "source_interpretation",
+              "claimId": "motivacao-reformas",
+              "objective": false,
+              "prompt": "Historiadores debatem: a democracia nasceu da ação popular ou da disputa entre elites? Explore as duas leituras.",
+              "errorPath": "Este é um debate historiográfico real — não existe resposta fechada; o valor está em conhecer as posições e suas evidências."
+            }
+          ],
+          "connection": "Agora você entende melhor: ✔ por que \"democracia representativa\" teria soado estranho em Atenas ✔ o debate moderno sobre sorteio em conselhos cidadãos ✔ o que Roma decidiu fazer diferente."
+        },
+        {
+          "id": "quem-ficava-de-fora",
+          "title": "Quem ficava de fora",
+          "hook": "A \"cidade de todos os cidadãos\" tinha cerca de 300 mil habitantes. Quantos podiam votar na assembleia?",
+          "narrative": [
+            "Cerca de 30 mil — aproximadamente um em cada dez.",
+            "A cidadania ateniense era um clube fechado: **mulheres, estrangeiros residentes (metecos) e pessoas escravizadas ficavam fora** da vida política, sempre. O demos que se governava por sorteio era, ao mesmo tempo, radicalmente igualitário por dentro e radicalmente excludente por fora.",
+            "Isso não é um detalhe constrangedor a esconder: é a chave para entender o que a palavra \"democracia\" significava lá — e o quanto o seu significado mudou até chegar a você."
+          ],
+          "interactions": [
+            {
+              "id": "i1",
+              "type": "counterfactual",
+              "claimId": "exclusao-politica",
+              "objective": true,
+              "prompt": "Se Atenas tivesse estendido a cidadania a metecos e mulheres, o que mudaria no funcionamento do sorteio?",
+              "options": [
+                "Nada no mecanismo — o sorteio funciona igual; mudaria QUEM entra no sorteio",
+                "O sorteio se tornaria impossível de organizar",
+                "A assembleia deixaria de existir"
+              ],
+              "correct": 0,
+              "errorPath": "O mecanismo do sorteio não depende do tamanho do corpo cívico — a exclusão era uma escolha política sobre quem conta como cidadão, não uma limitação técnica do sistema."
+            },
+            {
+              "id": "i2",
+              "type": "causal",
+              "claimId": "clistenes-marco",
+              "objective": true,
+              "prompt": "Por que as reformas de Clístenes (508 a.C.) são tratadas como o marco de nascimento da democracia?",
+              "options": [
+                "Porque reorganizaram os cidadãos em tribos que quebravam o poder das famílias aristocráticas",
+                "Porque aboliram a escravidão em Atenas",
+                "Porque criaram a primeira eleição presidencial"
+              ],
+              "correct": 0,
+              "errorPath": "A escravidão não foi abolida — e é exatamente essa convivência entre igualdade cívica e exclusão que a lição anterior mostrou. O marco de Clístenes é a reengenharia do corpo cívico: tribos novas que misturavam regiões e enfraqueciam clãs."
+            }
+          ],
+          "connection": "Agora você entende melhor: ✔ por que \"democracia\" antiga e moderna não são a mesma coisa ✔ os séculos de lutas por sufrágio que viriam ✔ por que a Constituição de 1988 diz \"todos\"."
+        }
+      ]
+    }
+  ]
+}

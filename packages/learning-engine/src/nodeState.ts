@@ -4,7 +4,7 @@
  * missão de resgate é visível (GDD §6.2).
  */
 
-import type { ClaimState, EngineParams, NodeSnapshot } from './types.ts';
+import type { ClaimState, EngineParams, NodeSnapshot } from './types';
 
 /**
  * @param understood o nó completou as lições da essência (evento de

@@ -4,14 +4,14 @@
  * curto e generoso após ausência (reencontro, não cobrança).
  */
 
-import { dueClaims } from './srs.ts';
+import { dueClaims } from './srs';
 import type {
   ClaimState,
   DailyMission,
   EngineParams,
   NodeSnapshot,
   ReviewMissionItem,
-} from './types.ts';
+} from './types';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 

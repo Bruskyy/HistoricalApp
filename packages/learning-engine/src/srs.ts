@@ -5,7 +5,7 @@
  * mudança aqui exige novo cenário em test/scenarios.
  */
 
-import type { ClaimState, EngineParams, ReviewOutcome } from './types.ts';
+import type { ClaimState, EngineParams, ReviewOutcome } from './types';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 

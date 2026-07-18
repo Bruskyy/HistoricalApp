@@ -3,11 +3,13 @@
   "private": true,
   "type": "module",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "apps/*"
   ],
   "scripts": {
     "test": "npm run test --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "validate:content": "node --experimental-strip-types tools/validate-content.ts content"
+    "validate:content": "node --experimental-strip-types tools/validate-content.ts content",
+    "compile:content": "node --experimental-strip-types tools/compile-content.ts content"
   }
 }

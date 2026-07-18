@@ -23,7 +23,7 @@ import {
   snapshotNode,
   type ClaimState,
   type EngineParams,
-} from '../src/index.ts';
+} from '../src/index';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 const day = (n: number) => n * DAY_MS;
