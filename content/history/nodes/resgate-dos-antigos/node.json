@@ -1,0 +1,135 @@
+{
+  "id": "resgate-dos-antigos",
+  "domain": "history",
+  "era": "renascimento",
+  "place": "Renascimento",
+  "name": "O resgate dos antigos",
+  "sensitive": false,
+  "journeys": ["a-ideia-renasce"],
+  "positionInJourney": { "a-ideia-renasce": 1 },
+  "claims": [
+    {
+      "id": "cadeia-de-copistas",
+      "text": "A queda de Roma no Ocidente não apagou os textos antigos: mosteiros medievais, o Império Bizantino e o mundo islâmico os copiaram, traduziram e preservaram durante séculos.",
+      "epistemicClass": "established_fact",
+      "consensusPct": 93,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Reynolds, L. D.; Wilson, N. G. Scribes and Scholars: A Guide to the Transmission of Greek and Latin Literature. Oxford University Press, 4ª ed., 2013."
+        }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "counterfactual",
+          "objective": true,
+          "prompt": "Se nenhum mosteiro, biblioteca bizantina ou tradutor árabe tivesse copiado os antigos, o mais provável é que…",
+          "options": [
+            "Montesquieu jamais teria lido Políbio — a corrente que liga Roma a 1988 se romperia no primeiro elo",
+            "Nada mudaria: as ideias sobrevivem sozinhas, sem suporte físico",
+            "O Renascimento teria acontecido do mesmo jeito, apenas mais cedo"
+          ],
+          "correct": 0,
+          "errorPath": "Ideias não flutuam: viajam em pergaminho, papel e tinta. Cada texto antigo que chegou ao Iluminismo sobreviveu porque alguém — num mosteiro, em Bizâncio, em Bagdá — escolheu copiá-lo. Sem copistas, sem corrente; sem corrente, sem 1988."
+        }
+      ]
+    },
+    {
+      "id": "cacadores-de-manuscritos",
+      "text": "No Renascimento, humanistas italianos caçaram e redescobriram manuscritos antigos esquecidos, e a imprensa de Gutenberg (c. 1450) multiplicou sua circulação pela Europa.",
+      "epistemicClass": "established_fact",
+      "consensusPct": 92,
+      "sources": [
+        {
+          "type": "reference_work",
+          "ref": "Kraye, J. (org.). The Cambridge Companion to Renaissance Humanism. Cambridge University Press, 1996."
+        }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "causal",
+          "objective": true,
+          "prompt": "Por que a imprensa mudou o destino dos textos antigos redescobertos?",
+          "options": [
+            "Um manuscrito achado virava milhares de cópias — a ideia deixava de depender de um único pergaminho frágil",
+            "Porque a imprensa corrigia os erros dos copistas automaticamente",
+            "Porque só a partir dela os textos foram traduzidos do grego"
+          ],
+          "correct": 0,
+          "errorPath": "O achado de um caçador de manuscritos ainda era um objeto único e perecível. A imprensa transformou sobrevivência em abundância: depois de impressa, uma ideia não podia mais ser perdida num incêndio — nem confiscada de todos ao mesmo tempo."
+        }
+      ]
+    },
+    {
+      "id": "vocabulario-republicano",
+      "text": "A redescoberta dos textos políticos antigos realimentou o pensamento cívico renascentista, repondo em circulação o vocabulário republicano (liberdade, virtude cívica, governo misto).",
+      "epistemicClass": "accepted_hypothesis",
+      "consensusPct": 82,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Skinner, Q. The Foundations of Modern Political Thought. Cambridge University Press, 1978."
+        },
+        {
+          "type": "academic_book",
+          "ref": "Pocock, J. G. A. The Machiavellian Moment. Princeton University Press, 1975."
+        }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "application",
+          "objective": true,
+          "prompt": "Maquiavel escreve sobre repúblicas lendo obsessivamente os historiadores de Roma. Isso ilustra…",
+          "options": [
+            "O vocabulário republicano antigo voltando a circular — os renascentistas pensavam o presente com palavras resgatadas do passado",
+            "Uma curiosidade de erudito, sem efeito sobre a política da época",
+            "A invenção renascentista de ideias que os antigos nunca tiveram"
+          ],
+          "correct": 0,
+          "errorPath": "Não era erudição decorativa: as cidades italianas discutiam liberdade e tirania com as palavras de Roma. O resgate dos textos devolveu à Europa um vocabulário político inteiro — o mesmo que o Iluminismo herdaria."
+        }
+      ]
+    },
+    {
+      "id": "ruptura-ou-continuidade",
+      "text": "O quanto o Renascimento foi uma ruptura com a Idade Média — ou a aceleração de continuidades medievais — é objeto de debate historiográfico.",
+      "epistemicClass": "historiographical_interpretation",
+      "consensusPct": 50,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Burckhardt, J. A cultura do Renascimento na Itália (1860)."
+        },
+        {
+          "type": "academic_book",
+          "ref": "Haskins, C. H. The Renaissance of the Twelfth Century. Harvard University Press, 1927."
+        }
+      ],
+      "debate": {
+        "question": "O Renascimento rompeu com a Idade Média — ou a Idade Média já vinha renascendo há séculos?",
+        "positions": [
+          {
+            "view": "Ruptura: o Renascimento italiano inaugura o indivíduo e o mundo modernos (tradição de Burckhardt).",
+            "acceptance": "clássica, hoje muito matizada"
+          },
+          {
+            "view": "Continuidade: houve 'renascimentos' medievais (séc. XII) e a fronteira é invenção posterior (Haskins e medievalistas).",
+            "acceptance": "amplamente aceita como corretivo"
+          }
+        ]
+      }
+    }
+  ],
+  "connections": [
+    { "to": "republica-romana", "type": "influence" },
+    { "to": "democracia-ateniense", "type": "influence" },
+    { "to": "iluminismo", "type": "influence" }
+  ],
+  "lessons": [
+    { "id": "quem-guardou-a-chama", "file": "lesson-1.md" },
+    { "id": "a-redescoberta", "file": "lesson-2.md" }
+  ]
+}

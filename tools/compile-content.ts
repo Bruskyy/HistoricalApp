@@ -40,11 +40,19 @@ function compileLesson(dir: string, lesson: { id: string; file: string }): Compi
   const interBlock = section(md, 'Interações').match(/```json\s*\n([\s\S]*?)\n```/);
   const interactions = interBlock ? JSON.parse(interBlock[1]!) : [];
 
+  // Ecos do Corredor: "- node-id: texto" — momentos "isso nasceu lá atrás"
+  const echoes = section(md, 'Ecos')
+    .split('\n')
+    .map((l) => l.match(/^- ([\w-]+):\s*(.+)$/))
+    .filter((m): m is RegExpMatchArray => m !== null)
+    .map((m) => ({ node: m[1]!, text: m[2]!.trim() }));
+
   return {
     id: lesson.id,
     title,
     hook: section(md, 'Gancho'),
     narrative,
+    echoes,
     interactions,
     connection: section(md, 'Conexão'),
   };

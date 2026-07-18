@@ -1,0 +1,139 @@
+{
+  "id": "revolucoes-atlanticas",
+  "domain": "history",
+  "era": "revolucoes",
+  "place": "Revoluções",
+  "name": "A ideia toma o poder",
+  "sensitive": false,
+  "journeys": ["a-ideia-renasce"],
+  "positionInJourney": { "a-ideia-renasce": 3 },
+  "claims": [
+    {
+      "id": "constituicao-escrita",
+      "text": "A Revolução Americana (1776-1787) transformou as teses iluministas em uma constituição escrita, com separação de poderes e freios e contrapesos.",
+      "epistemicClass": "established_fact",
+      "consensusPct": 95,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Wood, G. S. The Creation of the American Republic, 1776-1787. University of North Carolina Press, 1969."
+        }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "causal",
+          "objective": true,
+          "prompt": "Por que escrever a constituição num documento foi um gesto tão radical em 1787?",
+          "options": [
+            "Porque colocou o governo inteiro debaixo de um texto que qualquer cidadão pode ler e invocar — o poder virou cláusula",
+            "Porque nunca ninguém havia escrito leis antes",
+            "Porque o papel era um material raro e caro"
+          ],
+          "correct": 0,
+          "errorPath": "Leis escritas existiam desde a Antiguidade. O inédito foi outro: escrever O PRÓPRIO GOVERNO — seus poderes, seus limites, seus freios — num documento acima de qualquer governante. O rei virou réu em potencial; o texto virou soberano."
+        }
+      ]
+    },
+    {
+      "id": "declaracao-1789",
+      "text": "A Revolução Francesa (1789) derrubou o absolutismo e proclamou, na Declaração dos Direitos do Homem e do Cidadão, que a soberania reside na nação.",
+      "epistemicClass": "established_fact",
+      "consensusPct": 95,
+      "sources": [
+        {
+          "type": "primary_source",
+          "ref": "Declaração dos Direitos do Homem e do Cidadão (1789), art. 3º."
+        },
+        {
+          "type": "academic_book",
+          "ref": "Doyle, W. The Oxford History of the French Revolution. Oxford University Press, 1989."
+        }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "application",
+          "objective": true,
+          "prompt": "\"Todo poder emana do povo\" — art. 1º da Constituição de 1988. Essa frase é descendente direta de…",
+          "options": [
+            "Da soberania da nação proclamada em 1789 — que por sua vez descende de Locke, que descende da aposta de Atenas",
+            "De uma inovação exclusivamente brasileira de 1988",
+            "Do direito divino dos reis, adaptado"
+          ],
+          "correct": 0,
+          "errorPath": "A frase tem árvore genealógica: Atenas apostou que o poder pertence ao demos; Locke fez disso contrato; 1789 fez disso lei; 1988 a herdou em português. Você consegue citar cada elo — porque acendeu cada salão."
+        }
+      ]
+    },
+    {
+      "id": "pacote-constitucional",
+      "text": "As constituições democráticas modernas — incluindo a brasileira de 1988 — herdam diretamente o pacote revolucionário: soberania popular, direitos declarados e separação de poderes.",
+      "epistemicClass": "accepted_hypothesis",
+      "consensusPct": 88,
+      "sources": [
+        {
+          "type": "primary_source",
+          "ref": "Constituição da República Federativa do Brasil (1988), art. 1º-2º."
+        },
+        {
+          "type": "reference_work",
+          "ref": "Comparato, F. K. A Afirmação Histórica dos Direitos Humanos. Saraiva, 2019."
+        }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "connection",
+          "objective": true,
+          "prompt": "Abra a Constituição de 1988 nos artigos 1º e 2º. O que você encontra ali, em português?",
+          "options": [
+            "O pacote inteiro da jornada: soberania popular (Atenas→Locke→1789) e três poderes independentes (Roma→Montesquieu→1787)",
+            "Um sistema político sem precedentes históricos",
+            "Uma cópia literal da constituição americana"
+          ],
+          "correct": 0,
+          "errorPath": "Nem invenção do zero nem cópia: herança viva. Art. 1º: \"todo poder emana do povo\" — a linha de Atenas. Art. 2º: \"Legislativo, Executivo e Judiciário, independentes e harmônicos\" — a linha de Roma. Duas correntes de 2.000 anos, trançadas em dois artigos."
+        }
+      ]
+    },
+    {
+      "id": "causas-revolucao-francesa",
+      "text": "As causas da Revolução Francesa — ruptura social profunda ou derrapagem política de uma crise conjuntural — são objeto de debate historiográfico clássico.",
+      "epistemicClass": "historiographical_interpretation",
+      "consensusPct": 50,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Lefebvre, G. Quatre-vingt-neuf (1939)."
+        },
+        {
+          "type": "academic_book",
+          "ref": "Furet, F. Penser la Révolution française. Gallimard, 1978."
+        }
+      ],
+      "debate": {
+        "question": "1789 foi uma revolução social inevitável — ou uma crise política que saiu do controle?",
+        "positions": [
+          {
+            "view": "Interpretação social clássica: choque de classes estruturais; a burguesia derruba a ordem feudal (Lefebvre).",
+            "acceptance": "dominante até os anos 1970"
+          },
+          {
+            "view": "Revisionista: dinâmica política e ideológica própria, sem determinismo social; a revolução 'derrapou' (Furet).",
+            "acceptance": "muito influente desde então"
+          }
+        ]
+      }
+    }
+  ],
+  "connections": [
+    { "to": "iluminismo", "type": "influence" },
+    { "to": "republica-romana", "type": "influence" },
+    { "to": "constituicao-brasileira-1988", "type": "echo" }
+  ],
+  "lessons": [
+    { "id": "o-papel-vira-poder", "file": "lesson-1.md" },
+    { "id": "o-eco-sem-fim", "file": "lesson-2.md" }
+  ]
+}

@@ -2,109 +2,198 @@
   {
     "id": "democracia",
     "term": "Democracia",
-    "match": ["democracia", "democrática", "democrático", "democráticas", "democráticos"],
+    "match": [
+      "democracia",
+      "democrática",
+      "democrático",
+      "democráticas",
+      "democráticos"
+    ],
     "definition": "Do grego dēmos (povo) + kratos (poder): governo em que o poder emana do conjunto dos cidadãos. O que conta como \"povo\" mudou — e muito — ao longo de 2.500 anos."
   },
   {
     "id": "oligarquia",
     "term": "Oligarquia",
-    "match": ["oligarquia", "oligarquias", "oligárquica"],
+    "match": [
+      "oligarquia",
+      "oligarquias",
+      "oligárquica"
+    ],
     "definition": "Governo de poucos (oligoi). Na prática: quando um grupo pequeno — por riqueza, família ou influência — controla as decisões, mesmo sob instituições formalmente abertas."
   },
   {
     "id": "aristocracia",
     "term": "Aristocracia",
-    "match": ["aristocracia", "aristocrata", "aristocratas", "aristocrático", "aristocrática", "aristocráticas", "aristocráticos"],
+    "match": [
+      "aristocracia",
+      "aristocrata",
+      "aristocratas",
+      "aristocrático",
+      "aristocrática",
+      "aristocráticas",
+      "aristocráticos"
+    ],
     "definition": "Governo dos \"melhores\" (aristoi) — na prática, das grandes famílias de nascimento e riqueza. Em Atenas, a eleição era vista como aristocrática porque favorecia quem tinha nome, fortuna e oratória."
   },
   {
     "id": "sorteio",
     "term": "Sorteio",
-    "match": ["sorteio", "sorteava", "sorteado", "sorteados", "sortear", "sorteava-se"],
+    "match": [
+      "sorteio",
+      "sorteava",
+      "sorteado",
+      "sorteados",
+      "sortear",
+      "sorteava-se"
+    ],
     "definition": "Seleção de governantes ao acaso entre os cidadãos. Para os atenienses, o método mais democrático que existe: trata todos como igualmente capazes de governar."
   },
   {
     "id": "demos",
     "term": "Demos",
-    "match": ["demos"],
+    "match": [
+      "demos"
+    ],
     "definition": "O corpo de cidadãos de uma pólis grega — o \"povo\" da palavra democracia. Em Atenas, uma minoria dos habitantes."
   },
   {
     "id": "metecos",
     "term": "Metecos",
-    "match": ["metecos", "meteco"],
+    "match": [
+      "metecos",
+      "meteco"
+    ],
     "definition": "Estrangeiros residentes em Atenas: livres, pagavam impostos, serviam no exército — e nunca votavam."
   },
   {
     "id": "assembleia",
     "term": "Assembleia",
-    "match": ["assembleia", "assembleias"],
+    "match": [
+      "assembleia",
+      "assembleias"
+    ],
     "definition": "Reunião dos cidadãos com direito a voto. Em Atenas, decidia quase tudo; em Roma, votava leis e elegia magistrados — sob forte influência das elites."
   },
   {
     "id": "tirania",
     "term": "Tirania",
-    "match": ["tirania", "tirano"],
+    "match": [
+      "tirania",
+      "tirano"
+    ],
     "definition": "Para os antigos, o poder tomado ou exercido sem freios — não necessariamente cruel, mas sem limite. O medo que desenhou tanto Atenas quanto Roma."
   },
   {
     "id": "republica",
     "term": "República",
-    "match": ["república", "republicano", "republicana"],
+    "match": [
+      "república",
+      "republicano",
+      "republicana"
+    ],
     "definition": "Do latim res publica, \"coisa pública\": governo sem rei, com o poder distribuído em instituições. Não é, por si só, sinônimo de democracia."
   },
   {
     "id": "veto",
     "term": "Veto",
-    "match": ["veto", "vetar"],
+    "match": [
+      "veto",
+      "vetar"
+    ],
     "definition": "Do latim \"eu proíbo\". O poder de um cônsul barrar a decisão do outro — a origem romana da ideia de que poder freia poder."
   },
   {
     "id": "consul",
     "term": "Cônsul",
-    "match": ["cônsul", "cônsules"],
+    "match": [
+      "cônsul",
+      "cônsules"
+    ],
     "definition": "Um dos dois chefes do executivo romano: eleito, mandato de um ano, e cada um com poder de vetar o outro."
   },
   {
     "id": "senado",
     "term": "Senado",
-    "match": ["senado"],
+    "match": [
+      "senado"
+    ],
     "definition": "Conselho de ex-magistrados romanos — vitalício, aristocrático, não eleito diretamente. O centro de gravidade da política republicana."
   },
   {
     "id": "magistratura",
     "term": "Magistratura",
-    "match": ["magistraturas", "magistrados", "magistrado"],
+    "match": [
+      "magistraturas",
+      "magistrados",
+      "magistrado"
+    ],
     "definition": "Os cargos públicos de Roma (questor, edil, pretor, cônsul…), conquistados por eleição, degrau por degrau."
   },
   {
     "id": "cursus-honorum",
     "term": "Cursus honorum",
-    "match": ["cursus honorum"],
+    "match": [
+      "cursus honorum"
+    ],
     "definition": "\"Carreira das honras\": a escada obrigatória de cargos que um romano subia antes de chegar ao topo. Antes de mandar, era preciso ter servido."
   },
   {
     "id": "iluminismo",
     "term": "Iluminismo",
-    "match": ["iluminismo"],
+    "match": [
+      "iluminismo"
+    ],
     "definition": "Movimento intelectual dos séculos XVII-XVIII que releu os antigos com olhos novos — razão, direitos e a pergunta: quem autoriza o poder?"
   },
   {
     "id": "separacao-de-poderes",
     "term": "Separação de poderes",
-    "match": ["separação de poderes"],
+    "match": [
+      "separação de poderes"
+    ],
     "definition": "A tese de que Executivo, Legislativo e Judiciário devem ser independentes e limitar uns aos outros. Montesquieu a formulou lendo Roma — e a Constituição de 1988 a herda."
   },
   {
     "id": "constituicao",
     "term": "Constituição",
-    "match": ["constituição"],
+    "match": [
+      "constituição"
+    ],
     "definition": "O conjunto de regras fundamentais que organiza o poder de um Estado. A de 1988 é a brasileira em vigor — e carrega 2.500 anos de discussão dentro dela."
   },
   {
     "id": "polibio",
     "term": "Políbio",
-    "match": ["políbio"],
+    "match": [
+      "políbio"
+    ],
     "definition": "Historiador grego (c. 200-118 a.C.) levado a Roma como refém político. Passou anos observando a máquina romana; seu Livro VI descreve a \"constituição mista\" que influenciaria Montesquieu."
+  },
+  {
+    "id": "soberania",
+    "term": "Soberania",
+    "match": [
+      "soberania"
+    ],
+    "definition": "O poder último de decidir, acima do qual não há outro. A grande disputa da jornada: ela mora no rei, em Deus — ou no povo? 1789 e 1988 responderam: na nação, no povo."
+  },
+  {
+    "id": "humanistas",
+    "term": "Humanistas",
+    "match": [
+      "humanistas",
+      "humanismo",
+      "humanista"
+    ],
+    "definition": "Estudiosos do Renascimento que caçaram, editaram e ensinaram os textos antigos — convencidos de que Grécia e Roma tinham algo a dizer ao presente."
+  },
+  {
+    "id": "absolutismo",
+    "term": "Absolutismo",
+    "match": [
+      "absolutismo",
+      "absolutista"
+    ],
+    "definition": "Regime em que o rei concentra todo o poder, sem freios institucionais — justificado, no auge, como direito divino. O alvo direto de Locke, Montesquieu e 1789."
   }
 ]

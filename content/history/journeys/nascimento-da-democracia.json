@@ -1,8 +1,13 @@
 {
   "id": "nascimento-da-democracia",
+  "order": 1,
   "title": "O Nascimento da Democracia",
   "centralQuestion": "De onde veio a ideia de que o povo pode governar?",
-  "nodeOrder": ["democracia-ateniense", "republica-romana"],
+  "thread": "Atenas → Roma → Iluminismo → 1988 → você",
+  "nodeOrder": [
+    "democracia-ateniense",
+    "republica-romana"
+  ],
   "comingNext": "Iluminismo — quando a ideia renasce, mil anos depois",
   "synthesis": {
     "question": {
@@ -26,5 +31,9 @@
       "before": "Democracia: um sistema que a Grécia inventou",
       "after": "Democracia: uma discussão de 2.500 anos sobre quem merece o poder — ainda em aberto, e agora com você dentro"
     }
+  },
+  "next": {
+    "journey": "a-ideia-renasce",
+    "provocation": "Você acabou de descobrir de onde veio a democracia. Mas… como uma ideia dessas sobreviveu quase 2.000 anos — atravessando a queda de Roma, impérios e fogueiras — sem desaparecer?"
   }
 }

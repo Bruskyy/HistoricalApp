@@ -1,0 +1,139 @@
+{
+  "id": "iluminismo",
+  "domain": "history",
+  "era": "iluminismo",
+  "place": "Iluminismo",
+  "name": "As luzes releem os antigos",
+  "sensitive": false,
+  "journeys": ["a-ideia-renasce"],
+  "positionInJourney": { "a-ideia-renasce": 2 },
+  "claims": [
+    {
+      "id": "contrato-locke",
+      "text": "Locke argumentou que o poder político nasce de um contrato entre as pessoas e existe para proteger seus direitos — e que um governo que os viola pode ser legitimamente trocado.",
+      "epistemicClass": "established_fact",
+      "consensusPct": 95,
+      "sources": [
+        {
+          "type": "primary_source",
+          "ref": "Locke, J. Segundo Tratado sobre o Governo Civil (1689)."
+        },
+        {
+          "type": "academic_book",
+          "ref": "Dunn, J. The Political Thought of John Locke. Cambridge University Press, 1969."
+        }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "application",
+          "objective": true,
+          "prompt": "Um governo moderno perde uma eleição e entrega o poder pacificamente. Qual ideia iluminista está funcionando nesse gesto?",
+          "options": [
+            "A de Locke: o poder é um contrato revogável — quem governa é empregado dos governados, não dono deles",
+            "A de que o vencedor da eleição recebe o poder por direito divino",
+            "A do sorteio ateniense de cargos"
+          ],
+          "correct": 0,
+          "errorPath": "A troca pacífica de governo parece banal hoje — e é a tese mais radical de Locke em funcionamento: se o poder nasce de um contrato, ele pode ser retomado. Nenhum rei por direito divino 'perde a eleição'."
+        }
+      ]
+    },
+    {
+      "id": "separacao-montesquieu",
+      "text": "Montesquieu, em O Espírito das Leis (1748), formulou a doutrina moderna da separação de poderes a partir da leitura dos antigos e da constituição inglesa.",
+      "epistemicClass": "established_fact",
+      "consensusPct": 94,
+      "sources": [
+        {
+          "type": "primary_source",
+          "ref": "Montesquieu. O Espírito das Leis (1748), Livro XI."
+        },
+        {
+          "type": "academic_book",
+          "ref": "Shklar, J. Montesquieu. Oxford University Press, 1987."
+        }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "connection",
+          "objective": true,
+          "prompt": "O STF derruba uma lei do Congresso; o Congresso derruba um veto do Presidente. Esse balé institucional foi coreografado por…",
+          "options": [
+            "Montesquieu, relendo a máquina de equilíbrios que Políbio descreveu em Roma",
+            "Os atenienses, no desenho original do sorteio",
+            "Os copistas medievais, ao preservar os textos"
+          ],
+          "correct": 0,
+          "errorPath": "Cada peça dessa coreografia — poderes separados que se freiam — saiu de O Espírito das Leis, que por sua vez saiu da leitura de Roma. Os copistas preservaram a partitura; Montesquieu a reorquestrou; 1988 a executa todos os dias."
+        }
+      ]
+    },
+    {
+      "id": "pergunta-muda",
+      "text": "O Iluminismo deslocou a pergunta política central de \"quem deve mandar\" para \"o que autoriza o poder\" — fundando a legitimidade no consentimento dos governados.",
+      "epistemicClass": "accepted_hypothesis",
+      "consensusPct": 84,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Israel, J. Radical Enlightenment: Philosophy and the Making of Modernity. Oxford University Press, 2001."
+        }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "counterfactual",
+          "objective": true,
+          "prompt": "Num mundo onde o Iluminismo nunca tivesse feito a pergunta \"o que autoriza o poder?\", o mais provável é que…",
+          "options": [
+            "As revoluções americana e francesa não teriam seu argumento central — derrubar um rei exigiria outro rei",
+            "As revoluções aconteceriam iguais, pois ideias não influenciam eventos",
+            "A democracia ateniense teria voltado por conta própria"
+          ],
+          "correct": 0,
+          "errorPath": "Sem a mudança de pergunta, derrubar um rei significava apenas coroar outro. Foi o consentimento como fundamento do poder que permitiu imaginar o vazio deixado por um trono sendo preenchido por uma constituição."
+        }
+      ]
+    },
+    {
+      "id": "peso-das-ideias",
+      "text": "O peso relativo das ideias iluministas — versus crises fiscais, sociais e materiais — como causa das revoluções do século XVIII é objeto de debate historiográfico.",
+      "epistemicClass": "historiographical_interpretation",
+      "consensusPct": 50,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Israel, J. Democratic Enlightenment. Oxford University Press, 2011."
+        },
+        {
+          "type": "academic_book",
+          "ref": "Doyle, W. The Oxford History of the French Revolution. Oxford University Press, 1989."
+        }
+      ],
+      "debate": {
+        "question": "As revoluções foram filhas das ideias — ou das crises (fome, impostos, guerra)?",
+        "positions": [
+          {
+            "view": "As ideias como motor: sem o arsenal intelectual iluminista, as crises teriam produzido revoltas, não revoluções (Israel).",
+            "acceptance": "influente, contestada"
+          },
+          {
+            "view": "As estruturas como motor: crise fiscal, fome e tensão social explodiriam de qualquer forma; as ideias deram forma, não causa (tradição social).",
+            "acceptance": "amplamente defendida"
+          }
+        ]
+      }
+    }
+  ],
+  "connections": [
+    { "to": "democracia-ateniense", "type": "influence" },
+    { "to": "republica-romana", "type": "influence" },
+    { "to": "revolucoes-atlanticas", "type": "influence" }
+  ],
+  "lessons": [
+    { "id": "a-pergunta-muda", "file": "lesson-1.md" },
+    { "id": "a-maquina-redesenhada", "file": "lesson-2.md" }
+  ]
+}

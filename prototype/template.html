@@ -220,6 +220,7 @@
   .mission-card .mn { font-family: Georgia, serif; font-size: 17px; }
   .flame.waver { animation: flicker .55s infinite ease-in-out; }
   .mission-card.rescue { border-color: var(--flame); }
+  .card.eco { border-left: 3px solid var(--flame); }
   .node-card.pulse { animation: glowPulse 2.2s ease-in-out infinite; border-color: var(--era); }
   @keyframes glowPulse {
     0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--era) 34%, transparent); }
@@ -256,8 +257,14 @@
 /* Conteúdo compilado, injetado por tools/build-prototype.ts — NÃO editar à mão. */
 const PACKAGE = __PACKAGE_JSON__;
 
-const JOURNEY = PACKAGE.journeys[0];
-const NODES = JOURNEY.nodeOrder.map((id) => PACKAGE.nodes.find((n) => n.id === id));
+const JOURNEYS = [...PACKAGE.journeys].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+const nodeOf = (id) => PACKAGE.nodes.find((n) => n.id === id);
+const journeyNodes = (j) => j.nodeOrder.map(nodeOf);
+const NODES = JOURNEYS.flatMap(journeyNodes);
+const journeyDone = (j) => journeyNodes(j).every((n) => S.lit[n.id]);
+const journeyUnlocked = (ix) => ix === 0 || journeyDone(JOURNEYS[ix - 1]);
+const journeyOfNode = (nodeId) => JOURNEYS.find((j) => j.nodeOrder.includes(nodeId));
+const currentJourney = () => JOURNEYS.find((j) => !journeyDone(j)) ?? JOURNEYS[JOURNEYS.length - 1];
 const SEALED_BEFORE = ['Pré-História', 'Mesopotâmia', 'Egito'];
 
 const CONNECTION_LABELS = Object.fromEntries(
@@ -280,6 +287,7 @@ const S = Object.assign({
   lessonsDone: {},   // nodeId -> n
   nodeXp: 0,
   reviews: {},       // claimId -> { nodeId, dueAt, step }
+  events: [],        // log local do experimento (jornada concluída, "descobrir" clicado)
   timeShift: 0,      // atalho de teste "pular dias"
 }, loadState());
 function persist() {
@@ -376,67 +384,86 @@ function dueReviews() {
     .map(([claimId, r]) => ({ claimId, nodeId: r.nodeId, step: r.step ?? 0 }));
 }
 
+function nodeUnlockedInJourney(node) {
+  const j = journeyOfNode(node.id);
+  const pos = j.nodeOrder.indexOf(node.id);
+  return pos === 0 || S.lit[j.nodeOrder[pos - 1]];
+}
+
 function renderCorridor() {
   setProgress(null);
   closeTermBox();
-  const done = litCount();
-  const allLit = done === NODES.length;
   const due = dueReviews();
   const dueNodeIds = new Set(due.map((d) => d.nodeId));
   const duePlaces = NODES.filter((n) => dueNodeIds.has(n.id)).map((n) => n.place).join(' e ');
+  const cj = currentJourney();
+  const allDone = JOURNEYS.every(journeyDone);
+  const totalLit = NODES.filter((n) => S.lit[n.id]).length;
+  const unlocked = JOURNEYS.flatMap((j, ix) => (journeyUnlocked(ix) ? journeyNodes(j) : []));
+  const target = unlocked.find((n) => !S.lit[n.id] && nodeUnlockedInJourney(n));
 
   const say = due.length
     ? `Guardião… sinto chamas vacilando em ${duePlaces}. Não é urgência do mundo — é da memória. Três minutos bastam.`
-    : allLit
-      ? 'O fio inteiro está aceso, Guardião. Atenas, Roma… e o eco chega até você. Eu vigio as chamas — e te chamo quando alguma vacilar.'
-      : done === 0
+    : allDone
+      ? 'Todas as jornadas escritas estão acesas, Guardião. Os escribas do Arquivo já preparam as próximas — descansa perto das chamas.'
+      : totalLit === 0
         ? 'Bem-vindo ao Corredor do Tempo, Guardião. Os salões estão apagados — mas encontrei uma porta aberta na Grécia. Vamos?'
-        : 'A Grécia está acesa… e olha: a porta de Roma acabou de se abrir. Ela conhecia Atenas. E discordou.';
+        : target
+          ? `O Corredor cresce, Guardião — a porta de ${target.place} está aberta.${(S.lessonsDone[target.id] ?? 0) > 0 ? ' Sua lição espera onde você parou.' : ''}`
+          : 'O Corredor aguarda, Guardião.';
 
   let rows = SEALED_BEFORE.map((era) => eraRow(era, 'sealed')).join('');
 
-  NODES.forEach((node, i) => {
-    const lit = !!S.lit[node.id];
-    const locked = i > 0 && !S.lit[NODES[i - 1].id];
-    if (locked) {
-      rows += eraRow(node.place, 'sealed',
-        `<div class="sealed-note">selada — acende quando ${NODES[i - 1].place} estiver iluminada</div>`);
+  JOURNEYS.forEach((j, ix) => {
+    if (!journeyUnlocked(ix)) {
+      rows += eraRow(j.title, 'sealed',
+        `<div class="sealed-note">selada — conclua “${JOURNEYS[ix - 1].title}”</div>`);
       return;
     }
-    const doneLessons = S.lessonsDone[node.id] ?? 0;
-    const nodeDue = dueNodeIds.has(node.id);
-    const scheduled = node.claims.filter((c) => S.reviews[c.id]).map((c) => S.reviews[c.id].dueAt);
-    const nextDue = scheduled.length ? Math.min(...scheduled) : null;
-    const status = lit
-      ? nodeDue
-        ? 'memória vacilando — reacenda'
-        : `Compreendido · chama acesa${nextDue ? ` · revisão em ${Math.max(1, Math.ceil((nextDue - now()) / DAY))}d` : ''}`
-      : doneLessons > 0
-        ? `Lição ${doneLessons + 1} de ${node.lessons.length} · continuar`
-        : `Missão · lição 1 de ${node.lessons.length}`;
-    rows += eraRow(node.place, lit ? 'lit' : 'open', `
-      <div class="node-card ${lit ? 'lit' : ''}" data-node="${node.id}" role="button" tabindex="0" aria-label="${node.name}">
-        <div>
-          <div class="nm">${node.name}</div>
-          <div class="st"${nodeDue ? ' style="color:var(--flame)"' : ''}>${status}</div>
-        </div>
-        <div class="flame ${lit ? (nodeDue ? 'waver' : 'on') : ''}" style="font-size:22px">${lit ? '🔥' : '🕯️'}</div>
-      </div>`);
+    for (const node of journeyNodes(j)) {
+      const lit = !!S.lit[node.id];
+      if (!lit && !nodeUnlockedInJourney(node)) {
+        const j2 = journeyOfNode(node.id);
+        const prev = nodeOf(j2.nodeOrder[j2.nodeOrder.indexOf(node.id) - 1]);
+        rows += eraRow(node.place, 'sealed',
+          `<div class="sealed-note">selada — acende quando ${prev.place} estiver iluminada</div>`);
+        continue;
+      }
+      const doneLessons = S.lessonsDone[node.id] ?? 0;
+      const nodeDue = dueNodeIds.has(node.id);
+      const scheduled = node.claims.filter((c) => S.reviews[c.id]).map((c) => S.reviews[c.id].dueAt);
+      const nextDue = scheduled.length ? Math.min(...scheduled) : null;
+      const status = lit
+        ? nodeDue
+          ? 'memória vacilando — reacenda'
+          : `Compreendido · chama acesa${nextDue ? ` · revisão em ${Math.max(1, Math.ceil((nextDue - now()) / DAY))}d` : ''}`
+        : doneLessons > 0
+          ? `Lição ${doneLessons + 1} de ${node.lessons.length} · continuar`
+          : `Missão · lição 1 de ${node.lessons.length}`;
+      rows += eraRow(node.place, lit ? 'lit' : 'open', `
+        <div class="node-card ${lit ? 'lit' : ''}" data-node="${node.id}" role="button" tabindex="0" aria-label="${node.name}">
+          <div>
+            <div class="nm">${node.name}</div>
+            <div class="st"${nodeDue ? ' style="color:var(--flame)"' : ''}>${status}</div>
+          </div>
+          <div class="flame ${lit ? (nodeDue ? 'waver' : 'on') : ''}" style="font-size:22px">${lit ? '🔥' : '🕯️'}</div>
+        </div>`);
+    }
   });
 
-  rows += eraRow('Iluminismo', 'sealed',
-    `<div class="sealed-note">${allLit ? JOURNEY.comingNext : 'selada'}</div>`);
+  if (allDone) {
+    rows += eraRow('…', 'sealed',
+      `<div class="sealed-note">${JOURNEYS[JOURNEYS.length - 1].comingNext}</div>`);
+  }
 
-  // Missão do dia: o caminho de menor esforço é sempre um único toque (GDD §2);
-  // resgatar memória em risco vem antes de conteúdo novo (GDD §3.1).
-  const target = NODES.find((n, i) => !S.lit[n.id] && (i === 0 || S.lit[NODES[i - 1].id]));
+  const litInCj = journeyNodes(cj).filter((n) => S.lit[n.id]).length;
   const rescueCard = due.length ? `
     <div class="card mission-card rescue">
       <p class="eyebrow">memória se apagando</p>
       <div class="mn">${due.length === 1 ? '1 memória vacilando' : due.length + ' memórias vacilando'} — ${duePlaces}</div>
       <button class="cta gold" id="rescueBtn">🔥 reacender agora — XP em dobro</button>
     </div>` : '';
-  const missionCard = !allLit && target ? `
+  const missionCard = !allDone && target ? `
     <div class="card mission-card">
       <p class="eyebrow">${due.length ? 'depois, se quiser' : 'missão de hoje'}</p>
       <div class="mn">${target.name}</div>
@@ -446,16 +473,16 @@ function renderCorridor() {
     </div>` : '';
 
   screen().innerHTML = `
-    ${thoth(say, allLit && !due.length)}
+    ${thoth(say, allDone && !due.length)}
     ${rescueCard}
     ${missionCard}
     <div class="card journey-head">
       <p class="eyebrow">jornada</p>
-      <div class="q">${JOURNEY.centralQuestion}</div>
-      <div class="prog">${JOURNEY.title} · ${done} de ${NODES.length} salões acesos</div>
+      <div class="q">${cj.centralQuestion}</div>
+      <div class="prog">${cj.title} · ${litInCj} de ${cj.nodeOrder.length} salões acesos</div>
     </div>
     <div role="list">${rows}</div>
-    ${allLit && !due.length ? '<button class="cta ghost" id="againBtn">recomeçar o protótipo</button>' : ''}
+    ${allDone && !due.length ? '<button class="cta ghost" id="againBtn">recomeçar o protótipo</button>' : ''}
   `;
 
   const rescueBtn = $('rescueBtn');
@@ -471,7 +498,7 @@ function renderCorridor() {
   });
   const again = $('againBtn');
   if (again) again.addEventListener('click', () => {
-    Object.assign(S, { xp: 0, lit: {}, lessonsDone: {}, nodeXp: 0, reviews: {}, timeShift: 0 });
+    Object.assign(S, { xp: 0, lit: {}, lessonsDone: {}, nodeXp: 0, reviews: {}, timeShift: 0, events: [] });
     try { localStorage.removeItem(STORE_KEY); } catch {}
     refreshXp(); renderCorridor();
   });
@@ -484,7 +511,7 @@ function startReviewMission(due) {
   const nextOne = () => {
     if (ix >= due.length) { finishReviewMission(); return; }
     const item = due[ix++];
-    const node = NODES.find((n) => n.id === item.nodeId);
+    const node = nodeOf(item.nodeId);
     const claim = node.claims.find((c) => c.id === item.claimId);
     const variant = claim.reviewVariants[0]; // formato ≠ da lição (GDD §6.4)
     setProgress(Math.round((ix / (due.length + 1)) * 100));
@@ -533,7 +560,7 @@ function nextStep() {
 function stepScreen(html) { screen().innerHTML = html; screen().scrollTop = 0; }
 
 function startNode(nodeId) {
-  const node = NODES.find((n) => n.id === nodeId);
+  const node = nodeOf(nodeId);
   startLesson(node, S.lessonsDone[node.id] ?? 0);
 }
 
@@ -567,6 +594,22 @@ function startLesson(node, lessonIx) {
       stepScreen(`
         <p class="eyebrow">${eyebrow}</p>
         <div class="card"><p class="serif">${gloss(paragraph)}</p></div>
+        <button class="cta" id="go">continuar</button>`);
+      $('go').addEventListener('click', nextStep);
+    });
+  }
+
+  if (lesson.echoes && lesson.echoes.length) {
+    list.push(() => {
+      stepScreen(`
+        <p class="eyebrow">${node.place} · ecos do Corredor</p>
+        ${lesson.echoes.map((e, i) => {
+          const src = nodeOf(e.node);
+          return `<div class="card eco fade-in" style="animation-delay:${i * 0.4}s">
+            <p class="eyebrow">🔥 eco de ${src ? src.place : e.node}${src && S.lit[src.id] ? ' — um salão que você acendeu' : ''}</p>
+            <p class="serif">${gloss(e.text)}</p>
+          </div>`;
+        }).join('')}
         <button class="cta" id="go">continuar</button>`);
       $('go').addEventListener('click', nextStep);
     });
@@ -686,10 +729,14 @@ function celebrateNode(node) {
   }
   persist();
   setProgress(100);
-  const isLast = litCount() === NODES.length;
-  const say = litCount() === 1
+  const j = journeyOfNode(node.id);
+  const isLast = journeyDone(j);
+  const totalLit = NODES.filter((n) => S.lit[n.id]).length;
+  const say = totalLit === 1
     ? 'Nosso primeiro salão! Desenhei uma coluna grega no meu pergaminho. 🏛️'
-    : 'Roma no pergaminho — uma águia ao lado da coluna. O fio está quase inteiro nas nossas mãos.';
+    : isLast
+      ? 'Mais um fio inteiro no pergaminho, Guardião. Minha pena está ficando pesada de história.'
+      : `${node.place} no pergaminho. O Corredor está cada vez menos escuro — e a próxima porta já range.`;
 
   stepScreen(`
     <div class="celebrate">
@@ -705,24 +752,22 @@ function celebrateNode(node) {
       <button class="cta fade-in" style="animation-delay:3.5s" id="go">${isLast ? 'a pergunta final' : 'voltar ao Corredor'}</button>
     </div>`);
   S.nodeXp = 0;
-  $('go').addEventListener('click', () => (isLast ? renderSynthesis() : renderCorridor()));
+  $('go').addEventListener('click', () => (isLast ? renderSynthesis(j) : renderCorridor()));
 }
 
-/* ---------- momento de síntese (regra de prontidão da jornada) ----------
-   A jornada não termina em celebração: termina em compreensão.
-   Pergunta que atravessa os nós → reenquadramento → só então a festa. */
-function renderSynthesis() {
-  const syn = JOURNEY.synthesis;
-  if (!syn) { celebrateJourney(); return; }
+/* ---------- momento de síntese (regra de prontidão da jornada) ---------- */
+function renderSynthesis(j) {
+  const syn = j.synthesis;
+  if (!syn) { celebrateJourney(j); return; }
   setProgress(null);
   stepScreen(`
     <p class="eyebrow">síntese · a pergunta que atravessa a jornada</p>
     <div class="card" id="ic"></div>`);
-  renderInteraction(syn.question, { claims: [] }, $('ic'), renderReframe);
+  renderInteraction(syn.question, { claims: [] }, $('ic'), () => renderReframe(j));
 }
 
-function renderReframe() {
-  const syn = JOURNEY.synthesis;
+function renderReframe(j) {
+  const syn = j.synthesis;
   stepScreen(`
     <p class="eyebrow">síntese · o que mudou no seu olhar</p>
     ${syn.reframe.map((p, i) =>
@@ -733,40 +778,67 @@ function renderReframe() {
       <div class="shift-row after"><span class="eyebrow">como você sai</span><p class="serif"><b>${syn.shift.after}</b></p></div>
     </div>
     <button class="cta gold fade-in" style="animation-delay:${syn.reframe.length * 0.5 + 0.9}s" id="go">agora sim — ver a jornada</button>`);
-  $('go').addEventListener('click', celebrateJourney);
+  $('go').addEventListener('click', () => celebrateJourney(j));
 }
 
-function celebrateJourney() {
+function celebrateJourney(j) {
   setProgress(null);
-  const claims = NODES.reduce((sum, n) => sum + n.claims.length, 0);
+  S.events.push({ t: Date.now(), e: 'journey_complete', j: j.id });
+  persist();
+  const jNodes = journeyNodes(j);
+  const claims = jNodes.reduce((sum, n) => sum + n.claims.length, 0);
+  const nextJ = j.next ? JOURNEYS.find((x) => x.id === j.next.journey) : null;
+
+  const nextCard = nextJ
+    ? `
+      <div class="card fade-in" style="animation-delay:1.6s; width:100%; text-align:left">
+        <p class="eyebrow">mas…</p>
+        <p class="serif"><b>${j.next.provocation}</b></p>
+        <button class="cta gold" id="discoverBtn" style="margin-top:8px">▶ descobrir</button>
+      </div>
+      <button class="cta ghost fade-in" style="animation-delay:2.2s" id="go">por hoje chega — fechar a sessão</button>`
+    : `
+      <div class="card fade-in" style="animation-delay:1.6s; width:100%; text-align:left">
+        <p class="eyebrow">o Arquivo continua</p>
+        <p class="serif">${j.comingNext}</p>
+      </div>
+      <button class="cta gold fade-in" style="animation-delay:2.2s" id="go">fechar a sessão</button>`;
+
   stepScreen(`
     <div class="celebrate">
       <div class="jcard fade-in">
         <p class="eyebrow">jornada concluída</p>
-        <div class="jt">${JOURNEY.title}</div>
-        <div class="thread">Atenas → Roma → Iluminismo → 1988 → <b>você</b></div>
+        <div class="jt">${j.title}</div>
+        <div class="thread">${j.thread ?? ''}</div>
         <div class="stats">
-          <div class="stat"><b>${NODES.length}</b><span>salões acesos</span></div>
+          <div class="stat"><b>${jNodes.length}</b><span>salões acesos</span></div>
           <div class="stat"><b>${claims}</b><span>memórias guardadas</span></div>
           <div class="stat"><b>${S.xp}</b><span>xp</span></div>
         </div>
       </div>
       <div class="fade-in" style="animation-delay:.8s; width:100%; text-align:left">
-        ${thoth('Você respondeu a pergunta da jornada, Guardião: <b>' + JOURNEY.centralQuestion + '</b> E a resposta atravessou 2.500 anos até chegar em você.', true)}
+        ${thoth('Você respondeu a pergunta da jornada, Guardião: <b>' + j.centralQuestion + '</b>', true)}
       </div>
-      <div class="card fade-in" style="animation-delay:1.6s; width:100%; text-align:left">
-        <p class="eyebrow">a próxima porta</p>
-        <p class="serif">${JOURNEY.comingNext}</p>
-      </div>
-      <button class="cta gold fade-in" style="animation-delay:2.2s" id="go">fechar a sessão</button>
+      ${nextCard}
     </div>`);
-  $('go').addEventListener('click', renderSessionClose);
+  const discover = $('discoverBtn');
+  if (discover && nextJ) discover.addEventListener('click', () => {
+    S.events.push({ t: Date.now(), e: 'next_journey_via_provocation', j: nextJ.id });
+    persist();
+    startNode(journeyNodes(nextJ)[0].id);
+  });
+  const go = $('go');
+  if (go) go.addEventListener('click', () => {
+    S.events.push({ t: Date.now(), e: 'session_closed_after_journey', j: j.id });
+    persist();
+    renderSessionClose();
+  });
 }
 
 function renderSessionClose() {
   stepScreen(`
     <p class="eyebrow">até amanhã, Guardião</p>
-    ${thoth('Vou guardar as memórias de Atenas e Roma com cuidado. Em <b>3 dias</b> as chamas vão querer vacilar — e eu te chamo para reacendê-las. É assim que elas viram suas para sempre.')}
+    ${thoth('Vou guardar as memórias desta sessão com cuidado. Em <b>3 dias</b> as chamas vão querer vacilar — e eu te chamo para reacendê-las. É assim que elas viram suas para sempre.')}
     <button class="cta" id="go">voltar ao Corredor</button>`);
   $('go').addEventListener('click', renderCorridor);
 }
