@@ -1,0 +1,590 @@
+<title>Mneme — Protótipo da primeira sessão</title>
+<style>
+  :root {
+    --paper: #F2EBDC;
+    --paper-raised: #FAF5EA;
+    --paper-deep: #E7DDC8;
+    --ink: #20293C;
+    --ink-soft: #5A6273;
+    --ink-faint: #8B90A0;
+    --gold: #B8892F;
+    --gold-soft: #D9C08A;
+    --era: #2E7D74;
+    --era-soft: #BFD8D3;
+    --flame: #D98E2B;
+    --annotate: #8A5A3B;
+    --line: #D8CCB4;
+    --shadow: 0 1px 2px rgba(32,41,60,.06), 0 6px 24px rgba(32,41,60,.07);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #151A26;
+      --paper-raised: #1E2534;
+      --paper-deep: #10141E;
+      --ink: #E9E2D0;
+      --ink-soft: #A8AEBE;
+      --ink-faint: #767C8C;
+      --gold: #D4A64A;
+      --gold-soft: #6B5626;
+      --era: #4FA396;
+      --era-soft: #24443F;
+      --flame: #E9A23B;
+      --annotate: #C89A6B;
+      --line: #2C3446;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 28px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #F2EBDC; --paper-raised: #FAF5EA; --paper-deep: #E7DDC8;
+    --ink: #20293C; --ink-soft: #5A6273; --ink-faint: #8B90A0;
+    --gold: #B8892F; --gold-soft: #D9C08A; --era: #2E7D74; --era-soft: #BFD8D3;
+    --flame: #D98E2B; --annotate: #8A5A3B; --line: #D8CCB4;
+    --shadow: 0 1px 2px rgba(32,41,60,.06), 0 6px 24px rgba(32,41,60,.07);
+  }
+  :root[data-theme="dark"] {
+    --paper: #151A26; --paper-raised: #1E2534; --paper-deep: #10141E;
+    --ink: #E9E2D0; --ink-soft: #A8AEBE; --ink-faint: #767C8C;
+    --gold: #D4A64A; --gold-soft: #6B5626; --era: #4FA396; --era-soft: #24443F;
+    --flame: #E9A23B; --annotate: #C89A6B; --line: #2C3446;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 28px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper-deep);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 16px 8px 40px;
+  }
+  .phone {
+    width: 100%;
+    max-width: 430px;
+    background: var(--paper);
+    border-radius: 22px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 92vh;
+    border: 1px solid var(--line);
+  }
+  header.bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 18px 10px;
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .brand { font-family: Georgia, 'Iowan Old Style', 'Times New Roman', serif; font-size: 18px; letter-spacing: .04em; }
+  .brand small { color: var(--ink-faint); font-family: system-ui, sans-serif; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; display: block; }
+  .xp-chip {
+    font-variant-numeric: tabular-nums;
+    font-size: 12px; color: var(--ink-soft);
+    border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px;
+    background: var(--paper-raised);
+  }
+  main { flex: 1; overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+
+  .eyebrow {
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--ink-faint); margin: 0 0 2px;
+  }
+  h1, h2, h3 { font-family: Georgia, 'Iowan Old Style', serif; margin: 0; text-wrap: balance; font-weight: 600; }
+  h1 { font-size: 24px; line-height: 1.25; }
+  h2 { font-size: 19px; line-height: 1.3; }
+  p { line-height: 1.62; margin: 0; font-size: 15.5px; }
+  .serif { font-family: Georgia, 'Iowan Old Style', serif; }
+
+  .card {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  /* ---- Thoth ---- */
+  .thoth-row { display: flex; gap: 12px; align-items: flex-start; }
+  .thoth {
+    flex: 0 0 46px; width: 46px; height: 46px; border-radius: 50%;
+    background: var(--era-soft);
+    display: flex; align-items: center; justify-content: center;
+    border: 1.5px solid var(--era);
+  }
+  .thoth svg { width: 30px; height: 30px; }
+  .thoth-say { flex: 1; font-size: 14.5px; color: var(--ink-soft); line-height: 1.55; padding-top: 4px; font-style: italic; }
+  .thoth.bounce { animation: bounce .7s ease; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 30%{transform:translateY(-7px)} 60%{transform:translateY(2px)} }
+
+  /* ---- Corredor / timeline ---- */
+  .corridor { display: flex; flex-direction: column; }
+  .era-row { display: flex; gap: 14px; min-height: 64px; }
+  .rail { width: 34px; display: flex; flex-direction: column; align-items: center; }
+  .rail .seg { flex: 1; width: 3px; background: var(--line); }
+  .node-dot {
+    width: 30px; height: 30px; border-radius: 50%;
+    border: 2px solid var(--line); background: var(--paper);
+    display: flex; align-items: center; justify-content: center; font-size: 14px;
+    color: var(--ink-faint); flex: 0 0 auto;
+  }
+  .era-row.sealed .node-dot { background: var(--paper-deep); }
+  .era-row.open .node-dot { border-color: var(--era); color: var(--era); }
+  .era-row.lit .node-dot { border-color: var(--flame); background: var(--gold-soft); }
+  .era-info { flex: 1; padding: 4px 0 18px; }
+  .era-name { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
+  .era-row.open .era-name { color: var(--era); }
+  .node-card {
+    margin-top: 6px; background: var(--paper-raised); border: 1px solid var(--line);
+    border-radius: 12px; padding: 12px 14px; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center; gap: 8px;
+    transition: transform .15s ease;
+  }
+  .node-card:hover { transform: translateY(-1px); }
+  .node-card .nm { font-family: Georgia, serif; font-size: 15.5px; }
+  .node-card .st { font-size: 11px; color: var(--ink-faint); }
+  .node-card.lit { border-color: var(--flame); }
+  .node-card.lit .st { color: var(--flame); }
+  .sealed-note { font-size: 13px; color: var(--ink-faint); font-style: italic; padding: 8px 0 0; }
+  .flame { display: inline-block; }
+  .flame.on { animation: flicker 1.8s infinite ease-in-out; }
+  @keyframes flicker { 0%,100%{opacity:1; transform:scale(1)} 50%{opacity:.75; transform:scale(.92)} }
+
+  /* ---- Interações ---- */
+  .opt {
+    text-align: left; width: 100%;
+    background: var(--paper); border: 1.5px solid var(--line); border-radius: 12px;
+    padding: 13px 14px; font-size: 15px; color: var(--ink); cursor: pointer;
+    font-family: inherit; line-height: 1.45;
+    transition: border-color .15s ease, transform .1s ease;
+  }
+  .opt:hover { border-color: var(--era); transform: translateY(-1px); }
+  .opt.picked-right { border-color: var(--era); background: var(--era-soft); }
+  .opt.picked-annotate { border-color: var(--annotate); }
+  .opt:disabled { cursor: default; opacity: .55; }
+  .opt.picked-right:disabled, .opt.picked-annotate:disabled { opacity: 1; }
+  .annotation {
+    border-left: 3px solid var(--annotate);
+    padding: 10px 14px; font-size: 14.5px; color: var(--ink-soft);
+    background: color-mix(in srgb, var(--annotate) 7%, transparent);
+    border-radius: 0 10px 10px 0; line-height: 1.6;
+  }
+  .annotation b { color: var(--annotate); font-weight: 600; }
+  .stamp {
+    align-self: flex-end; font-variant-numeric: tabular-nums;
+    font-size: 12px; color: var(--gold); letter-spacing: .06em;
+    animation: stamp .5s ease;
+  }
+  @keyframes stamp { 0%{opacity:0; transform:scale(1.6)} 100%{opacity:1; transform:scale(1)} }
+
+  /* ---- Consenso ---- */
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-soft); border: 1px solid var(--line); border-radius: 999px;
+    padding: 4px 10px; background: var(--paper);
+  }
+  .consensus-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--ink-soft);
+  }
+  .consensus-badge .pct { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--gold); font-size: 15px; }
+  .debate-btn {
+    background: none; border: none; color: var(--era); font-size: 14px;
+    text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
+    padding: 0; font-family: inherit; text-align: left;
+  }
+  .debate-panel { display: flex; flex-direction: column; gap: 10px; border-top: 1px dashed var(--line); padding-top: 12px; }
+  .position { font-size: 14px; line-height: 1.55; color: var(--ink-soft); }
+  .position b { color: var(--ink); font-weight: 600; }
+  .position .acc { font-size: 11.5px; color: var(--ink-faint); letter-spacing: .05em; text-transform: uppercase; }
+
+  /* ---- Conexões ---- */
+  .connections { display: flex; flex-direction: column; gap: 7px; }
+  .connections .cx { display: flex; gap: 9px; font-size: 15px; align-items: baseline; opacity: 0; animation: rise .5s ease forwards; }
+  .connections .cx .tick { color: var(--era); font-weight: 700; }
+  @keyframes rise { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: translateY(0);} }
+
+  /* ---- CTA ---- */
+  .cta {
+    background: var(--ink); color: var(--paper);
+    border: none; border-radius: 12px; padding: 15px 18px;
+    font-size: 15.5px; font-weight: 600; cursor: pointer; font-family: inherit;
+    letter-spacing: .02em;
+    transition: transform .12s ease, opacity .12s ease;
+  }
+  .cta:hover { transform: translateY(-1px); }
+  .cta.gold { background: var(--gold); color: #fff; }
+  .cta.ghost { background: none; color: var(--ink-soft); border: 1.5px solid var(--line); font-weight: 500; }
+
+  /* ---- Celebração ---- */
+  .celebrate { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; padding: 26px 18px; }
+  .big-flame { font-size: 54px; animation: ignite 1.1s ease; }
+  @keyframes ignite { 0%{transform:scale(.2); opacity:0} 55%{transform:scale(1.25)} 100%{transform:scale(1); opacity:1} }
+  .fade-in { opacity: 0; animation: rise .6s ease forwards; }
+  .progress-track { height: 5px; background: var(--line); border-radius: 999px; overflow: hidden; margin: 0 18px; }
+  .progress-fill { height: 100%; background: var(--gold); border-radius: 999px; transition: width .5s ease; }
+  footer.note { text-align: center; font-size: 11px; color: var(--ink-faint); padding: 12px; }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    .connections .cx, .fade-in { opacity: 1 !important; }
+  }
+</style>
+
+<div class="phone">
+  <header class="bar">
+    <div class="brand">Mneme<small>protótipo · primeira sessão</small></div>
+    <div class="xp-chip" id="xpChip" hidden>0 XP</div>
+  </header>
+  <div class="progress-track" id="ptrack" hidden><div class="progress-fill" id="pfill" style="width:0%"></div></div>
+  <main id="screen"></main>
+  <footer class="note">Conteúdo real de <code>content/history/nodes/democracia-ateniense</code> · celebração na ordem do GDD §9 · nenhum dado sai desta página</footer>
+</div>
+
+<script>
+'use strict';
+
+/* ---------- estado ---------- */
+const S = {
+  xp: 0,
+  xpVisible: false,          // GDD §5.0: XP é registro; aparece só no fim
+  lesson1Done: false,
+  lesson2Done: false,
+  nodeLit: false,
+};
+
+const thothSVG = `<svg viewBox="0 0 40 40" fill="none" aria-label="Thoth, o escriba">
+  <rect x="9" y="6" width="22" height="28" rx="4" fill="var(--paper-raised)" stroke="var(--ink-soft)" stroke-width="1.6"/>
+  <path d="M9 10 q-3 2 0 4 M31 26 q3 2 0 4" stroke="var(--ink-soft)" stroke-width="1.6" fill="none"/>
+  <circle cx="16.5" cy="17" r="1.7" fill="var(--ink)"/>
+  <circle cx="23.5" cy="17" r="1.7" fill="var(--ink)"/>
+  <path d="M16 23 q4 3.4 8 0" stroke="var(--ink)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+  <path d="M28 8 l6 -5 l-2 7 z" fill="var(--gold)"/>
+</svg>`;
+
+const $ = (id) => document.getElementById(id);
+const screen = () => $('screen');
+
+function setProgress(pct) {
+  $('ptrack').hidden = pct === null;
+  if (pct !== null) $('pfill').style.width = pct + '%';
+}
+
+function gainXp(n, host) {
+  S.xp += n;
+  if (host) {
+    const el = document.createElement('div');
+    el.className = 'stamp';
+    el.textContent = '+' + n;
+    host.appendChild(el);
+  }
+}
+
+function thoth(text, bounce = false) {
+  return `<div class="thoth-row">
+    <div class="thoth ${bounce ? 'bounce' : ''}">${thothSVG}</div>
+    <div class="thoth-say">${text}</div>
+  </div>`;
+}
+
+/* ---------- Corredor do Tempo ---------- */
+function renderCorridor() {
+  setProgress(null);
+  const lit = S.nodeLit;
+  screen().innerHTML = `
+    ${thoth(lit
+      ? 'Guardião… olhe. A Grécia está acesa. <b>Nós</b> fizemos isso.'
+      : 'Bem-vindo ao Corredor do Tempo, Guardião. Os salões estão apagados — mas encontrei uma porta aberta na Grécia. Vamos?', lit)}
+    <div class="corridor" role="list">
+      ${eraRow('Pré-História', 'sealed')}
+      ${eraRow('Mesopotâmia', 'sealed')}
+      ${eraRow('Egito', 'sealed')}
+      ${eraRow('Grécia', lit ? 'lit' : 'open', `
+        <div class="node-card ${lit ? 'lit' : ''}" id="nodeCard" role="button" tabindex="0" aria-label="A democracia ateniense">
+          <div>
+            <div class="nm">A democracia ateniense</div>
+            <div class="st">${lit
+              ? 'Compreendido · chama acesa · revisão em 3 dias'
+              : S.lesson1Done ? 'Lição 2 de 2 · continuar' : 'Missão de hoje · lição 1 de 2'}</div>
+          </div>
+          <div class="flame ${lit ? 'on' : ''}" style="font-size:22px">${lit ? '🔥' : '🕯️'}</div>
+        </div>`)}
+      ${eraRow('Roma', 'sealed', `<div class="sealed-note">selada — “por que Roma copiou os gregos, e o que se recusou a copiar”</div>`)}
+    </div>
+    ${lit ? `<button class="cta ghost" id="againBtn">recomeçar o protótipo</button>` : ''}
+  `;
+  const card = $('nodeCard');
+  if (card && !lit) {
+    const go = () => (S.lesson1Done ? startLesson2() : startLesson1());
+    card.addEventListener('click', go);
+    card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') go(); });
+  }
+  const again = $('againBtn');
+  if (again) again.addEventListener('click', () => { Object.assign(S, { xp: 0, lesson1Done: false, lesson2Done: false, nodeLit: false }); $('xpChip').hidden = true; renderCorridor(); });
+}
+
+function eraRow(name, state, inner = '') {
+  return `<div class="era-row ${state}" role="listitem">
+    <div class="rail"><div class="node-dot">${state === 'lit' ? '🔥' : state === 'open' ? '◈' : '·'}</div><div class="seg"></div></div>
+    <div class="era-info"><div class="era-name">${name}</div>${inner}</div>
+  </div>`;
+}
+
+/* ---------- player de lição (máquina de passos) ---------- */
+let steps = [];
+let stepIx = 0;
+
+function playSteps(list) {
+  steps = list; stepIx = 0;
+  nextStep();
+}
+function nextStep() {
+  if (stepIx >= steps.length) return;
+  const step = steps[stepIx++];
+  setProgress(Math.round((stepIx / steps.length) * 100));
+  step();
+}
+
+function stepScreen(html) {
+  screen().innerHTML = html;
+  screen().scrollTop = 0;
+}
+
+function optButtons(options, onPick) {
+  return options.map((o, i) =>
+    `<button class="opt" data-i="${i}">${o}</button>`).join('');
+}
+
+function wireOptions(handler) {
+  screen().querySelectorAll('.opt').forEach((b) =>
+    b.addEventListener('click', () => handler(Number(b.dataset.i), b)));
+}
+
+/* ---------- Lição 1 — O sorteio que escandalizaria hoje ---------- */
+function startLesson1() {
+  playSteps([
+    // Gancho: decisão situada antes de qualquer explicação (LDD §3)
+    () => {
+      stepScreen(`
+        <p class="eyebrow">Grécia · lição 1 de 2</p>
+        <h1>O sorteio que escandalizaria hoje</h1>
+        <div class="card">
+          <p class="serif">Você é um cidadão de Atenas, 450 a.C. Amanhã a cidade escolhe quem vai administrar o tesouro público.</p>
+          <p><b>Como você prefere escolher?</b></p>
+          ${optButtons(['Eleição com candidatos', 'Sorteio entre os cidadãos', 'Indicação pelos mais ricos'])}
+          <div id="fb"></div>
+        </div>`);
+      wireOptions((i, btn) => {
+        screen().querySelectorAll('.opt').forEach((b) => (b.disabled = true));
+        btn.classList.add('picked-right');
+        $('fb').innerHTML = `
+          <div class="annotation">${i === 1
+            ? 'Você escolheu como um ateniense — e isso é raro hoje. Veja por quê.'
+            : 'Escolha registrada — não há resposta errada aqui. Mas a escolha ateniense vai te surpreender.'}</div>
+          <button class="cta" id="go">continuar</button>`;
+        $('go').addEventListener('click', nextStep);
+      });
+    },
+    // Narrativa
+    () => {
+      stepScreen(`
+        <p class="eyebrow">Grécia · lição 1 de 2</p>
+        <div class="card">
+          <p class="serif">Se você respondeu “votando no melhor candidato”, os atenienses discordariam de você — com veemência.</p>
+          <p class="serif">Para a democracia ateniense, <b>eleição era coisa de aristocrata</b>: quem vence eleições é quem tem nome, dinheiro e boa oratória. O método verdadeiramente democrático, para eles, era o <b>sorteio</b>.</p>
+        </div>
+        <button class="cta" id="go">e a lógica disso?</button>`);
+      $('go').addEventListener('click', nextStep);
+    },
+    () => {
+      stepScreen(`
+        <p class="eyebrow">Grécia · lição 1 de 2</p>
+        <div class="card">
+          <p class="serif">A lógica: se todo cidadão é capaz de participar do governo, <b>o acaso é mais justo que a fama</b>.</p>
+          <p class="serif">Qualquer cidadão podia ser sorteado para a maioria dos cargos — do conselho que preparava as leis aos tribunais populares. Eleições ficavam só para funções técnicas, como generais.</p>
+        </div>
+        <button class="cta" id="go">entendi — me testa</button>`);
+      $('go').addEventListener('click', nextStep);
+    },
+    // Interação causal (objetiva) com caminho do erro
+    () => {
+      stepScreen(`
+        <p class="eyebrow">Grécia · pergunta causal</p>
+        <div class="card">
+          <p><b>Por que os atenienses viam o sorteio como MAIS democrático que a eleição?</b></p>
+          ${optButtons([
+            'Porque a eleição favorece quem tem fama, dinheiro e oratória',
+            'Porque o sorteio era mais rápido de organizar',
+            'Porque os deuses escolhiam os sorteados'])}
+          <div id="fb"></div>
+        </div>`);
+      wireOptions((i, btn) => {
+        const fb = $('fb');
+        if (i === 0) {
+          screen().querySelectorAll('.opt').forEach((b) => (b.disabled = true));
+          btn.classList.add('picked-right');
+          gainXp(10, fb);
+          fb.insertAdjacentHTML('beforeend', `<button class="cta" id="go">continuar</button>`);
+          $('go').addEventListener('click', nextStep);
+        } else {
+          btn.classList.add('picked-annotate'); btn.disabled = true;
+          fb.innerHTML = `<div class="annotation"><b>Ainda não — e aqui está o porquê:</b> a rapidez não era o ponto. O argumento era de igualdade: a eleição premia vantagens que nem todo cidadão tem (nome, riqueza, retórica); o sorteio trata todos como igualmente capazes de governar. Tente de novo.</div>`;
+        }
+      });
+    },
+    // Exploração de debate (nunca objetiva — EDITORIAL_POLICY §3)
+    () => {
+      stepScreen(`
+        <p class="eyebrow">Grécia · a história em disputa</p>
+        <div class="card">
+          <span class="chip">Interpretação historiográfica</span>
+          <p class="serif">A democracia nasceu <b>de cima</b> (disputa entre elites) ou <b>de baixo</b> (ação popular)?</p>
+          <div class="consensus-badge">Nível de consenso <span class="pct">55%</span></div>
+          <button class="debate-btn" id="whyBtn">Por que existe debate sobre este assunto?</button>
+          <div id="panel"></div>
+        </div>`);
+      $('whyBtn').addEventListener('click', () => {
+        $('panel').innerHTML = `
+          <div class="debate-panel">
+            <div class="position"><b>Revolução popular:</b> a ação coletiva do demos foi decisiva (Ober, <i>The Athenian Revolution</i>).<div class="acc">aceitação ampla, não unânime</div></div>
+            <div class="position"><b>Subproduto de elites:</b> competição entre facções aristocráticas, formalizada por Clístenes.<div class="acc">minoritária relevante</div></div>
+            <button class="cta" id="go">fascinante — seguir</button>
+          </div>`;
+        $('go').addEventListener('click', nextStep);
+      });
+    },
+    // Conexão (toda lição termina apontando para fora — LDD §3)
+    () => {
+      stepScreen(`
+        <p class="eyebrow">Grécia · lição 1 concluída</p>
+        <h2>Agora você entende melhor:</h2>
+        <div class="card connections">
+          <div class="cx" style="animation-delay:.1s"><span class="tick">✔</span> por que “democracia representativa” soaria estranho em Atenas</div>
+          <div class="cx" style="animation-delay:.5s"><span class="tick">✔</span> o debate moderno sobre sorteio em conselhos cidadãos</div>
+          <div class="cx" style="animation-delay:.9s"><span class="tick">✔</span> o que Roma decidiu fazer diferente</div>
+        </div>
+        ${thoth('Anotei tudo no meu pergaminho. Falta uma pergunta incômoda: quem podia, de fato, ser sorteado?')}
+        <button class="cta gold" id="go">lição 2 — quem ficava de fora</button>`);
+      $('go').addEventListener('click', () => { S.lesson1Done = true; startLesson2(); });
+    },
+  ]);
+}
+
+/* ---------- Lição 2 — Quem ficava de fora ---------- */
+function startLesson2() {
+  playSteps([
+    () => {
+      stepScreen(`
+        <p class="eyebrow">Grécia · lição 2 de 2</p>
+        <h1>Quem ficava de fora</h1>
+        <div class="card">
+          <p class="serif">A “cidade de todos os cidadãos” tinha cerca de <b>300 mil habitantes</b>.</p>
+          <p><b>Quantos podiam votar na assembleia?</b></p>
+          ${optButtons(['Quase todos — uns 250 mil', 'Cerca de metade', 'Cerca de 30 mil — um em cada dez'])}
+          <div id="fb"></div>
+        </div>`);
+      wireOptions((i, btn) => {
+        screen().querySelectorAll('.opt').forEach((b) => (b.disabled = true));
+        btn.classList.add(i === 2 ? 'picked-right' : 'picked-annotate');
+        $('fb').innerHTML = `
+          <div class="annotation">${i === 2 ? '<b>Exato.</b>' : '<b>Menos — bem menos:</b>'} cerca de 30 mil. <b>Mulheres, estrangeiros residentes (metecos) e pessoas escravizadas ficavam fora</b> da vida política, sempre. O demos era radicalmente igualitário por dentro — e radicalmente excludente por fora.</div>
+          <button class="cta" id="go">continuar</button>`;
+        if (i === 2) gainXp(10, $('fb'));
+        $('go').addEventListener('click', nextStep);
+      });
+    },
+    // Contrafactual (objetiva)
+    () => {
+      stepScreen(`
+        <p class="eyebrow">Grécia · e se…?</p>
+        <div class="card">
+          <p><b>Se Atenas tivesse estendido a cidadania a metecos e mulheres, o que mudaria no funcionamento do sorteio?</b></p>
+          ${optButtons([
+            'Nada no mecanismo — mudaria QUEM entra no sorteio',
+            'O sorteio se tornaria impossível de organizar',
+            'A assembleia deixaria de existir'])}
+          <div id="fb"></div>
+        </div>`);
+      wireOptions((i, btn) => {
+        const fb = $('fb');
+        if (i === 0) {
+          screen().querySelectorAll('.opt').forEach((b) => (b.disabled = true));
+          btn.classList.add('picked-right');
+          gainXp(10, fb);
+          fb.insertAdjacentHTML('beforeend', `<button class="cta" id="go">continuar</button>`);
+          $('go').addEventListener('click', nextStep);
+        } else {
+          btn.classList.add('picked-annotate'); btn.disabled = true;
+          fb.innerHTML = `<div class="annotation"><b>Ainda não:</b> o mecanismo do sorteio não depende do tamanho do corpo cívico. A exclusão era uma <b>escolha política</b> sobre quem conta como cidadão — não uma limitação técnica. Tente de novo.</div>`;
+        }
+      });
+    },
+    // Causal (objetiva)
+    () => {
+      stepScreen(`
+        <p class="eyebrow">Grécia · pergunta causal</p>
+        <div class="card">
+          <p><b>Por que as reformas de Clístenes (508 a.C.) são tratadas como o marco de nascimento da democracia?</b></p>
+          ${optButtons([
+            'Reorganizaram os cidadãos em tribos que quebravam o poder das famílias aristocráticas',
+            'Aboliram a escravidão em Atenas',
+            'Criaram a primeira eleição presidencial'])}
+          <div id="fb"></div>
+        </div>`);
+      wireOptions((i, btn) => {
+        const fb = $('fb');
+        if (i === 0) {
+          screen().querySelectorAll('.opt').forEach((b) => (b.disabled = true));
+          btn.classList.add('picked-right');
+          gainXp(10, fb);
+          fb.insertAdjacentHTML('beforeend', `<button class="cta" id="go">concluir o nó</button>`);
+          $('go').addEventListener('click', nextStep);
+        } else {
+          btn.classList.add('picked-annotate'); btn.disabled = true;
+          fb.innerHTML = `<div class="annotation"><b>Ainda não:</b> a escravidão <i>não</i> foi abolida — é exatamente essa convivência entre igualdade cívica e exclusão que você acabou de ver. O marco de Clístenes é a reengenharia do corpo cívico: tribos novas que misturavam regiões e enfraqueciam clãs. Tente de novo.</div>`;
+        }
+      });
+    },
+    // Celebração do nó — ordem fixa do GDD §9: nó → Thoth → conexões → XP por último
+    () => {
+      S.lesson2Done = true; S.nodeLit = true;
+      setProgress(100);
+      stepScreen(`
+        <div class="celebrate">
+          <div class="big-flame flame on">🔥</div>
+          <h1 class="fade-in" style="animation-delay:.5s">A democracia ateniense<br>acendeu no Corredor</h1>
+          <div class="fade-in" style="animation-delay:1.2s; width:100%">${thoth('Nosso primeiro salão! Desenhei uma coluna grega no meu pergaminho. 🏛️', true)}</div>
+          <div class="card connections fade-in" style="animation-delay:2s; width:100%; text-align:left">
+            <p class="eyebrow">este conhecimento se conecta a</p>
+            <div class="cx" style="animation-delay:2.2s"><span class="tick">✔</span> República Romana</div>
+            <div class="cx" style="animation-delay:2.5s"><span class="tick">✔</span> Iluminismo</div>
+            <div class="cx" style="animation-delay:2.8s"><span class="tick">✔</span> Constituição de 1988</div>
+          </div>
+          <div class="fade-in" style="animation-delay:3.4s">
+            <span class="xp-chip">+${S.xp} XP</span>
+          </div>
+          <button class="cta fade-in" style="animation-delay:3.8s" id="go">fechar a sessão</button>
+        </div>`);
+      $('xpChip').textContent = S.xp + ' XP';
+      $('xpChip').hidden = false;
+      $('go').addEventListener('click', nextStep);
+    },
+    // Fecho de sessão: gancho do amanhã + SRS vestido de missão (GDD §3.4/§6)
+    () => {
+      setProgress(null);
+      stepScreen(`
+        <p class="eyebrow">até amanhã, Guardião</p>
+        <div class="card">
+          <p class="serif"><b>Amanhã:</b> por que Roma copiou os gregos — e o que ela se recusou a copiar.</p>
+        </div>
+        ${thoth('Vou guardar esta memória com cuidado. Em <b>3 dias</b> a chama vai querer vacilar — e eu te chamo para reacendê-la. É assim que ela vira sua para sempre.')}
+        <button class="cta" id="go">voltar ao Corredor</button>`);
+      $('go').addEventListener('click', renderCorridor);
+    },
+  ]);
+}
+
+renderCorridor();
+</script>
