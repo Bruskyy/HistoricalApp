@@ -27,7 +27,7 @@ O produto inteiro é este loop. Tudo o mais é reforço.
                          ↓
             Desbloquear próximo nó        ◄─── Progressão (§5)
                          ↓
-               Sair satisfeito            ◄─── Fecho de sessão (§3.3)
+               Sair satisfeito            ◄─── Fecho de sessão (§3.4)
                          ↓
    Receber missão de revisão no futuro    ◄─── Agendador SRS (§6)
                          ↓
@@ -49,6 +49,46 @@ O diagrama acima opera em três escalas de tempo simultâneas — a progressão 
 
 > Para cada sistema abaixo, a primeira linha declara **[Loop: passo que fortalece]**. Sistema sem passo declarado não entra no produto.
 
+### 1.3 A emoção dominante (o "efeito Zelda")
+
+Todo jogo memorável tem uma emoção dominante (Minecraft: descoberta; Dark Souls: superação; Finch: carinho; Pokémon: coleção). A nossa, em uma frase:
+
+> **A emoção dominante é a descoberta — o arrepio do "agora faz sentido", quando algo distante no tempo de repente se conecta ao mundo do usuário.**
+
+Hierarquia emocional (para resolver conflitos de design):
+
+| Papel | Emoção | Onde vive |
+|---|---|---|
+| **Dominante** | **Descoberta** (de conexões, de causas, de "por que o mundo é assim") | Ganchos, conexões reveladas, fios entre eras no Corredor |
+| Suporte 1 | Carinho | Thoth |
+| Suporte 2 | Coleção/reconstrução | Timeline acendendo, eras completas |
+| Suporte 3 | Continuidade | Streak, missões diárias |
+
+**Regra de decisão:** quando duas opções de design empatarem, vence a que reforça descoberta. Se uma mecânica de suporte (coleção, streak) começar a competir com a descoberta pela atenção do usuário — por exemplo, o usuário completando nós pelo brilho, sem ler as conexões — a mecânica de suporte é atenuada. É a versão em jogo da regra da moldura (VISION §9.1).
+
+### 1.4 Por que isso é divertido (definição explícita)
+
+A diversão central do produto não é ganhar pontos — é **montar o mapa mental da humanidade, uma conexão inesperada por vez**. Os quatro mecanismos de diversão, em ordem de importância:
+
+1. **Lacuna de curiosidade:** cada gancho abre uma pergunta que incomoda não saber ("por que os atenienses achavam eleição aristocrática?") — a diversão de precisar saber o final.
+2. **O momento "aha":** a conexão revelada que reorganiza o que já se sabia ("a Constituição de 1988 ecoa uma assembleia de 2.500 anos atrás") — a recompensa intelectual mais forte que existe, e a que nenhum concorrente da Etapa 1 entrega.
+3. **Reconstrução visível:** ver o Corredor do Tempo passar de escuro a aceso pelas próprias mãos — a satisfação de Minecraft/Civilization aplicada à memória do mundo.
+4. **Crescer junto:** Thoth registrando a jornada da dupla — o carinho do Finch a serviço do conhecimento.
+
+Se os testes mostrarem usuários engajados sem momentos "aha" (mecanismo 2), o produto está falhando na sua diversão central mesmo que as métricas de retenção estejam boas — e é isso que deve ser corrigido primeiro.
+
+### 1.5 O núcleo irredutível (teste de remoção)
+
+Pergunta obrigatória antes de congelar o MVP: **"o que acontece se removermos metade dos sistemas?"** Resposta registrada:
+
+**Núcleo irredutível (4 sistemas — sem qualquer um deles, não há produto):**
+1. Corredor do Tempo (o mundo)
+2. Jornadas/lições (o conteúdo — LDD)
+3. Missões de revisão SRS (a memória)
+4. Thoth (a emoção)
+
+**Camada de suporte (tudo o mais no MVP):** XP, níveis, títulos, streak, cards compartilháveis, notificações. Cada sistema de suporte entra no piloto **instrumentado e sob suspeita**: se removê-lo não enfraquecer nenhum passo do loop nas métricas e nos testes qualitativos, ele sai — o produto ideal é o núcleo mais o mínimo de suporte que os dados justificarem. O piloto deve incluir pelo menos um experimento de ocultação (ex.: esconder XP de uma coorte, §5.0) antes do lançamento público.
+
 ---
 
 ## 2. A sessão ideal (3-10 minutos)
@@ -58,7 +98,7 @@ O diagrama acima opera em três escalas de tempo simultâneas — a progressão 
 1. **Abertura (5s):** Thoth recebe o usuário; o Corredor do Tempo mostra onde ele parou. Zero menus antes de contexto.
 2. **A missão do dia** já está montada (§3) — um toque para começar.
 3. **1-2 lições** (LDD §3) e/ou uma missão de revisão (§6).
-4. **Fecho de sessão (§3.3):** progressão visível + gancho do amanhã.
+4. **Fecho de sessão (§3.4):** progressão visível + gancho do amanhã.
 
 Sem paredes de escolha: o usuário *pode* explorar livremente o Corredor, mas o caminho de menor esforço é sempre "jogar a missão do dia". (Referência: a fricção de "muitos cliques entre vídeos" é reclamação documentada contra o Coursera na Etapa 1.)
 
@@ -83,7 +123,21 @@ Completar o slot 1 **ou** o slot 2 conta para o streak — revisar vale tanto qu
 - **"Memória se apagando" urgente:** nó Dominado em regressão (LDD §6) gera missão destacada com XP em dobro (§10). É o único caso de "urgência" no produto — e é urgência de conhecimento, não de FOMO comercial.
 - **Desafio da semana (V1)** e **eventos temáticos (V2)**: VISION §15 — reutilizam esta mesma estrutura de missão.
 
-### 3.3 Fecho de sessão
+### 3.3 Agência: escolhas reais dentro do guia
+
+**[Loop: "Receber uma missão" — transformar "receba → faça → fim" em "escolha → faça → quero mais"]**
+
+O caminho é guiado, mas o jogador precisa sentir que dirige. Escolhas do MVP — nenhuma compromete o aprendizado, todas aumentam a sensação de autonomia:
+
+- **Escolha de jornada:** desde o onboarding, 2-3 jornadas disponíveis — o usuário decide *qual pergunta quer responder primeiro* ("De onde veio a democracia?" vs. "Como nascem os impérios?"). Trocar de jornada ativa é livre e sem punição.
+- **Ordem da missão diária:** os slots (§3.1) podem ser feitos em qualquer ordem — revisar antes de aprender, ou o contrário.
+- **Escolha dentro da revisão:** quando há várias memórias vacilando, o usuário escolhe qual resgatar primeiro (as demais esperam — o teto do §6.3 protege).
+- **Decisões situadas nas lições** (LDD §7, tipo 7): "você vota?" — a agência *dentro* do conteúdo, a mais importante de todas.
+- **Slot de exploração** (§3.1, slot 3): mergulhar na camada de aprofundamento (LDD §4) ou espiar outra jornada — curiosidade nunca fica bloqueada atrás da missão do dia.
+
+Regra: guiar o próximo passo ≠ trancar os outros. O caminho recomendado é sempre um toque; os alternativos, sempre visíveis.
+
+### 3.4 Fecho de sessão
 
 **[Loop: "Sair satisfeito" + "Retornar"]**
 
@@ -101,6 +155,10 @@ Ao fim da última atividade: (1) resumo emocional — o que acendeu, o que Thoth
 ## 5. XP, níveis e títulos
 
 **[Loop: "Receber feedback" + "Desbloquear próximo nó" (escala de maestria)]**
+
+### 5.0 XP é registro, não pilar (hipótese sob teste)
+
+A progressão *real* do usuário é **Timeline → Conhecimento → Thoth → Jornadas** — coisas que ele vê e sente. XP é a contabilidade por trás disso: útil como moeda comum entre sistemas (ligas futuras, calibração), mas **o loop precisa sobreviver sem ele**. Hipótese registrada para o piloto: uma coorte com XP oculto (só celebração, timeline e Thoth como feedback). Se a retenção e a satisfação não caírem, o XP vira métrica interna e sai da interface. O mesmo vale para níveis. Nada nesta seção é pilar; é instrumentação com roupa de jogo.
 
 ### 5.1 Fontes de XP (hipóteses iniciais)
 
@@ -120,9 +178,11 @@ Ao fim da última atividade: (1) resumo emocional — o que acendeu, o que Thoth
 
 Curva de custo crescente: XP para o nível *n* ≈ `100 × n^1.5` (nível 2: ~283; nível 5: ~1.118; nível 10: ~3.162; nível 20: ~8.944 XP acumulados). Hipótese a calibrar no piloto com a meta: usuário engajado (1 sessão/dia) sobe de nível ~2×/semana no início, desacelerando suavemente.
 
-### 5.3 Títulos do Arquivo
+### 5.3 Títulos do Arquivo (hipótese, não certeza)
 
-**Títulos não são compráveis com XP** — cada um tem um portão de compreensão (Princípio Fundamental aplicado à progressão):
+> **Alerta registrado:** títulos são uma camada gamificada clássica — e é possível que nos testes ninguém ligue para "virei Cronista" e todo mundo ligue para **"terminei Roma"**. Se for isso que os dados mostrarem, os títulos são substituídos por marcos de conteúdo real como identidade pública do progresso (era concluída, jornada completa), e a hierarquia do Arquivo vira detalhe cosmético ou sai. Tratar esta subseção inteira como hipótese de piloto, no mesmo regime do XP (§5.0).
+
+**Se existirem, títulos não são compráveis com XP** — cada um tem um portão de compreensão (Princípio Fundamental aplicado à progressão):
 
 | Título | Requisito (hipótese) |
 |---|---|
@@ -166,6 +226,26 @@ Um nó é **Dominado** quando ≥80% de suas afirmações estão Dominadas (oper
 - **Teto diário de revisão: ~15 afirmações.** Excedente é priorizado por risco e adiado — o produto jamais recebe o usuário com uma pilha de 200 revisões (o colapso clássico do Anki, documentado na Etapa 1). O algoritmo absorve o atraso; o usuário nunca vê dívida.
 - **Invisibilidade total:** nenhum intervalo, porcentagem de retenção ou nome de algoritmo aparece na interface. O usuário vê apenas missões e chamas vacilando.
 - **Pausas longas são bem-vindas de volta:** após ausência de semanas, a primeira sessão é uma missão de resgate curta e generosa (as 10 memórias mais em risco), não um muro de revisões — reencontro, não cobrança.
+
+### 6.4 Loop de dificuldade: Descoberta → Aplicação → Transferência → Domínio
+
+**[Loop: "Responder desafios" — como o desafio cresce sem virar repetição]**
+
+Cada conceito sobe uma escada de exigência cognitiva ao longo da vida dele no produto, usando a taxonomia do LDD §7:
+
+| Degrau | Quando | Tipos de interação (LDD §7) | O que prova |
+|---|---|---|---|
+| **Descoberta** | Gancho da lição | Decisão situada (7), antes de qualquer explicação | Engajou com o problema |
+| **Aplicação** | Dentro da lição | Causal (1), ordenação causal (4), interpretação de fonte (6) | Entendeu o que acabou de ver |
+| **Transferência** | Revisões SRS | Contrafactual (2), aplicação/analogia (3) — **sempre em formato diferente do usado na lição original** | Entendeu de verdade, não decorou a pergunta |
+| **Domínio** | Nível Mestre | Conexão entre nós/eras (5) | Integrou ao mapa mental |
+
+Duas regras anti-repetição:
+
+1. **Revisão nunca repete a pergunta da lição.** Se o usuário viu "por que o sorteio era democrático?" na lição, a revisão pergunta "e se Atenas tivesse adotado eleições — o que mudaria?". Reencontrar a mesma pergunta mede memória da *pergunta*; formato novo mede memória do *conceito*. (É também o que torna o SRS divertido em vez de burocrático — cada revisão contém uma pequena descoberta, alimentando a emoção dominante do §1.3.)
+2. **Variedade de formato dentro da sessão:** duas interações consecutivas nunca usam o mesmo tipo — o ritmo da sessão alterna decidir/explicar/ordenar/conectar.
+
+A dificuldade *percebida* é gerenciada pela banda de acerto 60-85% (LDD §9.3); a dificuldade *estrutural* é esta escada. As duas coisas são medidas separadamente no piloto.
 
 ## 7. Companheiro (Thoth)
 
@@ -241,7 +321,7 @@ Geração automática no momento da celebração (passo 4 do §9), compartilhame
 
 - **Máximo 1/dia** no MVP; o conteúdo é sempre **conhecimento ou missão concreta**, nunca cobrança: *"A memória de Roma está vacilando — 3 minutos a resgatam"*, *"Hoje em 1789: a Bastilha caiu. Thoth separou essa história"* (o gatilho de efeméride validado na Etapa 1 como feature, não produto).
 - **Proibido:** culpa ("você vai perder seu streak!!"), pressão em série, notificação comercial vestida de missão.
-- O gancho do amanhã (§3.3) e a notificação do dia seguinte são o mesmo conteúdo — o fecho de sessão planta o que a notificação colhe.
+- O gancho do amanhã (§3.4) e a notificação do dia seguinte são o mesmo conteúdo — o fecho de sessão planta o que a notificação colhe.
 
 ## 13. Sistemas de fases futuras (resumo de intenção)
 
