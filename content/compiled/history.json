@@ -282,6 +282,7 @@
       "domain": "history",
       "era": "antiguidade",
       "place": "Grécia",
+      "emblem": "🏛️",
       "name": "A democracia ateniense",
       "sensitive": false,
       "journeys": [
@@ -515,6 +516,7 @@
       "domain": "history",
       "era": "iluminismo",
       "place": "Iluminismo",
+      "emblem": "🪔",
       "name": "As luzes releem os antigos",
       "sensitive": false,
       "journeys": [
@@ -772,6 +774,7 @@
       "domain": "history",
       "era": "antiguidade",
       "place": "Roma",
+      "emblem": "🦅",
       "name": "A República Romana",
       "sensitive": false,
       "journeys": [
@@ -1008,6 +1011,7 @@
       "domain": "history",
       "era": "renascimento",
       "place": "Renascimento",
+      "emblem": "📖",
       "name": "O resgate dos antigos",
       "sensitive": false,
       "journeys": [
@@ -1261,6 +1265,7 @@
       "domain": "history",
       "era": "revolucoes",
       "place": "Revoluções",
+      "emblem": "⚖️",
       "name": "A ideia toma o poder",
       "sensitive": false,
       "journeys": [

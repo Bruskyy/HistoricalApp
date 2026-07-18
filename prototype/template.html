@@ -229,6 +229,53 @@
   .nav-back:hover { border-color: var(--era); color: var(--era); }
   .pips { font-size: 11px; letter-spacing: 2px; margin-top: 3px; }
   .milestone-pips { font-size: 26px; letter-spacing: 6px; }
+
+  /* O mundo registra o progresso (GDD §4, "teste do print") */
+  .mural {
+    display: flex; gap: 9px; justify-content: center; align-items: flex-end;
+    padding: 18px 12px 14px;
+    background: linear-gradient(180deg, var(--paper-deep), color-mix(in srgb, var(--ink) 14%, var(--paper-deep)));
+    border: 1px solid var(--line); border-radius: 14px;
+  }
+  .arch {
+    width: 46px; height: 60px; border-radius: 23px 23px 5px 5px;
+    display: flex; align-items: flex-end; justify-content: center;
+    padding-bottom: 8px; font-size: 20px;
+    border: 1.5px solid color-mix(in srgb, var(--line) 60%, transparent);
+    background: color-mix(in srgb, var(--ink) 24%, var(--paper-deep));
+    transition: background .8s ease, box-shadow .8s ease, border-color .8s ease;
+  }
+  .arch.veiled { opacity: .22; }
+  .arch.next {
+    border-color: var(--gold);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--ink) 24%, var(--paper-deep)) 45%, color-mix(in srgb, var(--gold) 28%, var(--paper-deep)));
+    animation: seam 2.4s infinite ease-in-out;
+  }
+  @keyframes seam {
+    0%,100% { box-shadow: inset 0 -12px 16px -12px var(--gold); }
+    50% { box-shadow: inset 0 -22px 20px -10px var(--gold); }
+  }
+  .arch.lit {
+    background: linear-gradient(180deg, color-mix(in srgb, var(--gold) 32%, var(--paper-raised)), var(--gold-soft));
+    border-color: var(--flame);
+    box-shadow: 0 0 14px color-mix(in srgb, var(--flame) 45%, transparent);
+  }
+  .mural.small { padding: 8px; gap: 6px; background: none; border: none; }
+  .mural.small .arch { width: 34px; height: 44px; font-size: 15px; padding-bottom: 5px; }
+
+  .era-row.sealed .era-info, .era-row.sealed .node-dot { opacity: .55; }
+  .era-row.lit {
+    background: linear-gradient(90deg, color-mix(in srgb, var(--gold) 10%, transparent), transparent 70%);
+    border-radius: 12px;
+  }
+  .era-row.lit .seg {
+    background: linear-gradient(180deg, var(--flame), var(--gold));
+    box-shadow: 0 0 7px color-mix(in srgb, var(--flame) 55%, transparent);
+  }
+  .era-row.lit .node-dot {
+    box-shadow: 0 0 12px color-mix(in srgb, var(--flame) 60%, transparent);
+    font-size: 15px;
+  }
   .node-card.pulse { animation: glowPulse 2.2s ease-in-out infinite; border-color: var(--era); }
   @keyframes glowPulse {
     0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--era) 34%, transparent); }
@@ -464,7 +511,7 @@ function renderCorridor() {
             <div class="st"${nodeDue ? ' style="color:var(--flame)"' : ''}>${status}</div>
           </div>
           <div class="flame ${lit ? (nodeDue ? 'waver' : 'on') : ''}" style="font-size:22px">${lit ? '🔥' : '🕯️'}</div>
-        </div>`);
+        </div>`, lit ? (node.emblem ?? '🔥') : null);
     }
   });
 
@@ -498,6 +545,12 @@ function renderCorridor() {
       <div class="q">${cj.centralQuestion}</div>
       <div class="prog">${cj.title} · ${litInCj} de ${cj.nodeOrder.length} salões acesos</div>
     </div>
+    <div class="mural" aria-label="o caminho construído no Corredor">${
+      JOURNEYS.flatMap((j2, ix2) => journeyNodes(j2).map((n) => {
+        const st = S.lit[n.id] ? 'lit' : (target && n.id === target.id) ? 'next' : journeyUnlocked(ix2) ? '' : 'veiled';
+        return `<div class="arch ${st}" title="${n.place}">${S.lit[n.id] ? (n.emblem ?? '🔥') : ''}</div>`;
+      })).join('')
+    }</div>
     <div role="list">${rows}</div>
     ${allDone && !due.length ? '<button class="cta ghost" id="againBtn">recomeçar o protótipo</button>' : ''}
   `;
@@ -560,9 +613,10 @@ function finishReviewMission() {
   $('go').addEventListener('click', renderCorridor);
 }
 
-function eraRow(name, state, inner = '') {
+function eraRow(name, state, inner = '', glyph = null) {
+  const dot = glyph ?? (state === 'lit' ? '🔥' : state === 'open' ? '◈' : '·');
   return `<div class="era-row ${state}" role="listitem">
-    <div class="rail"><div class="node-dot">${state === 'lit' ? '🔥' : state === 'open' ? '◈' : '·'}</div><div class="seg"></div></div>
+    <div class="rail"><div class="node-dot">${dot}</div><div class="seg"></div></div>
     <div class="era-info"><div class="era-name">${name}</div>${inner}</div>
   </div>`;
 }
@@ -884,6 +938,8 @@ function celebrateJourney(j) {
       <div class="jcard fade-in">
         <p class="eyebrow">jornada concluída</p>
         <div class="jt">${j.title}</div>
+        <div class="mural small">${journeyNodes(j).map((n) =>
+          `<div class="arch lit" title="${n.place}">${n.emblem ?? '🔥'}</div>`).join('')}</div>
         <div class="thread">${j.thread ?? ''}</div>
         <div class="stats">
           <div class="stat"><b>${jNodes.length}</b><span>salões acesos</span></div>

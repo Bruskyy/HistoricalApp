@@ -3,10 +3,15 @@
   "domain": "history",
   "era": "iluminismo",
   "place": "Iluminismo",
+  "emblem": "🪔",
   "name": "As luzes releem os antigos",
   "sensitive": false,
-  "journeys": ["a-ideia-renasce"],
-  "positionInJourney": { "a-ideia-renasce": 2 },
+  "journeys": [
+    "a-ideia-renasce"
+  ],
+  "positionInJourney": {
+    "a-ideia-renasce": 2
+  },
   "claims": [
     {
       "id": "contrato-locke",
@@ -128,12 +133,27 @@
     }
   ],
   "connections": [
-    { "to": "democracia-ateniense", "type": "influence" },
-    { "to": "republica-romana", "type": "influence" },
-    { "to": "revolucoes-atlanticas", "type": "influence" }
+    {
+      "to": "democracia-ateniense",
+      "type": "influence"
+    },
+    {
+      "to": "republica-romana",
+      "type": "influence"
+    },
+    {
+      "to": "revolucoes-atlanticas",
+      "type": "influence"
+    }
   ],
   "lessons": [
-    { "id": "a-pergunta-muda", "file": "lesson-1.md" },
-    { "id": "a-maquina-redesenhada", "file": "lesson-2.md" }
+    {
+      "id": "a-pergunta-muda",
+      "file": "lesson-1.md"
+    },
+    {
+      "id": "a-maquina-redesenhada",
+      "file": "lesson-2.md"
+    }
   ]
 }

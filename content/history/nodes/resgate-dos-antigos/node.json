@@ -3,10 +3,15 @@
   "domain": "history",
   "era": "renascimento",
   "place": "Renascimento",
+  "emblem": "📖",
   "name": "O resgate dos antigos",
   "sensitive": false,
-  "journeys": ["a-ideia-renasce"],
-  "positionInJourney": { "a-ideia-renasce": 1 },
+  "journeys": [
+    "a-ideia-renasce"
+  ],
+  "positionInJourney": {
+    "a-ideia-renasce": 1
+  },
   "claims": [
     {
       "id": "cadeia-de-copistas",
@@ -124,12 +129,27 @@
     }
   ],
   "connections": [
-    { "to": "republica-romana", "type": "influence" },
-    { "to": "democracia-ateniense", "type": "influence" },
-    { "to": "iluminismo", "type": "influence" }
+    {
+      "to": "republica-romana",
+      "type": "influence"
+    },
+    {
+      "to": "democracia-ateniense",
+      "type": "influence"
+    },
+    {
+      "to": "iluminismo",
+      "type": "influence"
+    }
   ],
   "lessons": [
-    { "id": "quem-guardou-a-chama", "file": "lesson-1.md" },
-    { "id": "a-redescoberta", "file": "lesson-2.md" }
+    {
+      "id": "quem-guardou-a-chama",
+      "file": "lesson-1.md"
+    },
+    {
+      "id": "a-redescoberta",
+      "file": "lesson-2.md"
+    }
   ]
 }

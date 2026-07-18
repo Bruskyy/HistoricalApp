@@ -3,10 +3,15 @@
   "domain": "history",
   "era": "revolucoes",
   "place": "Revoluções",
+  "emblem": "⚖️",
   "name": "A ideia toma o poder",
   "sensitive": false,
-  "journeys": ["a-ideia-renasce"],
-  "positionInJourney": { "a-ideia-renasce": 3 },
+  "journeys": [
+    "a-ideia-renasce"
+  ],
+  "positionInJourney": {
+    "a-ideia-renasce": 3
+  },
   "claims": [
     {
       "id": "constituicao-escrita",
@@ -128,12 +133,27 @@
     }
   ],
   "connections": [
-    { "to": "iluminismo", "type": "influence" },
-    { "to": "republica-romana", "type": "influence" },
-    { "to": "constituicao-brasileira-1988", "type": "echo" }
+    {
+      "to": "iluminismo",
+      "type": "influence"
+    },
+    {
+      "to": "republica-romana",
+      "type": "influence"
+    },
+    {
+      "to": "constituicao-brasileira-1988",
+      "type": "echo"
+    }
   ],
   "lessons": [
-    { "id": "o-papel-vira-poder", "file": "lesson-1.md" },
-    { "id": "o-eco-sem-fim", "file": "lesson-2.md" }
+    {
+      "id": "o-papel-vira-poder",
+      "file": "lesson-1.md"
+    },
+    {
+      "id": "o-eco-sem-fim",
+      "file": "lesson-2.md"
+    }
   ]
 }
