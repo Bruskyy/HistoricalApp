@@ -76,7 +76,9 @@ node(id, era_id, name, sensitive:bool, ...)    -- nó da timeline
 node_journey(journey_id, node_id, position)    -- jornada atravessa nós (N:N ordenado)
 lesson(id, node_id, position, ...)             -- lição
 interaction(id, lesson_id, type, payload_ref)  -- 7 tipos do LDD §7
-claim(id, node_id, consensus_pct, ...)         -- afirmação atômica (unidade do SRS)
+claim(id, node_id, epistemic_class,            -- fato|hipótese|interpretação|debate
+      consensus_pct, sources_json, ...)        -- afirmação atômica (unidade do SRS;
+                                               -- EDITORIAL_POLICY §3-4)
 claim_variant(id, claim_id, type, payload_ref) -- variantes de pergunta p/ revisão
 connection(from_node, to_node, type, ...)      -- conhecimento conectado
 ```

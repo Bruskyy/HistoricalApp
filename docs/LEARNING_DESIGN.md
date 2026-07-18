@@ -2,7 +2,7 @@
 
 > **Por que este documento existe e vem antes do GDD:** o diferencial do produto não é a gamificação — é **como o conteúdo é ensinado**. A gamificação (GDD) recompensa progressão; este documento define o que *é* progressão: como nasce uma jornada, como uma lição é estruturada, o que significa "aprendido" e como se avalia compreensão em vez de memorização. Todas as fórmulas do GDD (XP, evolução do companheiro, North Star) referenciam as definições daqui.
 >
-> Documento subordinado ao [`VISION.md`](VISION.md) — em especial ao Princípio Fundamental (*recompensar compreensão, nunca apenas tempo; errar ensina, nunca custa*) e aos princípios pedagógicos da seção 11.
+> Documento subordinado ao [`VISION.md`](VISION.md) — em especial ao Princípio Fundamental (*recompensar compreensão, nunca apenas tempo; errar ensina, nunca custa*) e aos princípios pedagógicos da seção 11 — e à [`EDITORIAL_POLICY.md`](EDITORIAL_POLICY.md), da qual este documento é a implementação operacional (cadeia: VISION > EDITORIAL_POLICY > LDD > GDD > PRD).
 
 ---
 
@@ -34,7 +34,11 @@ Toda jornada passa por este funil, nesta ordem:
 1. **Pergunta central.** Uma jornada nunca nasce de um tema ("Grécia Antiga"), nasce de uma pergunta que uma pessoa real faria ("De onde veio a ideia de que o povo pode governar?"). Se a pergunta não desperta curiosidade em alguém da persona Marina, a jornada não é aprovada.
 2. **Arco narrativo.** A resposta é estruturada como história com forma dramática: contexto → tensão → virada → consequências → legado no presente. Toda jornada termina conectando ao mundo atual do usuário (por que isso importa hoje) — é o que separa "jornada" de "curso".
 3. **Seleção de nós.** Escolher os 5-12 nós que contam esse arco. Critério de corte: um nó entra se sua remoção quebra a cadeia causal da narrativa; não entra "porque é importante em geral" (isso é enciclopédia, não jornada).
-4. **Mapeamento de afirmações e consenso.** Para cada nó, listar as afirmações atômicas e classificar cada uma: consenso forte (≥90%), majoritário (70-90%), disputado (40-70%), hipótese minoritária (<40%) — com fontes e os principais lados do debate para as duas últimas faixas. Percentuais são **avaliações editoriais da literatura**, feitas na revisão especializada, e devem ser defensáveis quando o usuário tocar no indicador.
+4. **Mapeamento de afirmações, consenso e classe epistêmica.** Para cada nó, listar as afirmações atômicas e classificá-las em **dois eixos independentes** (EDITORIAL_POLICY, Princípios 1-3):
+   - **Banda de consenso:** forte (≥90%), majoritário (70-90%), disputado (40-70%), hipótese minoritária (<40%) — com fontes e os principais lados do debate para as duas últimas faixas. Percentuais são **avaliações editoriais da literatura**, feitas na revisão especializada, e devem ser defensáveis quando o usuário tocar no indicador.
+   - **Classe epistêmica:** fato estabelecido · hipótese aceita · interpretação historiográfica · debate em aberto (tabela na EDITORIAL_POLICY, Princípio 3). A classe determina como a afirmação pode ser cobrada: fatos podem ter "resposta certa"; interpretações e debates **nunca** viram pergunta objetiva (regra da seção 7) — viram exploração de perspectivas.
+   - **Regra anti-falso-balanceamento:** hipótese minoritária nunca é apresentada com o mesmo peso do consenso (Princípio 1); ela vive nas camadas de aprofundamento, nomeada como minoritária.
+   - **Fontes:** cada afirmação referencia fontes conforme a hierarquia da EDITORIAL_POLICY (Princípio 4): obras acadêmicas e artigos revisados por pares sustentam claims; material de divulgação pode inspirar linguagem/ganchos, nunca sustentar conteúdo.
 5. **Mapeamento de conexões.** Registrar o que este nó desbloqueia de compreensão em outros nós/jornadas (alimenta o "conhecimento conectado" e o planejamento de jornadas futuras).
 6. **Escrita das lições e interações** conforme seções 3-5.
 7. **Revisão especializada.** Nenhuma jornada publica sem revisão por pessoa com formação na área (resposta direta à fraqueza fatal do Paladin). O revisor valida: precisão factual, classificação de consenso, e se as simplificações são omissões legítimas ou distorções (seção 4).
@@ -121,6 +125,15 @@ Um nó Dominado pode **regredir** silenciosamente se as revisões passarem a fal
 - **Presente como destino, não como palanque.** Conectar ao hoje (regra do arco narrativo) sem tomar partido em disputa política contemporânea; quando o presente é ele próprio disputado, aplicar o mesmo sistema de consenso usado para o passado.
 - **Tom "amigo erudito" em tudo** (VISION §19): entusiasmo por entender, nunca condescendência nem ironia à custa do usuário.
 
+## 8.1 Atualização contínua do conteúdo
+
+(EDITORIAL_POLICY, Princípio 6.) O conhecimento evolui e o catálogo acompanha:
+
+- Nova evidência ou mudança de consenso na literatura → o claim é atualizado **pelo mesmo pipeline** (incluindo revisão especializada da mudança), nunca por edição direta.
+- Toda revisão registra: o que mudou, por quê (com fontes) e quando — histórico consultável (o versionamento do repositório de conteúdo provê o registro; PRD RF-14 define a exposição ao usuário).
+- Reclassificações (ex.: "debate em aberto" → "hipótese aceita") são mudanças editoriais de primeira classe, celebráveis na comunicação ("a ciência avançou") — nunca silenciosas.
+- Gatilho de revisão periódica: nós sem revisão há mais de N meses (parâmetro editorial) entram na fila de reverificação por amostragem.
+
 ## 9. Papéis editoriais, produção e dificuldade
 
 ### 9.1 Quem escreve
@@ -152,7 +165,8 @@ Dificuldade é **medida, não intuída**:
 Antes de qualquer nó ir ao ar:
 
 - [ ] Pergunta central da jornada responde "por que alguém se importaria?"
-- [ ] Claims atômicos extraídos, com consenso classificado e fontes vinculadas
+- [ ] Claims atômicos extraídos, com banda de consenso **e** classe epistêmica classificadas, fontes vinculadas conforme a hierarquia da EDITORIAL_POLICY (nenhum claim sustentado por material de divulgação)
+- [ ] Nenhuma interpretação/debate cobrado como pergunta objetiva; nenhum falso balanceamento (minoritária apresentada como par do consenso)
 - [ ] Revisão especializada concluída (precisão + consenso + simplificações legítimas)
 - [ ] Cada lição: 1 ideia, ≤3 conceitos novos, gancho antes de explicação
 - [ ] ≥3 tipos de pergunta da taxonomia; zero anti-padrões; ≥1 pergunta causal por lição

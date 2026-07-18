@@ -1,6 +1,6 @@
 # Product Requirements Document (PRD)
 
-> **Papel deste documento na cadeia:** o [`VISION.md`](VISION.md) decide *por quê*; o [`LEARNING_DESIGN.md`](LEARNING_DESIGN.md) decide *como se ensina*; o [`GAME_DESIGN.md`](GAME_DESIGN.md) decide *como se joga*. Este PRD decide **o que construir, em que ordem e com que critério de aceitação** — sem redefinir nada dos três anteriores. Em conflito, a precedência é VISION > LDD > GDD > PRD.
+> **Papel deste documento na cadeia:** o [`VISION.md`](VISION.md) decide *por quê*; a [`EDITORIAL_POLICY.md`](EDITORIAL_POLICY.md) define o compromisso de credibilidade; o [`LEARNING_DESIGN.md`](LEARNING_DESIGN.md) decide *como se ensina*; o [`GAME_DESIGN.md`](GAME_DESIGN.md) decide *como se joga*. Este PRD decide **o que construir, em que ordem e com que critério de aceitação** — sem redefinir nada dos anteriores. Em conflito, a precedência é VISION > EDITORIAL_POLICY > LDD > GDD > PRD.
 >
 > Escopo deste PRD: **Piloto fechado + MVP público** (fases da VISION §16.2). V1+ entra apenas como referência de release.
 
@@ -99,6 +99,13 @@ Numeração `RF-XX.Y`. Cada bloco referencia o documento que o especifica em det
 1. Eventos mínimos: sessão, lição iniciada/concluída, interação (tipo, acerto, tentativa, tempo), transição de estado de nó/afirmação, revisão, streak, celebração exibida, card gerado/compartilhado, notificação aberta.
 2. Coortes e feature flags para os experimentos do GDD (§1.5, §5.0, §5.3).
 3. Painel interno com North Star, funil D1/D7/D30 e painel de calibração (GDD Apêndice A).
+
+### RF-14 — Transparência editorial (EDITORIAL_POLICY, "Na interface")
+1. Botão **"Por que existe debate sobre este assunto?"** em toda afirmação classificada como interpretação historiográfica ou debate em aberto — abre as posições, quem as defende, grau de aceitação e evidências.
+2. **Página de metodologia editorial** acessível de dentro do app (e como página web pública): como o conteúdo é produzido, revisado e atualizado, com o texto canônico do compromisso (EDITORIAL_POLICY). Linguagem acessível, não jurídica.
+3. **Histórico de revisões visível:** conteúdo atualizado exibe indicação discreta ("revisado em [data]") com acesso ao que mudou e por quê, em linguagem para leigos.
+4. Classe epistêmica dos claims (fato/hipótese/interpretação/debate — EDITORIAL_POLICY, Princípio 3) presente no modelo de conteúdo e refletida no comportamento das perguntas (interpretações nunca cobradas como resposta objetiva — validado em CI junto ao checklist do LDD).
+5. Auditoria de copy de marketing/lojas contra as promessas proibidas ("neutro", "sem ideologia", "verdade absoluta") antes de qualquer publicação.
 
 ## 4. Requisitos não funcionais
 

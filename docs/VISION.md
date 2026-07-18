@@ -5,6 +5,8 @@
 > **v2** — revisado após feedback do fundador: adicionados mantra, Princípio Fundamental, universo do produto, progressão unificada, momentos memoráveis, camada de emoção e comunidade/eventos; timeline promovida para o coração do propósito; roadmap alterado para incluir um Learning Design Document (LDD) antes do GDD.
 >
 > **v3** — segunda rodada de feedback: adicionada a Filosofia de Crescimento do Produto (seção 2.1), separação explícita entre visão e primeira versão utilizável com introdução gradual de sistemas (seção 16), guardrail contra o universo competir com o conteúdo (seção 9), seção dedicada ao papel da IA (seção 22) e alertas de validação sobre os nomes Mneme/Thoth (seção 19).
+>
+> **v4** — diretriz do fundador: Política Editorial e Credibilidade Científica elevada a **pilar permanente** da plataforma, com documento próprio ([`EDITORIAL_POLICY.md`](EDITORIAL_POLICY.md)) inserido na cadeia de precedência (VISION > EDITORIAL_POLICY > LDD > GDD > PRD). Compromisso com o método, não com "neutralidade absoluta".
 
 ---
 
@@ -98,6 +100,7 @@ Implicações práticas:
 
 **Valores:**
 - **Precisão antes de engajamento.** Nunca simplificamos a ponto de mentir. Quando a história é incerta, o produto mostra a incerteza.
+- **Compromisso com o método, não com "neutralidade absoluta".** Nunca prometemos "conteúdo neutro", "sem ideologia" ou "verdade absoluta" — prometemos pesquisa acadêmica, revisão especializada e transparência sobre consenso e debate. Texto canônico e princípios completos na [`EDITORIAL_POLICY.md`](EDITORIAL_POLICY.md), pilar permanente da plataforma.
 - **Retenção compassiva, não punitiva.** Hábito se constrói com acolhimento (referência: Finch), não com culpa.
 - **Gamificação a serviço do domínio.** Toda mecânica aponta para evidência real de aprendizado — nunca XP por clique vazio (seção 2).
 - **Construir uma vez, aplicar em muitos domínios.** Toda decisão do MVP responde também: "isso funciona se o domínio fosse Filosofia?".
@@ -319,7 +322,8 @@ Validar lógica → depois preços, com dados reais.
 
 | Risco | Mitigação |
 |---|---|
-| Imprecisão de conteúdo (fraqueza fatal do Paladin) | Processo editorial com revisão especializada (LDD) + nível de consenso transparente. |
+| Imprecisão de conteúdo (fraqueza fatal do Paladin) | Política Editorial como pilar (EDITORIAL_POLICY): revisão especializada obrigatória, hierarquia de fontes, classificação epistêmica e nível de consenso transparente. |
+| Acusações de viés ideológico (de qualquer direção) | Compromisso com método, não neutralidade (EDITORIAL_POLICY): consenso acadêmico como conteúdo principal, debates legítimos explicitados com evidências, governança que só aceita literatura acadêmica como motivo de mudança. |
 | Custo/complexidade de IA persistente | Fora do MVP; validar loop central primeiro. |
 | Scope creep (plataforma + gamificação + IA de uma vez) | MVP de um domínio, introdução gradual de sistemas por fase validada (seção 16). |
 | Universo roubar atenção do conteúdo ("RPG com skin de história") | Regra da moldura (seção 9.1): conteúdo real sempre em primeiro plano + teste de remoção da ficção + monitorar percepção em testes de usuário. |
@@ -360,6 +364,7 @@ O que a IA faz, em ordem de chegada ao produto (fases da seção 16.2):
 
 1. ✅ Pesquisa de mercado — `COMPETITOR_ANALYSIS.md`
 2. ✅ Product Vision — este documento
+2b. ✅ **Política Editorial** — `EDITORIAL_POLICY.md` *(pilar permanente; precede o LDD na cadeia de precedência)*
 3. ⏭️ **Learning Design Document (LDD)** — `LEARNING_DESIGN.md` *(etapa nova: o modelo de aprendizagem vem antes do jogo, porque o diferencial do produto é como se ensina, não só como se joga)*
 4. Game Design Document — `GAME_DESIGN.md`
 5. Product Requirements Document — `PRD.md`
