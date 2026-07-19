@@ -12,11 +12,59 @@
           "id": "poder-e-democracia",
           "icon": "🏛️",
           "title": "Poder & Democracia",
-          "journeys": ["nascimento-da-democracia", "a-ideia-renasce"]
+          "journeys": ["nascimento-da-democracia", "a-ideia-renasce"],
+          "upcoming": [
+            { "icon": "👑", "title": "Absolutismo: o poder que não devia acabar" },
+            { "icon": "🗳️", "title": "A era das constituições" }
+          ]
         },
-        { "id": "idade-media", "icon": "⚔️", "title": "Idade Média", "status": "writing" },
-        { "id": "guerras-mundiais", "icon": "💣", "title": "Guerras Mundiais", "status": "writing" },
-        { "id": "brasil", "icon": "🇧🇷", "title": "Brasil", "status": "writing" }
+        {
+          "id": "mundo-antigo",
+          "icon": "🏺",
+          "title": "Mundo Antigo",
+          "status": "writing",
+          "upcoming": [
+            { "icon": "⚔️", "title": "As Guerras Médicas: Grécia contra o império" },
+            { "icon": "🌍", "title": "Alexandre e o mundo que ficou grego" },
+            { "icon": "🦅", "title": "Roma: da aldeia ao império" },
+            { "icon": "🗡️", "title": "César e a morte da República" },
+            { "icon": "✝️", "title": "Como o cristianismo conquistou Roma" },
+            { "icon": "🏚️", "title": "A queda de Roma" }
+          ]
+        },
+        {
+          "id": "idade-media",
+          "icon": "⚔️",
+          "title": "Idade Média",
+          "status": "writing",
+          "upcoming": [
+            { "icon": "🏰", "title": "O mundo feudal" },
+            { "icon": "🕌", "title": "O islã e a luz que veio do Oriente" },
+            { "icon": "🦠", "title": "A Peste Negra: o ano em que o mundo parou" }
+          ]
+        },
+        {
+          "id": "guerras-mundiais",
+          "icon": "💣",
+          "title": "Guerras Mundiais",
+          "status": "writing",
+          "upcoming": [
+            { "icon": "💥", "title": "1914: como o mundo tropeçou na guerra" },
+            { "icon": "💣", "title": "A Segunda Guerra: o mundo em chamas" },
+            { "icon": "❄️", "title": "Guerra Fria: o conflito que nunca explodiu" }
+          ]
+        },
+        {
+          "id": "brasil",
+          "icon": "🇧🇷",
+          "title": "Brasil",
+          "status": "writing",
+          "upcoming": [
+            { "icon": "🚢", "title": "Brasil Colônia: o país que nasceu empresa" },
+            { "icon": "👑", "title": "Um império nos trópicos" },
+            { "icon": "🗳️", "title": "A República brasileira: promessas e quedas" }
+          ]
+        }
       ]
     },
     {
@@ -25,7 +73,41 @@
       "title": "Filosofia",
       "tagline": "Descubra as ideias que moldaram a humanidade",
       "status": "writing",
-      "teaser": "Sócrates espera por você — ala em escrita"
+      "teaser": "Sócrates espera por você — ala em escrita",
+      "shelves": [
+        {
+          "id": "filosofia-grega",
+          "icon": "🏛️",
+          "title": "Filosofia Grega",
+          "status": "writing",
+          "upcoming": [
+            { "icon": "🗣️", "title": "Sócrates e a arte de perguntar" },
+            { "icon": "🕯️", "title": "Platão: a caverna e a luz" },
+            { "icon": "📐", "title": "Aristóteles: o homem que organizou o mundo" }
+          ]
+        },
+        {
+          "id": "estoicismo",
+          "icon": "🏺",
+          "title": "Estoicismo",
+          "status": "writing",
+          "upcoming": [
+            { "icon": "🧘", "title": "A arte de não sofrer duas vezes" },
+            { "icon": "🏛️", "title": "Marco Aurélio: o imperador que escrevia para si" }
+          ]
+        },
+        {
+          "id": "existencialismo",
+          "icon": "🌑",
+          "title": "Existencialismo",
+          "status": "writing",
+          "upcoming": [
+            { "icon": "⛰️", "title": "Nietzsche: martelo e aurora" },
+            { "icon": "🌑", "title": "Sartre e o peso da liberdade" },
+            { "icon": "☕", "title": "Camus: o absurdo e a revolta" }
+          ]
+        }
+      ]
     }
   ]
 }

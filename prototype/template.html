@@ -269,23 +269,41 @@
   .domain-head .dt { font-family: Georgia, serif; font-size: 20px; font-weight: 600; }
   .domain-head .dg { font-size: 12.5px; color: var(--ink-soft); }
   .shelf-title { display: flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-top: 2px; }
-  .jcardlib {
-    background: var(--paper-raised); border: 1.5px solid var(--line); border-radius: 14px;
-    padding: 16px; display: flex; flex-direction: column; gap: 8px; cursor: pointer;
+  .domain-head.big .di { font-size: 30px; }
+  .domain-head.big .dt { font-size: 26px; }
+  .bib-card { cursor: pointer; transition: transform .15s ease, border-color .15s ease; }
+  .bib-card:hover { transform: translateY(-1px); border-color: var(--era); }
+  .bib-card.sealed { opacity: .8; border-style: dashed; }
+  .bcount { font-size: 12px; color: var(--ink-faint); }
+  .divider { border-top: 1px solid var(--line); margin: 6px 24px; }
+  .jbook {
+    background: var(--paper-raised); border: 1.5px solid var(--line); border-left: 5px solid var(--era);
+    border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 8px; cursor: pointer;
     transition: transform .15s ease, border-color .15s ease;
   }
-  .jcardlib:hover { transform: translateY(-1px); border-color: var(--era); }
-  .jcardlib.done { border-color: var(--gold); }
-  .jcardlib .jq { font-family: Georgia, serif; font-size: 16px; line-height: 1.4; }
-  .jcardlib .jm { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-faint); }
-  .jcardlib .selo { color: var(--gold); font-weight: 700; }
-  .writing-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .writing-chip {
-    font-size: 12px; color: var(--ink-faint); border: 1px dashed var(--line);
-    border-radius: 999px; padding: 5px 12px; font-style: italic;
+  .jbook:hover { transform: translateY(-1px); border-color: var(--era); }
+  .jbook.done { border-color: var(--gold); border-left-color: var(--gold); }
+  .jbook.sealed { opacity: .6; cursor: default; border-left-color: var(--line); }
+  .jbook .jb-title { font-family: Georgia, serif; font-size: 17px; font-weight: 600; }
+  .jbook .jb-q { font-family: Georgia, serif; font-size: 13.5px; font-style: italic; color: var(--ink-soft); line-height: 1.4; }
+  .jbook .jb-stats { font-size: 12px; color: var(--ink-faint); }
+  .jbook .jm { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-faint); }
+  .jbook .selo { color: var(--gold); font-weight: 700; }
+  .jb-cta {
+    align-self: flex-start; font-size: 13px; font-weight: 700; color: var(--gold);
+    border: 1.5px solid var(--gold); border-radius: 999px; padding: 6px 14px;
+  }
+  .pctbar { height: 5px; border-radius: 999px; background: var(--line); overflow: hidden; }
+  .pctbar > div { height: 100%; background: var(--gold); border-radius: 999px; transition: width .4s ease; }
+  .soon { display: flex; flex-direction: column; gap: 6px; margin: -2px 0 4px; }
+  .soon .eyebrow { margin: 0; }
+  .soon-row {
+    display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-faint);
+    border: 1px dashed var(--line); border-radius: 10px; padding: 8px 12px; font-style: italic;
   }
   .domain-sealed { opacity: .75; }
   .continue-card { border: 1.5px solid var(--gold); }
+  .cc-title { font-family: Georgia, serif; font-size: 17px; font-weight: 600; }
 
   /* Thoth evolui (GDD §7.1 — diferencial obrigatório VISION §16.1) */
   .thoth { position: relative; transition: box-shadow .6s ease, border-color .6s ease; }
@@ -542,97 +560,62 @@ function wireCommon(due) {
 
 /* A Biblioteca: home de quem retorna. O primeiro uso NUNCA cai aqui —
    é guiado direto ao Corredor (VISION §17-D1: sem parede de escolha). */
-function renderLibrary() {
-  nav(null, 'biblioteca');
-  setProgress(null);
-  closeTermBox();
-  const lib = PACKAGE.library;
-  const due = dueReviews();
-  const totalLit = NODES.filter((n) => S.lit[n.id]).length;
+function libStats(d) {
+  let open = 0, soon = 0;
+  for (const sh of d.shelves ?? []) {
+    open += (sh.journeys ?? []).length;
+    soon += (sh.upcoming ?? []).length;
+  }
+  return { open, soon };
+}
 
-  const say = due.length
-    ? 'Guardião… sinto chamas vacilando. Resgata as memórias antes de abrir portas novas?'
-    : JOURNEYS.every(journeyDone)
-      ? 'Todas as alas escritas estão acesas. Os escribas preparam as próximas — e eu guardo cada chama.'
-      : 'O Arquivo cresce com você, Guardião. Qual porta hoje?';
+function domainOfJourney(jid) {
+  for (const d of PACKAGE.library.domains)
+    for (const sh of d.shelves ?? [])
+      if ((sh.journeys ?? []).includes(jid)) return d;
+  return PACKAGE.library.domains[0];
+}
 
-  let continueCard = '';
+/* % da jornada em lições: salão aceso conta cheio; salão pela metade conta o que foi feito. */
+function journeyLessonPct(j) {
+  let done = 0, total = 0;
+  for (const n of journeyNodes(j)) {
+    total += n.lessons.length;
+    done += S.lit[n.id] ? n.lessons.length : Math.min(S.lessonsDone[n.id] ?? 0, n.lessons.length);
+  }
+  return total ? Math.round((100 * done) / total) : 0;
+}
+
+function continueCardHtml() {
   if (S.resume && !S.lit[S.resume.nodeId]) {
     const n = nodeOf(S.resume.nodeId);
-    continueCard = `
+    const j = journeyOfNode(n.id);
+    const pct = journeyLessonPct(j);
+    return `
       <div class="card continue-card">
         <p class="eyebrow">⭐ continue de onde parou</p>
-        <div style="font-family:Georgia,serif; font-size:16px">${n.name}</div>
-        <div class="jm">${n.place} · lição ${S.resume.lessonIx + 1} de ${n.lessons.length}</div>
-        <button class="cta gold" id="continueBtn">▶ continuar</button>
+        <div class="cc-title">${j.title}</div>
+        <div class="jm">${n.name} · lição ${S.resume.lessonIx + 1} de ${n.lessons.length}</div>
+        <div class="pctbar"><div style="width:${pct}%"></div></div>
+        <button class="cta gold" id="continueBtn">▶ continuar — ${pct}%</button>
       </div>`;
-  } else {
-    const target = NODES.find((n) => !S.lit[n.id] && nodeUnlockedInJourney(n) &&
-      journeyUnlocked(JOURNEYS.indexOf(journeyOfNode(n.id))));
-    if (target && totalLit > 0) {
-      const tj = journeyOfNode(target.id);
-      continueCard = `
-        <div class="card continue-card">
-          <p class="eyebrow">⭐ próxima porta</p>
-          <div style="font-family:Georgia,serif; font-size:16px">${target.name}</div>
-          <div class="jm">${tj.title} · ${target.place}</div>
-          <button class="cta gold" id="continueBtn2">▶ entrar</button>
-        </div>`;
-    }
   }
+  const target = NODES.find((n) => !S.lit[n.id] && nodeUnlockedInJourney(n) &&
+    journeyUnlocked(JOURNEYS.indexOf(journeyOfNode(n.id))));
+  if (!target) return '';
+  const tj = journeyOfNode(target.id);
+  const pct = journeyLessonPct(tj);
+  return `
+    <div class="card continue-card">
+      <p class="eyebrow">⭐ ${pct > 0 ? 'continue de onde parou' : 'próxima porta'}</p>
+      <div class="cc-title">${tj.title}</div>
+      <div class="jm">${target.name} · ${target.place}</div>
+      <div class="pctbar"><div style="width:${pct}%"></div></div>
+      <button class="cta gold" id="continueBtn2">▶ ${pct > 0 ? `continuar — ${pct}%` : 'entrar'}</button>
+    </div>`;
+}
 
-  const domainsHtml = lib.domains.map((d) => {
-    if (d.status !== 'open') {
-      return `
-        <div class="card domain-sealed">
-          <div class="domain-head"><span class="di">${d.icon}</span><span class="dt">${d.title}</span></div>
-          <div class="dg">${d.tagline}</div>
-          <div class="sealed-note">🔒 ${d.teaser ?? 'ala em escrita'}</div>
-        </div>`;
-    }
-    const litD = NODES.filter((n) => S.lit[n.id]).length;
-    const shelvesHtml = (d.shelves ?? []).map((sh) => {
-      if (sh.status === 'writing') return '';
-      const cards = (sh.journeys ?? []).map((jid) => {
-        const j = JOURNEYS.find((x) => x.id === jid);
-        const jN = journeyNodes(j);
-        const lit = jN.filter((n) => S.lit[n.id]).length;
-        const doneJ = lit === jN.length;
-        const locked = !journeyUnlocked(JOURNEYS.indexOf(j));
-        if (locked) {
-          return `<div class="jcardlib" style="opacity:.6; cursor:default">
-            <div class="jq">${j.title}</div>
-            <div class="jm">🔒 conclua “${JOURNEYS[JOURNEYS.indexOf(j) - 1].title}”</div>
-          </div>`;
-        }
-        return `<div class="jcardlib ${doneJ ? 'done' : ''}" data-journey="${j.id}" role="button" tabindex="0">
-          <div class="jq">${j.centralQuestion}</div>
-          <div class="jm">${doneJ
-            ? `<span class="selo">✔ jornada concluída</span> · ${j.title}`
-            : `${j.title} · ${lit} de ${jN.length} salões`}
-            <span>${jN.map((n) => S.lit[n.id] ? (n.emblem ?? '🔥') : '·').join(' ')}</span></div>
-        </div>`;
-      }).join('');
-      return `<div class="shelf-title"><span>${sh.icon}</span>${sh.title}</div>${cards}`;
-    }).join('');
-    const writing = (d.shelves ?? []).filter((sh) => sh.status === 'writing');
-    return `
-      <div class="domain-head"><span class="di">${d.icon}</span><span class="dt">${d.title}</span></div>
-      <div class="dg" style="margin-top:-8px">${d.tagline} · ${litD === 1 ? '1 salão aceso' : litD + ' salões acesos'}</div>
-      ${shelvesHtml}
-      ${writing.length ? `<div class="shelf-title"><span>✍️</span>nas mesas dos escribas</div>
-        <div class="writing-chips">${writing.map((sh) => `<span class="writing-chip">${sh.icon} ${sh.title}</span>`).join('')}</div>` : ''}`;
-  }).join('');
-
-  screen().innerHTML = `
-    ${thoth(say, false)}
-    ${rescueCardHtml(due)}
-    ${continueCard}
-    <h2 class="serif" style="margin-top:2px">${lib.title}</h2>
-    ${domainsHtml}
-  `;
-
-  wireCommon(due);
+function wireContinue() {
   const c1 = $('continueBtn');
   if (c1) c1.addEventListener('click', () => startNode(S.resume.nodeId));
   const c2 = $('continueBtn2');
@@ -640,7 +623,103 @@ function renderLibrary() {
     const target = NODES.find((n) => !S.lit[n.id] && nodeUnlockedInJourney(n));
     if (target) renderCorridor(journeyOfNode(target.id));
   });
-  screen().querySelectorAll('.jcardlib[data-journey]').forEach((card) => {
+}
+
+/* Home minimalista (feedback do fundador): bibliotecas em cima, continuar embaixo.
+   Quem chega olha para cima; quem retorna olha para baixo — as duas convivem. */
+function renderLibrary() {
+  nav(null, 'biblioteca');
+  setProgress(null);
+  closeTermBox();
+  const lib = PACKAGE.library;
+  const due = dueReviews();
+
+  const bibs = lib.domains.map((d) => {
+    const { open, soon } = libStats(d);
+    const litD = d.status === 'open' ? NODES.filter((n) => S.lit[n.id]).length : 0;
+    const sub = d.status === 'open'
+      ? `${open} ${open === 1 ? 'jornada aberta' : 'jornadas abertas'} · ${soon} em escrita${litD ? ` · ${litD === 1 ? '1 salão aceso' : litD + ' salões acesos'}` : ''}`
+      : `em escrita — ${soon} jornadas planejadas`;
+    return `
+      <div class="card bib-card ${d.status === 'open' ? '' : 'sealed'}" data-domain="${d.id}" role="button" tabindex="0">
+        <div class="domain-head"><span class="di">${d.icon}</span><span class="dt">${d.title}</span></div>
+        <div class="dg">${d.tagline}</div>
+        <div class="bcount">${sub}</div>
+      </div>`;
+  }).join('');
+
+  screen().innerHTML = `
+    ${due.length ? thoth('Guardião… sinto chamas vacilando. Três minutos e elas ficam suas.', false) + rescueCardHtml(due) : ''}
+    <h2 class="serif" style="margin-top:2px">${lib.title}</h2>
+    <p class="eyebrow">as bibliotecas do Arquivo</p>
+    ${bibs}
+    <div class="divider" aria-hidden="true"></div>
+    ${continueCardHtml()}
+  `;
+
+  wireCommon(due);
+  wireContinue();
+  screen().querySelectorAll('.bib-card[data-domain]').forEach((card) => {
+    const go = () => renderDomain(lib.domains.find((x) => x.id === card.dataset.domain));
+    card.addEventListener('click', go);
+    card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') go(); });
+  });
+}
+
+/* Uma biblioteca por vez: estantes com jornadas-livro e, sob cada estante,
+   o "em breve" — a antecipação é mecânica de produto (GDD §4.0), e os
+   números são sempre honestos: aberto é aberto, em escrita é em escrita. */
+function renderDomain(d) {
+  nav(renderLibrary, `biblioteca de ${d.title.toLowerCase()}`);
+  setProgress(null);
+  closeTermBox();
+  const due = dueReviews();
+  const litD = NODES.filter((n) => S.lit[n.id]).length;
+
+  const shelvesHtml = (d.shelves ?? []).map((sh) => {
+    const cards = (sh.journeys ?? []).map((jid) => {
+      const j = JOURNEYS.find((x) => x.id === jid);
+      const jN = journeyNodes(j);
+      const lit = jN.filter((n) => S.lit[n.id]).length;
+      const doneJ = lit === jN.length;
+      const locked = !journeyUnlocked(JOURNEYS.indexOf(j));
+      const lessons = jN.reduce((a, n) => a + n.lessons.length, 0);
+      const mins = Math.max(5, Math.round((lessons * 4) / 5) * 5);
+      if (locked) {
+        return `<div class="jbook sealed">
+          <div class="jb-title">${j.title}</div>
+          <div class="jm">🔒 conclua “${JOURNEYS[JOURNEYS.indexOf(j) - 1].title}” para abrir</div>
+        </div>`;
+      }
+      const pct = journeyLessonPct(j);
+      return `<div class="jbook ${doneJ ? 'done' : ''}" data-journey="${j.id}" role="button" tabindex="0">
+        <div class="jb-title">${j.title}</div>
+        <div class="jb-q">${j.centralQuestion}</div>
+        <div class="jb-stats">🚪 ${jN.length} salões · 📖 ${lessons} lições · ⏱ ~${mins} min</div>
+        ${doneJ
+          ? `<div class="jm"><span class="selo">✔ jornada concluída</span> <span>${jN.map((n) => n.emblem ?? '🔥').join(' ')}</span></div>`
+          : `<div class="pctbar"><div style="width:${pct}%"></div></div>
+             <div class="jb-cta">▶ ${pct > 0 ? `continuar — ${pct}%` : 'começar'}</div>`}
+      </div>`;
+    }).join('');
+    const soon = (sh.upcoming ?? []).length ? `
+      <div class="soon">
+        <p class="eyebrow">em breve nesta estante</p>
+        ${(sh.upcoming ?? []).map((u) => `<div class="soon-row"><span>${u.icon}</span>${u.title}</div>`).join('')}
+      </div>` : '';
+    return `<div class="shelf-title"><span>${sh.icon}</span>${sh.title}</div>${cards}${soon}`;
+  }).join('');
+
+  screen().innerHTML = `
+    ${rescueCardHtml(due)}
+    <div class="domain-head big"><span class="di">${d.icon}</span><span class="dt">${d.title}</span></div>
+    <div class="dg">${d.tagline}${d.status === 'open' && litD ? ` · ${litD === 1 ? '1 salão aceso' : litD + ' salões acesos'}` : ''}</div>
+    ${d.status === 'open' ? '' : `<div class="card domain-sealed"><div class="sealed-note">🔒 ${d.teaser ?? 'ala em escrita'} — os escribas já trabalham nas jornadas abaixo.</div></div>`}
+    ${shelvesHtml}
+  `;
+
+  wireCommon(due);
+  screen().querySelectorAll('.jbook[data-journey]').forEach((card) => {
     const go = () => renderCorridor(JOURNEYS.find((x) => x.id === card.dataset.journey));
     card.addEventListener('click', go);
     card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') go(); });
@@ -650,7 +729,7 @@ function renderLibrary() {
 /* O Corredor: a timeline de UMA jornada — não a home (feedback do fundador). */
 function renderCorridor(j) {
   j = j ?? currentJourney();
-  nav(renderLibrary, j.title.toLowerCase());
+  nav(() => renderDomain(domainOfJourney(j.id)), j.title.toLowerCase());
   setProgress(null);
   closeTermBox();
   const jN = journeyNodes(j);
