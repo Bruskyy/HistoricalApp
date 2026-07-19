@@ -7,6 +7,8 @@
 > **v3** — segunda rodada de feedback: adicionada a Filosofia de Crescimento do Produto (seção 2.1), separação explícita entre visão e primeira versão utilizável com introdução gradual de sistemas (seção 16), guardrail contra o universo competir com o conteúdo (seção 9), seção dedicada ao papel da IA (seção 22) e alertas de validação sobre os nomes Mneme/Thoth (seção 19).
 >
 > **v4** — diretriz do fundador: Política Editorial e Credibilidade Científica elevada a **pilar permanente** da plataforma, com documento próprio ([`EDITORIAL_POLICY.md`](EDITORIAL_POLICY.md)) inserido na cadeia de precedência (VISION > EDITORIAL_POLICY > LDD > GDD > PRD). Compromisso com o método, não com "neutralidade absoluta".
+>
+> **v5** — decisão de escopo do fundador: o produto será **somente História e Filosofia** (seção 5). A lista aberta de domínios futuros sai da visão; a engine continua domínio-agnóstica como decisão de arquitetura, não como promessa de expansão.
 
 ---
 
@@ -64,15 +66,17 @@ A Etapa 1 mapeou uma lacuna dupla e específica (ver `COMPETITOR_ANALYSIS.md`, s
 
 O único concorrente que tentou os dois ao mesmo tempo (Paladin, 7/10) falhou exatamente no equilíbrio: gamificação forte, mas curadoria de conteúdo criticada por imprecisão. **O problema real não é "faltar um Duolingo de História" — é faltar um produto que trate conhecimento profundo com o mesmo rigor de design de produto que hoje só existe em apps de conteúdo raso.**
 
-## 5. Visão de longo prazo: uma plataforma, não um app
+## 5. Visão de longo prazo: dois domínios, uma engine
 
-> Construir a primeira plataforma que transforma conhecimento profundo em jogo — começando por História, com arquitetura desde o dia 1 preparada para novos domínios (Filosofia, Economia, Geografia, Direito, Psicologia, Literatura, Artes, Ciências Políticas) rodando sobre a mesma engine de aprendizado, gamificação e IA.
+> Construir a plataforma que transforma conhecimento profundo em jogo — com **exatamente dois domínios: História e Filosofia** (decisão do fundador, v5). História é o primeiro domínio publicado; Filosofia é o segundo, sobre a mesma engine de aprendizado, gamificação e IA.
 
 Implicações práticas:
 
 - **História não é "o produto"; é o primeiro domínio de conteúdo publicado sobre a engine.** Todo conceito de produto abaixo (jornada, nó, missão, companheiro, museu) é nomeado e desenhado de forma domínio-agnóstica, mesmo que o MVP só tenha um domínio ativo.
-- Isso é uma decisão de **arquitetura de conteúdo e produto**, não de escopo do MVP — o MVP continua sendo só História (seção 16.1). O banco de conteúdo, a progressão e a IA não podem ser hardcoded para "história".
-- O nome da marca (seção 19) precisa funcionar para a plataforma inteira.
+- A engine domínio-agnóstica continua sendo uma decisão de **arquitetura de conteúdo** (o banco de conteúdo, a progressão e a IA não podem ser hardcoded para "história") — mas ela existe para servir bem História e Filosofia, **não** como promessa de expansão para outros domínios. Escopo enxuto é proteção do produto ("pequeno, mas inesquecível"), não limitação temporária.
+- História e Filosofia se **alimentam mutuamente**: jornadas de um domínio podem ecoar salões do outro (a democracia ateniense ↔ Sócrates e a pólis). Essa ponte entre os dois domínios é parte da USP, e é algo que nenhum dos dois domínios teria sozinho.
+- O MVP continua sendo só História (seção 16.1); Filosofia entra como segunda ala quando a primeira provar retenção.
+- O nome da marca (seção 19) precisa funcionar para os dois domínios.
 
 ## 6. Proposta única de valor (USP)
 

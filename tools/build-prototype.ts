@@ -8,10 +8,21 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const template = readFileSync('prototype/template.html', 'utf-8');
-const pkg = readFileSync('content/compiled/history.json', 'utf-8');
+const pkg = JSON.parse(readFileSync('content/compiled/history.json', 'utf-8'));
+pkg.library = JSON.parse(readFileSync('content/library.json', 'utf-8'));
+
+// Estantes só podem referenciar jornadas que existem no pacote
+const journeyIds = new Set(pkg.journeys.map((j: { id: string }) => j.id));
+for (const d of pkg.library.domains) {
+  for (const sh of d.shelves ?? []) {
+    for (const jid of sh.journeys ?? []) {
+      if (!journeyIds.has(jid)) throw new Error(`estante ${sh.id} referencia jornada inexistente: ${jid}`);
+    }
+  }
+}
 
 // "</" dentro de strings JSON encerraria o <script>; escapa por segurança.
-const safe = JSON.stringify(JSON.parse(pkg)).replace(/<\//g, '<\\/');
+const safe = JSON.stringify(pkg).replace(/<\//g, '<\\/');
 
 if (!template.includes('__PACKAGE_JSON__'))
   throw new Error('placeholder __PACKAGE_JSON__ não encontrado no template');

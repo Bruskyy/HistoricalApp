@@ -1,0 +1,31 @@
+{
+  "title": "O que você quer entender hoje?",
+  "domains": [
+    {
+      "id": "history",
+      "icon": "📜",
+      "title": "História",
+      "tagline": "Entenda como o mundo chegou até aqui",
+      "status": "open",
+      "shelves": [
+        {
+          "id": "poder-e-democracia",
+          "icon": "🏛️",
+          "title": "Poder & Democracia",
+          "journeys": ["nascimento-da-democracia", "a-ideia-renasce"]
+        },
+        { "id": "idade-media", "icon": "⚔️", "title": "Idade Média", "status": "writing" },
+        { "id": "guerras-mundiais", "icon": "💣", "title": "Guerras Mundiais", "status": "writing" },
+        { "id": "brasil", "icon": "🇧🇷", "title": "Brasil", "status": "writing" }
+      ]
+    },
+    {
+      "id": "philosophy",
+      "icon": "🧠",
+      "title": "Filosofia",
+      "tagline": "Descubra as ideias que moldaram a humanidade",
+      "status": "writing",
+      "teaser": "Sócrates espera por você — ala em escrita"
+    }
+  ]
+}

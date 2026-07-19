@@ -147,6 +147,16 @@ Ao fim da última atividade: (1) resumo emocional — o que acendeu, o que Thoth
 
 **[Loop: "Avançar na Timeline" + "Desbloquear próximo nó"]**
 
+### 4.0 Hierarquia de navegação: Biblioteca → Jornada → Corredor → Salões → Lições
+
+*(Adicionado na fase de refinamento, por proposta do fundador — navegação em níveis para o app deixar de despejar tudo numa tela só.)*
+
+- **A Biblioteca é a home de quem retorna.** Uma tela de escolha no espírito "o que você quer entender hoje?": no topo, **⭐ Continue de onde parou** (o caminho de menor atrito é sempre o primeiro); abaixo, os dois domínios — 📜 História e 🧠 Filosofia — cada um com suas **estantes**.
+- **Estantes são curadoria, não taxonomia.** O nível do meio agrupa jornadas por grande tema (🏛️ Poder & Democracia, ⚔️ Idade Média…), mas a jornada dentro da estante continua **livre para atravessar séculos e civilizações** — o fio cross-era é a USP e nenhuma hierarquia de navegação pode prendê-lo a uma única era. Cada card de jornada mostra a pergunta central, o progresso em salões e os emblemas conquistados.
+- **O Corredor mostra UMA jornada por vez.** Ele deixa de ser a home e vira o que sempre quis ser: a recompensa espacial da jornada escolhida — o mural de arcadas, o fio de chamas, a próxima porta. Concluída a jornada, a porta da próxima ala aparece dentro do próprio Corredor (o "só mais um pouco" não exige voltar à Biblioteca).
+- **O primeiro uso NUNCA começa na Biblioteca.** A primeira sessão continua guiada direto ao primeiro salão (VISION §17-D1: sem parede de escolha). A Biblioteca só se revela quando existe algo a escolher — a partir do segundo dia. Corolário: a Biblioteca nunca mostra escolha vazia; domínios/estantes em escrita aparecem como promessa selada ("Sócrates espera por você"), não como opção quebrada.
+- **Missões de resgate aparecem em qualquer nível.** A memória vacilando fura a hierarquia: o card de resgate aparece na Biblioteca e no Corredor, porque o SRS não pertence a uma jornada — pertence ao Guardião.
+
 - **Estrutura:** eras em sequência cronológica (Pré-História → ... → Era da Informação); dentro de cada era, os nós posicionados onde pertencem. As civilizações paralelas (China, Américas, África — LDD §8) aparecem como trilhos paralelos da mesma era, não como apêndice.
 - **Estados visuais do nó** = estados do LDD §6: apagado (bloqueado) → tênue (disponível) → **aceso** (Compreendido) → **chama firme** (Dominado) → **constelação** (Mestre). Nó em regressão: a chama visivelmente vacila — sem texto de culpa, o visual conta a história.
 - **Desbloqueio é por jornada, não estritamente linear:** concluir um nó de uma jornada libera o próximo nó *daquela jornada*, mesmo que salte séculos (o arco "Nascimento da Democracia" pula da Grécia ao Iluminismo). O Corredor mostra o salto como um **fio de conexão** atravessando as eras — a visualização literal do conhecimento conectado.

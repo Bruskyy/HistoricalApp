@@ -263,6 +263,30 @@
   .mural.small { padding: 8px; gap: 6px; background: none; border: none; }
   .mural.small .arch { width: 34px; height: 44px; font-size: 15px; padding-bottom: 5px; }
 
+  /* Biblioteca (GDD §4: Biblioteca → Corredor → Salões → Lições) */
+  .domain-head { display: flex; align-items: baseline; gap: 10px; margin-top: 4px; }
+  .domain-head .di { font-size: 22px; }
+  .domain-head .dt { font-family: Georgia, serif; font-size: 20px; font-weight: 600; }
+  .domain-head .dg { font-size: 12.5px; color: var(--ink-soft); }
+  .shelf-title { display: flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-top: 2px; }
+  .jcardlib {
+    background: var(--paper-raised); border: 1.5px solid var(--line); border-radius: 14px;
+    padding: 16px; display: flex; flex-direction: column; gap: 8px; cursor: pointer;
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .jcardlib:hover { transform: translateY(-1px); border-color: var(--era); }
+  .jcardlib.done { border-color: var(--gold); }
+  .jcardlib .jq { font-family: Georgia, serif; font-size: 16px; line-height: 1.4; }
+  .jcardlib .jm { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-faint); }
+  .jcardlib .selo { color: var(--gold); font-weight: 700; }
+  .writing-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .writing-chip {
+    font-size: 12px; color: var(--ink-faint); border: 1px dashed var(--line);
+    border-radius: 999px; padding: 5px 12px; font-style: italic;
+  }
+  .domain-sealed { opacity: .75; }
+  .continue-card { border: 1.5px solid var(--gold); }
+
   /* Thoth evolui (GDD §7.1 — diferencial obrigatório VISION §16.1) */
   .thoth { position: relative; transition: box-shadow .6s ease, border-color .6s ease; }
   .thoth.s2 { border-color: var(--gold); box-shadow: 0 0 9px color-mix(in srgb, var(--gold) 45%, transparent); }
@@ -334,7 +358,7 @@
   </header>
   <div class="progress-track" id="ptrack" hidden><div class="progress-fill" id="pfill" style="width:0%"></div></div>
   <main id="screen"></main>
-  <footer class="note">Gerado de <code>content/</code> pelo pipeline editorial · progresso salvo só neste aparelho<br><a href="#" id="skipDays" style="color:var(--ink-faint)">⏩ pular 3 dias (atalho de teste do protótipo)</a></footer>
+  <footer class="note">Gerado de <code>content/</code> pelo pipeline editorial · progresso salvo só neste aparelho<br><a href="#" id="skipDays" style="color:var(--ink-faint)">⏩ pular 3 dias (teste)</a> · <a href="#" id="resetBtn" style="color:var(--ink-faint)">recomeçar</a></footer>
 </div>
 
 <script>
@@ -386,8 +410,10 @@ const now = () => Date.now() + S.timeShift;
 const $ = (id) => document.getElementById(id);
 const screen = () => $('screen');
 
-function nav(back, chip) {
-  $('backBtn').hidden = !back;
+let NAV_BACK = null;
+function nav(backHandler, chip) {
+  NAV_BACK = typeof backHandler === 'function' ? backHandler : null;
+  $('backBtn').hidden = !NAV_BACK;
   $('navChip').textContent = chip ?? 'protótipo';
 }
 function setProgress(pct) {
@@ -478,7 +504,7 @@ let rightIx = 0;
 const verdictRight = () => `<div class="verdict right">✓ ${RIGHT_WORDS[rightIx++ % RIGHT_WORDS.length]}</div>`;
 const verdictMiss = () => `<div class="verdict miss">✕ Ainda não…</div>`;
 
-/* ---------- Corredor ---------- */
+/* ---------- Corredor & Biblioteca (GDD §4: Biblioteca → Corredor → Salões) ---------- */
 function dueReviews() {
   return Object.entries(S.reviews)
     .filter(([, r]) => r.dueAt <= now())
@@ -491,128 +517,20 @@ function nodeUnlockedInJourney(node) {
   return pos === 0 || S.lit[j.nodeOrder[pos - 1]];
 }
 
-function renderCorridor() {
-  nav(false, null);
-  setProgress(null);
-  closeTermBox();
-  const due = dueReviews();
+function rescueCardHtml(due) {
+  if (!due.length) return '';
   const dueNodeIds = new Set(due.map((d) => d.nodeId));
   const duePlaces = NODES.filter((n) => dueNodeIds.has(n.id)).map((n) => n.place).join(' e ');
-  const cj = currentJourney();
-  const allDone = JOURNEYS.every(journeyDone);
-  const totalLit = NODES.filter((n) => S.lit[n.id]).length;
-  const unlocked = JOURNEYS.flatMap((j, ix) => (journeyUnlocked(ix) ? journeyNodes(j) : []));
-  const target = unlocked.find((n) => !S.lit[n.id] && nodeUnlockedInJourney(n));
-
-  const say = due.length
-    ? `Guardião… sinto chamas vacilando em ${duePlaces}. Não é urgência do mundo — é da memória. Três minutos bastam.`
-    : allDone
-      ? 'Todas as jornadas escritas estão acesas, Guardião. Os escribas do Arquivo já preparam as próximas — descansa perto das chamas.'
-      : totalLit === 0
-        ? 'Bem-vindo ao Corredor do Tempo, Guardião. Os salões estão apagados — mas encontrei uma porta aberta na Grécia. Vamos?'
-        : target
-          ? `O Corredor cresce, Guardião — a porta de ${target.place} está aberta.${(S.lessonsDone[target.id] ?? 0) > 0 ? ' Sua lição espera onde você parou.' : ''}`
-          : 'O Corredor aguarda, Guardião.';
-
-  let rows = SEALED_BEFORE.map((era) => eraRow(era, 'sealed')).join('');
-
-  JOURNEYS.forEach((j, ix) => {
-    if (!journeyUnlocked(ix)) {
-      rows += eraRow(j.title, 'sealed',
-        `<div class="sealed-note">selada — conclua “${JOURNEYS[ix - 1].title}”</div>`);
-      return;
-    }
-    for (const node of journeyNodes(j)) {
-      const lit = !!S.lit[node.id];
-      if (!lit && !nodeUnlockedInJourney(node)) {
-        const j2 = journeyOfNode(node.id);
-        const prev = nodeOf(j2.nodeOrder[j2.nodeOrder.indexOf(node.id) - 1]);
-        rows += eraRow(node.place, 'sealed',
-          `<div class="sealed-note">selada — acende quando ${prev.place} estiver iluminada</div>`);
-        continue;
-      }
-      const doneLessons = S.lessonsDone[node.id] ?? 0;
-      const nodeDue = dueNodeIds.has(node.id);
-      const scheduled = node.claims.filter((c) => S.reviews[c.id]).map((c) => S.reviews[c.id].dueAt);
-      const nextDue = scheduled.length ? Math.min(...scheduled) : null;
-      const status = lit
-        ? nodeDue
-          ? 'memória vacilando — reacenda'
-          : `Compreendido · chama acesa${nextDue ? ` · revisão em ${Math.max(1, Math.ceil((nextDue - now()) / DAY))}d` : ''}`
-        : doneLessons > 0
-          ? `Lição ${doneLessons + 1} de ${node.lessons.length} · continuar`
-          : `Missão · lição 1 de ${node.lessons.length}`;
-      rows += eraRow(node.place, lit ? 'lit' : 'open', `
-        <div class="node-card ${lit ? 'lit' : ''}" data-node="${node.id}" role="button" tabindex="0" aria-label="${node.name}">
-          <div>
-            <div class="nm">${node.name}</div>
-            ${lit ? '' : `<div class="pips">${'🔥'.repeat(doneLessons)}${'🕯️'.repeat(node.lessons.length - doneLessons)}</div>`}
-            <div class="st"${nodeDue ? ' style="color:var(--flame)"' : ''}>${status}</div>
-          </div>
-          <div class="flame ${lit ? (nodeDue ? 'waver' : 'on') : ''}" style="font-size:22px">${lit ? '🔥' : '🕯️'}</div>
-        </div>`, lit ? (node.emblem ?? '🔥') : null);
-    }
-  });
-
-  if (allDone) {
-    rows += eraRow('…', 'sealed',
-      `<div class="sealed-note">${JOURNEYS[JOURNEYS.length - 1].comingNext}</div>`);
-  }
-
-  const litInCj = journeyNodes(cj).filter((n) => S.lit[n.id]).length;
-  const rescueCard = due.length ? `
+  return `
     <div class="card mission-card rescue">
       <p class="eyebrow">memória se apagando</p>
       <div class="mn">${due.length === 1 ? '1 memória vacilando' : due.length + ' memórias vacilando'} — ${duePlaces}</div>
       <button class="cta gold" id="rescueBtn">🔥 reacender agora — XP em dobro</button>
-    </div>` : '';
-  const missionCard = !allDone && target ? `
-    <div class="card mission-card">
-      <p class="eyebrow">${due.length ? 'depois, se quiser' : 'missão de hoje'}</p>
-      <div class="mn">${target.name}</div>
-      <button class="cta ${due.length ? 'ghost' : 'gold'}" id="missionBtn">▶ ${
-        (S.lessonsDone[target.id] ?? 0) > 0 ? 'continuar de onde parei' : 'começar agora'
-      }</button>
-    </div>` : '';
-
-  screen().innerHTML = `
-    ${thoth(say, allDone && !due.length)}
-    ${rescueCard}
-    ${missionCard}
-    <div class="card journey-head">
-      <p class="eyebrow">jornada</p>
-      <div class="q">${cj.centralQuestion}</div>
-      <div class="prog">${cj.title} · ${litInCj} de ${cj.nodeOrder.length} salões acesos</div>
-    </div>
-    <div class="mural" aria-label="o caminho construído no Corredor">${
-      JOURNEYS.flatMap((j2, ix2) => journeyNodes(j2).map((n) => {
-        const st = S.lit[n.id] ? 'lit' : (target && n.id === target.id) ? 'next' : journeyUnlocked(ix2) ? '' : 'veiled';
-        return `<div class="arch ${st}" title="${n.place}">${S.lit[n.id] ? (n.emblem ?? '🔥') : ''}</div>`;
-      })).join('')
-    }</div>
-    <div role="list">${rows}</div>
-    ${allDone && !due.length ? '<button class="cta ghost" id="againBtn">recomeçar o protótipo</button>' : ''}
-  `;
-
+    </div>`;
+}
+function wireCommon(due) {
   const rescueBtn = $('rescueBtn');
   if (rescueBtn) rescueBtn.addEventListener('click', () => startReviewMission(due));
-  const missionBtn = $('missionBtn');
-  if (missionBtn && target) missionBtn.addEventListener('click', () => startNode(target.id));
-
-  screen().querySelectorAll('.node-card:not(.lit)').forEach((card) => {
-    if (target && card.dataset.node === target.id && !due.length) card.classList.add('pulse');
-    const go = () => startNode(card.dataset.node);
-    card.addEventListener('click', go);
-    card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') go(); });
-  });
-  const again = $('againBtn');
-  if (again) again.addEventListener('click', () => {
-    Object.assign(S, { xp: 0, lit: {}, lessonsDone: {}, nodeXp: 0, reviews: {}, timeShift: 0, events: [], thothStageSeen: 1, resume: null });
-    try { localStorage.removeItem(STORE_KEY); } catch {}
-    refreshXp(); renderCorridor();
-  });
-
-  // O companheiro é tocável: o pergaminho-diário é a memória da dupla (GDD §7.1)
   const av = screen().querySelector('.thoth');
   if (av) {
     av.classList.add('tappable');
@@ -622,9 +540,218 @@ function renderCorridor() {
   }
 }
 
+/* A Biblioteca: home de quem retorna. O primeiro uso NUNCA cai aqui —
+   é guiado direto ao Corredor (VISION §17-D1: sem parede de escolha). */
+function renderLibrary() {
+  nav(null, 'biblioteca');
+  setProgress(null);
+  closeTermBox();
+  const lib = PACKAGE.library;
+  const due = dueReviews();
+  const totalLit = NODES.filter((n) => S.lit[n.id]).length;
+
+  const say = due.length
+    ? 'Guardião… sinto chamas vacilando. Resgata as memórias antes de abrir portas novas?'
+    : JOURNEYS.every(journeyDone)
+      ? 'Todas as alas escritas estão acesas. Os escribas preparam as próximas — e eu guardo cada chama.'
+      : 'O Arquivo cresce com você, Guardião. Qual porta hoje?';
+
+  let continueCard = '';
+  if (S.resume && !S.lit[S.resume.nodeId]) {
+    const n = nodeOf(S.resume.nodeId);
+    continueCard = `
+      <div class="card continue-card">
+        <p class="eyebrow">⭐ continue de onde parou</p>
+        <div style="font-family:Georgia,serif; font-size:16px">${n.name}</div>
+        <div class="jm">${n.place} · lição ${S.resume.lessonIx + 1} de ${n.lessons.length}</div>
+        <button class="cta gold" id="continueBtn">▶ continuar</button>
+      </div>`;
+  } else {
+    const target = NODES.find((n) => !S.lit[n.id] && nodeUnlockedInJourney(n) &&
+      journeyUnlocked(JOURNEYS.indexOf(journeyOfNode(n.id))));
+    if (target && totalLit > 0) {
+      const tj = journeyOfNode(target.id);
+      continueCard = `
+        <div class="card continue-card">
+          <p class="eyebrow">⭐ próxima porta</p>
+          <div style="font-family:Georgia,serif; font-size:16px">${target.name}</div>
+          <div class="jm">${tj.title} · ${target.place}</div>
+          <button class="cta gold" id="continueBtn2">▶ entrar</button>
+        </div>`;
+    }
+  }
+
+  const domainsHtml = lib.domains.map((d) => {
+    if (d.status !== 'open') {
+      return `
+        <div class="card domain-sealed">
+          <div class="domain-head"><span class="di">${d.icon}</span><span class="dt">${d.title}</span></div>
+          <div class="dg">${d.tagline}</div>
+          <div class="sealed-note">🔒 ${d.teaser ?? 'ala em escrita'}</div>
+        </div>`;
+    }
+    const litD = NODES.filter((n) => S.lit[n.id]).length;
+    const shelvesHtml = (d.shelves ?? []).map((sh) => {
+      if (sh.status === 'writing') return '';
+      const cards = (sh.journeys ?? []).map((jid) => {
+        const j = JOURNEYS.find((x) => x.id === jid);
+        const jN = journeyNodes(j);
+        const lit = jN.filter((n) => S.lit[n.id]).length;
+        const doneJ = lit === jN.length;
+        const locked = !journeyUnlocked(JOURNEYS.indexOf(j));
+        if (locked) {
+          return `<div class="jcardlib" style="opacity:.6; cursor:default">
+            <div class="jq">${j.title}</div>
+            <div class="jm">🔒 conclua “${JOURNEYS[JOURNEYS.indexOf(j) - 1].title}”</div>
+          </div>`;
+        }
+        return `<div class="jcardlib ${doneJ ? 'done' : ''}" data-journey="${j.id}" role="button" tabindex="0">
+          <div class="jq">${j.centralQuestion}</div>
+          <div class="jm">${doneJ
+            ? `<span class="selo">✔ jornada concluída</span> · ${j.title}`
+            : `${j.title} · ${lit} de ${jN.length} salões`}
+            <span>${jN.map((n) => S.lit[n.id] ? (n.emblem ?? '🔥') : '·').join(' ')}</span></div>
+        </div>`;
+      }).join('');
+      return `<div class="shelf-title"><span>${sh.icon}</span>${sh.title}</div>${cards}`;
+    }).join('');
+    const writing = (d.shelves ?? []).filter((sh) => sh.status === 'writing');
+    return `
+      <div class="domain-head"><span class="di">${d.icon}</span><span class="dt">${d.title}</span></div>
+      <div class="dg" style="margin-top:-8px">${d.tagline} · ${litD === 1 ? '1 salão aceso' : litD + ' salões acesos'}</div>
+      ${shelvesHtml}
+      ${writing.length ? `<div class="shelf-title"><span>✍️</span>nas mesas dos escribas</div>
+        <div class="writing-chips">${writing.map((sh) => `<span class="writing-chip">${sh.icon} ${sh.title}</span>`).join('')}</div>` : ''}`;
+  }).join('');
+
+  screen().innerHTML = `
+    ${thoth(say, false)}
+    ${rescueCardHtml(due)}
+    ${continueCard}
+    <h2 class="serif" style="margin-top:2px">${lib.title}</h2>
+    ${domainsHtml}
+  `;
+
+  wireCommon(due);
+  const c1 = $('continueBtn');
+  if (c1) c1.addEventListener('click', () => startNode(S.resume.nodeId));
+  const c2 = $('continueBtn2');
+  if (c2) c2.addEventListener('click', () => {
+    const target = NODES.find((n) => !S.lit[n.id] && nodeUnlockedInJourney(n));
+    if (target) renderCorridor(journeyOfNode(target.id));
+  });
+  screen().querySelectorAll('.jcardlib[data-journey]').forEach((card) => {
+    const go = () => renderCorridor(JOURNEYS.find((x) => x.id === card.dataset.journey));
+    card.addEventListener('click', go);
+    card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') go(); });
+  });
+}
+
+/* O Corredor: a timeline de UMA jornada — não a home (feedback do fundador). */
+function renderCorridor(j) {
+  j = j ?? currentJourney();
+  nav(renderLibrary, j.title.toLowerCase());
+  setProgress(null);
+  closeTermBox();
+  const jN = journeyNodes(j);
+  const due = dueReviews();
+  const dueNodeIds = new Set(due.map((d) => d.nodeId));
+  const done = journeyDone(j);
+  const litInJ = jN.filter((n) => S.lit[n.id]).length;
+  const target = jN.find((n) => !S.lit[n.id] && nodeUnlockedInJourney(n));
+  const nextJ = j.next ? JOURNEYS.find((x) => x.id === j.next.journey) : null;
+
+  const say = due.length
+    ? 'As chamas vacilantes primeiro, Guardião — três minutos bastam.'
+    : done
+      ? `A ala “${j.title}” inteira está acesa. ${nextJ ? 'E olha: a porta da próxima ala já range.' : 'A Biblioteca guarda as próximas portas.'}`
+      : litInJ === 0
+        ? `Uma ala nova, Guardião: ${j.title}. A primeira porta aberta é ${target ? target.place : jN[0].place}. Vamos?`
+        : `A porta de ${target ? target.place : '…'} está aberta.${target && (S.lessonsDone[target.id] ?? 0) > 0 ? ' Sua lição espera onde você parou.' : ''}`;
+
+  let rows = '';
+  for (const node of jN) {
+    const lit = !!S.lit[node.id];
+    if (!lit && !nodeUnlockedInJourney(node)) {
+      const prev = nodeOf(j.nodeOrder[j.nodeOrder.indexOf(node.id) - 1]);
+      rows += eraRow(node.place, 'sealed',
+        `<div class="sealed-note">selada — acende quando ${prev.place} estiver iluminada</div>`);
+      continue;
+    }
+    const doneLessons = S.lessonsDone[node.id] ?? 0;
+    const nodeDue = dueNodeIds.has(node.id);
+    const scheduled = node.claims.filter((c) => S.reviews[c.id]).map((c) => S.reviews[c.id].dueAt);
+    const nextDue = scheduled.length ? Math.min(...scheduled) : null;
+    const status = lit
+      ? nodeDue
+        ? 'memória vacilando — reacenda'
+        : `Compreendido · chama acesa${nextDue ? ` · revisão em ${Math.max(1, Math.ceil((nextDue - now()) / DAY))}d` : ''}`
+      : doneLessons > 0
+        ? `Lição ${doneLessons + 1} de ${node.lessons.length} · continuar`
+        : `Missão · lição 1 de ${node.lessons.length}`;
+    rows += eraRow(node.place, lit ? 'lit' : 'open', `
+      <div class="node-card ${lit ? 'lit' : ''}" data-node="${node.id}" role="button" tabindex="0" aria-label="${node.name}">
+        <div>
+          <div class="nm">${node.name}</div>
+          ${lit ? '' : `<div class="pips">${'🔥'.repeat(doneLessons)}${'🕯️'.repeat(node.lessons.length - doneLessons)}</div>`}
+          <div class="st"${nodeDue ? ' style="color:var(--flame)"' : ''}>${status}</div>
+        </div>
+        <div class="flame ${lit ? (nodeDue ? 'waver' : 'on') : ''}" style="font-size:22px">${lit ? '🔥' : '🕯️'}</div>
+      </div>`, lit ? (node.emblem ?? '🔥') : null);
+  }
+  if (done) {
+    rows += nextJ
+      ? eraRow(nextJ.title, 'open', `
+          <div class="node-card" data-nextj="${nextJ.id}" role="button" tabindex="0">
+            <div><div class="nm">➡ próxima ala</div><div class="st">${nextJ.centralQuestion}</div></div>
+            <div style="font-size:22px">🚪</div>
+          </div>`)
+      : eraRow('…', 'sealed', `<div class="sealed-note">${j.comingNext}</div>`);
+  }
+
+  const missionCard = !done && target ? `
+    <div class="card mission-card">
+      <p class="eyebrow">${due.length ? 'depois, se quiser' : 'missão de hoje'}</p>
+      <div class="mn">${target.name}</div>
+      <button class="cta ${due.length ? 'ghost' : 'gold'}" id="missionBtn">▶ ${
+        (S.lessonsDone[target.id] ?? 0) > 0 ? 'continuar de onde parei' : 'começar agora'
+      }</button>
+    </div>` : '';
+
+  screen().innerHTML = `
+    ${thoth(say, done && !due.length)}
+    ${rescueCardHtml(due)}
+    ${missionCard}
+    <div class="card journey-head">
+      <p class="eyebrow">jornada</p>
+      <div class="q">${j.centralQuestion}</div>
+      <div class="prog">${j.title} · ${litInJ} de ${jN.length} salões acesos</div>
+    </div>
+    <div class="mural" aria-label="o caminho construído nesta ala">${
+      jN.map((n) => {
+        const st = S.lit[n.id] ? 'lit' : (target && n.id === target.id) ? 'next' : '';
+        return `<div class="arch ${st}" title="${n.place}">${S.lit[n.id] ? (n.emblem ?? '🔥') : ''}</div>`;
+      }).join('')
+    }</div>
+    <div role="list">${rows}</div>
+  `;
+
+  wireCommon(due);
+  const missionBtn = $('missionBtn');
+  if (missionBtn && target) missionBtn.addEventListener('click', () => startNode(target.id));
+  screen().querySelectorAll('.node-card[data-node]:not(.lit)').forEach((card) => {
+    if (target && card.dataset.node === target.id && !due.length) card.classList.add('pulse');
+    const go = () => startNode(card.dataset.node);
+    card.addEventListener('click', go);
+    card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') go(); });
+  });
+  const nextDoor = screen().querySelector('[data-nextj]');
+  if (nextDoor) nextDoor.addEventListener('click', () => renderCorridor(JOURNEYS.find((x) => x.id === nextDoor.dataset.nextj)));
+}
+
 /* ---------- o pergaminho de Thoth (diário da dupla) ---------- */
 function renderPergaminho() {
-  nav(true, 'pergaminho de Thoth');
+  nav(renderLibrary, 'pergaminho de Thoth');
   setProgress(null);
   if (!S.startedAt) { S.startedAt = Date.now(); persist(); }
   const days = Math.max(1, Math.ceil((Date.now() + S.timeShift - S.startedAt) / DAY));
@@ -646,8 +773,8 @@ function renderPergaminho() {
             <div class="de-name">${n.name}</div>
           </div>
         </div>`).join('')}
-    <button class="cta" id="go">voltar ao Corredor</button>`);
-  $('go').addEventListener('click', renderCorridor);
+    <button class="cta" id="go">voltar</button>`);
+  $('go').addEventListener('click', renderLibrary);
 }
 
 /* ---------- cerimônia de evolução (marcos reais, nunca XP bruto) ---------- */
@@ -656,7 +783,7 @@ function maybeEvolve(next) {
   if (st <= (S.thothStageSeen ?? 1)) { next(); return; }
   S.thothStageSeen = st;
   persist();
-  nav(false, null);
+  nav(null, null);
   setProgress(null);
   stepScreen(`
     <div class="celebrate">
@@ -684,7 +811,7 @@ function startReviewMission(due) {
     const claim = node.claims.find((c) => c.id === item.claimId);
     const variant = claim.reviewVariants[0]; // formato ≠ da lição (GDD §6.4)
     setProgress(Math.round((ix / (due.length + 1)) * 100));
-    nav(true, `resgate · ${ix}/${due.length}`);
+    nav(renderLibrary, `resgate · ${ix}/${due.length}`);
     stepScreen(`<p class="eyebrow">${node.place} · memória se apagando · ${ix} de ${due.length}</p><div class="card" id="ic"></div>`);
     renderInteraction(variant, node, $('ic'), () => {
       const r = S.reviews[item.claimId];
@@ -698,7 +825,7 @@ function startReviewMission(due) {
 }
 
 function finishReviewMission() {
-  nav(false, null);
+  nav(null, null);
   setProgress(null);
   stepScreen(`
     <div class="celebrate">
@@ -706,10 +833,10 @@ function finishReviewMission() {
       <h1 class="fade-in" style="animation-delay:.3s">Chamas firmes novamente</h1>
       <div class="fade-in" style="animation-delay:1s; width:100%; text-align:left">${thoth('É assim que uma memória vira sua para sempre: voltando a ela na hora certa. As próximas revisões ficam cada vez mais raras — sinal de que ela está segura.', true)}</div>
       <div class="fade-in" style="animation-delay:1.7s"><span class="xp-chip">+${S.nodeXp} XP — em dobro</span></div>
-      <button class="cta fade-in" style="animation-delay:2.1s" id="go">voltar ao Corredor</button>
+      <button class="cta fade-in" style="animation-delay:2.1s" id="go">voltar à Biblioteca</button>
     </div>`);
   S.nodeXp = 0; persist();
-  $('go').addEventListener('click', renderCorridor);
+  $('go').addEventListener('click', renderLibrary);
 }
 
 function eraRow(name, state, inner = '', glyph = null) {
@@ -755,7 +882,7 @@ function startLesson(node, lessonIx) {
   const remaining = rest.slice(1);
 
   const list = [];
-  const withNav = (fn) => () => { nav(true, chip); fn(); };
+  const withNav = (fn) => () => { nav(() => renderCorridor(j), chip); fn(); };
 
   list.push(withNav(() => {
     stepScreen(`
@@ -839,7 +966,7 @@ function renderLessonComplete(node, lessonIx) {
   }
   S.resume = { nodeId: node.id, lessonIx: done };
   persist();
-  nav(false, null);
+  nav(null, null);
   setProgress(null);
   stepScreen(`
     <div class="celebrate">
@@ -848,7 +975,7 @@ function renderLessonComplete(node, lessonIx) {
       <div class="fade-in" style="animation-delay:.9s; width:100%; text-align:left">${thoth('Marco registrado no pergaminho, Guardião. Respira — o Corredor guarda seu lugar.', true)}</div>
       <button class="cta gold fade-in" style="animation-delay:1.4s" id="go">voltar ao Corredor</button>
     </div>`);
-  $('go').addEventListener('click', renderCorridor);
+  $('go').addEventListener('click', () => renderCorridor(journeyOfNode(node.id)));
 }
 
 /* Retorno perfeito: quem volta nunca precisa descobrir onde parou. */
@@ -857,15 +984,15 @@ function renderWelcomeBack() {
   const node = nodeOf(r.nodeId);
   const j = journeyOfNode(node.id);
   const remainingSaloes = journeyNodes(j).filter((n) => !S.lit[n.id]).length;
-  nav(false, null);
+  nav(null, null);
   setProgress(null);
   stepScreen(`
     <p class="eyebrow">bem-vindo de volta, Guardião</p>
     ${thoth(`Guardei tudo exatamente onde você deixou: <b>${node.place}</b>, lição ${r.lessonIx + 1} de ${node.lessons.length}. ${remainingSaloes === 1 ? 'Falta só este salão para concluir a jornada.' : `Faltam ${remainingSaloes} salões nesta jornada.`}`)}
     <button class="cta gold" id="go">▶ continuar de onde parei</button>
-    <button class="cta ghost" id="map">ver o Corredor</button>`);
+    <button class="cta ghost" id="map">ver a Biblioteca</button>`);
   $('go').addEventListener('click', () => startNode(node.id));
-  $('map').addEventListener('click', renderCorridor);
+  $('map').addEventListener('click', renderLibrary);
 }
 
 function interactionEyebrow(inter) {
@@ -946,7 +1073,7 @@ function renderInteraction(inter, node, host, onDone, xpMult = 1) {
 
 /* ---------- celebrações (ordem GDD §9) ---------- */
 function celebrateNode(node) {
-  nav(false, null);
+  nav(null, null);
   S.lit[node.id] = true;
   // Nó compreendido: afirmações objetivas entram no agendador (revisão em ~3 dias)
   for (const c of node.claims) {
@@ -979,14 +1106,14 @@ function celebrateNode(node) {
       <button class="cta fade-in" style="animation-delay:3.5s" id="go">${isLast ? 'a pergunta final' : 'voltar ao Corredor'}</button>
     </div>`);
   S.nodeXp = 0;
-  $('go').addEventListener('click', () => (isLast ? renderSynthesis(j) : renderCorridor()));
+  $('go').addEventListener('click', () => (isLast ? renderSynthesis(j) : renderCorridor(j)));
 }
 
 /* ---------- momento de síntese (regra de prontidão da jornada) ---------- */
 function renderSynthesis(j) {
   const syn = j.synthesis;
   if (!syn) { celebrateJourney(j); return; }
-  nav(false, 'síntese');
+  nav(null, 'síntese');
   setProgress(null);
   stepScreen(`
     <p class="eyebrow">síntese · a pergunta que atravessa a jornada</p>
@@ -1055,7 +1182,7 @@ function celebrateJourney(j) {
   if (discover && nextJ) discover.addEventListener('click', () => {
     S.events.push({ t: Date.now(), e: 'next_journey_via_provocation', j: nextJ.id });
     persist();
-    maybeEvolve(renderCorridor); // evolução de Thoth antes da nova ala se revelar
+    maybeEvolve(() => renderCorridor(nextJ)); // evolução antes da nova ala se abrir
   });
   const go = $('go');
   if (go) go.addEventListener('click', () => {
@@ -1069,8 +1196,8 @@ function renderSessionClose() {
   stepScreen(`
     <p class="eyebrow">até amanhã, Guardião</p>
     ${thoth('Vou guardar as memórias desta sessão com cuidado. Em <b>3 dias</b> as chamas vão querer vacilar — e eu te chamo para reacendê-las. É assim que elas viram suas para sempre.')}
-    <button class="cta" id="go">voltar ao Corredor</button>`);
-  $('go').addEventListener('click', renderCorridor);
+    <button class="cta" id="go">voltar à Biblioteca</button>`);
+  $('go').addEventListener('click', renderLibrary);
 }
 
 refreshXp();
@@ -1078,9 +1205,19 @@ document.getElementById('skipDays').addEventListener('click', (e) => {
   e.preventDefault();
   S.timeShift += 3 * DAY;
   persist();
-  renderCorridor();
+  renderLibrary();
 });
-$('backBtn').addEventListener('click', renderCorridor);
+document.getElementById('resetBtn').addEventListener('click', (e) => {
+  e.preventDefault();
+  Object.assign(S, { xp: 0, lit: {}, lessonsDone: {}, nodeXp: 0, reviews: {}, timeShift: 0, events: [], thothStageSeen: 1, resume: null, startedAt: null });
+  try { localStorage.removeItem(STORE_KEY); } catch {}
+  refreshXp(); renderCorridor(JOURNEYS[0]);
+});
+$('backBtn').addEventListener('click', () => { if (NAV_BACK) NAV_BACK(); });
+// Primeiro uso: guiado direto ao Corredor (sem parede de escolha — VISION §17-D1);
+// quem retorna cai na Biblioteca; quem parou no meio, no retorno perfeito.
+const totalLitBoot = NODES.filter((n) => S.lit[n.id]).length;
 if (S.resume && !S.lit[S.resume.nodeId]) renderWelcomeBack();
-else renderCorridor();
+else if (totalLitBoot > 0 || Object.keys(S.lessonsDone).length > 0) renderLibrary();
+else renderCorridor(JOURNEYS[0]);
 </script>
