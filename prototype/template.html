@@ -263,6 +263,34 @@
   .mural.small { padding: 8px; gap: 6px; background: none; border: none; }
   .mural.small .arch { width: 34px; height: 44px; font-size: 15px; padding-bottom: 5px; }
 
+  /* Thoth evolui (GDD §7.1 — diferencial obrigatório VISION §16.1) */
+  .thoth { position: relative; transition: box-shadow .6s ease, border-color .6s ease; }
+  .thoth.s2 { border-color: var(--gold); box-shadow: 0 0 9px color-mix(in srgb, var(--gold) 45%, transparent); }
+  .thoth.s3 {
+    border-color: var(--flame);
+    background: linear-gradient(180deg, var(--era-soft), color-mix(in srgb, var(--gold) 30%, var(--era-soft)));
+    box-shadow: 0 0 14px color-mix(in srgb, var(--flame) 55%, transparent);
+  }
+  .tbadge {
+    position: absolute; right: -4px; bottom: -4px; font-size: 13px;
+    background: var(--paper-raised); border: 1px solid var(--gold);
+    border-radius: 999px; padding: 1px 3px;
+  }
+  .thoth.tappable { cursor: pointer; }
+  .diary-entry {
+    display: flex; gap: 12px; align-items: center;
+    background: var(--paper-raised); border: 1px solid var(--line);
+    border-radius: 12px; padding: 12px 14px;
+  }
+  .diary-entry .de-emblem { font-size: 24px; }
+  .diary-entry .de-place { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+  .diary-entry .de-name { font-family: Georgia, serif; font-size: 14.5px; color: var(--ink); }
+  .evolve-avatar {
+    width: 84px; height: 84px; border-radius: 50%; font-size: 40px;
+    display: flex; align-items: center; justify-content: center;
+    animation: ignite 1.2s ease;
+  }
+
   .era-row.sealed .era-info, .era-row.sealed .node-dot { opacity: .55; }
   .era-row.lit {
     background: linear-gradient(90deg, color-mix(in srgb, var(--gold) 10%, transparent), transparent 70%);
@@ -346,6 +374,8 @@ const S = Object.assign({
   nodeXp: 0,
   reviews: {},       // claimId -> { nodeId, dueAt, step }
   events: [],        // log local do experimento (jornada concluída, "descobrir" clicado)
+  thothStageSeen: 1, // último estágio de Thoth já celebrado
+  startedAt: null,   // início da dupla (o "aniversário" futuro)
   timeShift: 0,      // atalho de teste "pular dias"
 }, loadState());
 function persist() {
@@ -376,9 +406,18 @@ function gainXp(n, host) {
     host.appendChild(el);
   }
 }
+const THOTH_STAGES = ['Aprendiz de tinta', 'Escriba iniciado', 'Escriba do Arquivo'];
+function thothStage() {
+  const done = JOURNEYS.filter(journeyDone).length;
+  return done >= 2 ? 3 : done >= 1 ? 2 : 1;
+}
+function thothAvatar(extra = '') {
+  const st = thothStage();
+  return `<div class="thoth s${st} ${extra}">📜${st > 1 ? `<span class="tbadge">${st === 2 ? '✒️' : '🖋️'}</span>` : ''}</div>`;
+}
 function thoth(text, bounce = false) {
   return `<div class="thoth-row">
-    <div class="thoth ${bounce ? 'bounce' : ''}">📜</div>
+    ${thothAvatar(bounce ? 'bounce' : '')}
     <div class="thoth-say">${text}</div>
   </div>`;
 }
@@ -568,10 +607,70 @@ function renderCorridor() {
   });
   const again = $('againBtn');
   if (again) again.addEventListener('click', () => {
-    Object.assign(S, { xp: 0, lit: {}, lessonsDone: {}, nodeXp: 0, reviews: {}, timeShift: 0, events: [] });
+    Object.assign(S, { xp: 0, lit: {}, lessonsDone: {}, nodeXp: 0, reviews: {}, timeShift: 0, events: [], thothStageSeen: 1, resume: null });
     try { localStorage.removeItem(STORE_KEY); } catch {}
     refreshXp(); renderCorridor();
   });
+
+  // O companheiro é tocável: o pergaminho-diário é a memória da dupla (GDD §7.1)
+  const av = screen().querySelector('.thoth');
+  if (av) {
+    av.classList.add('tappable');
+    av.setAttribute('role', 'button');
+    av.setAttribute('aria-label', 'ver o pergaminho de Thoth');
+    av.addEventListener('click', renderPergaminho);
+  }
+}
+
+/* ---------- o pergaminho de Thoth (diário da dupla) ---------- */
+function renderPergaminho() {
+  nav(true, 'pergaminho de Thoth');
+  setProgress(null);
+  if (!S.startedAt) { S.startedAt = Date.now(); persist(); }
+  const days = Math.max(1, Math.ceil((Date.now() + S.timeShift - S.startedAt) / DAY));
+  const litNodes = NODES.filter((n) => S.lit[n.id]);
+  const st = thothStage();
+  stepScreen(`
+    <div style="display:flex; flex-direction:column; align-items:center; gap:6px">
+      ${thothAvatar()}
+      <h2>${THOTH_STAGES[st - 1]}</h2>
+      <p class="eyebrow">guardando memórias com você há ${days === 1 ? '1 dia' : days + ' dias'}</p>
+    </div>
+    ${litNodes.length === 0
+      ? `<div class="card"><p class="serif" style="font-style:italic; color:var(--ink-soft)">O pergaminho ainda está em branco. Nossa história começa no primeiro salão que acendermos juntos, Guardião.</p></div>`
+      : `<p class="eyebrow">o que desenhei até aqui</p>` + litNodes.map((n, i) => `
+        <div class="diary-entry fade-in" style="animation-delay:${i * 0.15}s">
+          <div class="de-emblem">${n.emblem ?? '🔥'}</div>
+          <div>
+            <div class="de-place">${n.place}</div>
+            <div class="de-name">${n.name}</div>
+          </div>
+        </div>`).join('')}
+    <button class="cta" id="go">voltar ao Corredor</button>`);
+  $('go').addEventListener('click', renderCorridor);
+}
+
+/* ---------- cerimônia de evolução (marcos reais, nunca XP bruto) ---------- */
+function maybeEvolve(next) {
+  const st = thothStage();
+  if (st <= (S.thothStageSeen ?? 1)) { next(); return; }
+  S.thothStageSeen = st;
+  persist();
+  nav(false, null);
+  setProgress(null);
+  stepScreen(`
+    <div class="celebrate">
+      <div class="evolve-avatar thoth s${st}">📜${st > 1 ? `<span class="tbadge" style="font-size:17px">${st === 2 ? '✒️' : '🖋️'}</span>` : ''}</div>
+      <p class="eyebrow fade-in" style="animation-delay:.4s">seu companheiro evoluiu</p>
+      <h1 class="fade-in" style="animation-delay:.6s">${THOTH_STAGES[st - 1]}</h1>
+      <div class="fade-in" style="animation-delay:1.3s; width:100%; text-align:left">${thoth(st === 2
+        ? 'Guardião… minha pena mudou. Uma jornada inteira no pergaminho — eu não era capaz de desenhar assim antes de você. O Arquivo me deu um selo novo.'
+        : 'Duas jornadas completas. Os outros escribas agora me chamam de Escriba do Arquivo — mas nós dois sabemos de quem são essas chamas.', true)}</div>
+      <div class="mural small fade-in" style="animation-delay:2s">${NODES.filter((n) => S.lit[n.id]).map((n) =>
+        `<div class="arch lit">${n.emblem ?? '🔥'}</div>`).join('')}</div>
+      <button class="cta gold fade-in" style="animation-delay:2.5s" id="go">continuar</button>
+    </div>`);
+  $('go').addEventListener('click', next);
 }
 
 /* ---------- missão de revisão (memória se apagando — GDD §3.2/§6) ---------- */
@@ -956,13 +1055,13 @@ function celebrateJourney(j) {
   if (discover && nextJ) discover.addEventListener('click', () => {
     S.events.push({ t: Date.now(), e: 'next_journey_via_provocation', j: nextJ.id });
     persist();
-    renderCorridor(); // a nova ala se revela no Corredor — o cérebro vê o mapa crescer
+    maybeEvolve(renderCorridor); // evolução de Thoth antes da nova ala se revelar
   });
   const go = $('go');
   if (go) go.addEventListener('click', () => {
     S.events.push({ t: Date.now(), e: 'session_closed_after_journey', j: j.id });
     persist();
-    renderSessionClose();
+    maybeEvolve(renderSessionClose);
   });
 }
 
