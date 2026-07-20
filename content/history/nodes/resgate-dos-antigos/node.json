@@ -7,10 +7,12 @@
   "name": "O resgate dos antigos",
   "sensitive": false,
   "journeys": [
-    "a-ideia-renasce"
+    "mod-resgate-luzes",
+    "trilha-como-nasceu-a-democracia"
   ],
   "positionInJourney": {
-    "a-ideia-renasce": 1
+    "mod-resgate-luzes": 1,
+    "trilha-como-nasceu-a-democracia": 3
   },
   "claims": [
     {

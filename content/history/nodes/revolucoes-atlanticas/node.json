@@ -7,10 +7,12 @@
   "name": "A ideia toma o poder",
   "sensitive": false,
   "journeys": [
-    "a-ideia-renasce"
+    "mod-revolucoes",
+    "trilha-como-nasceu-a-democracia"
   ],
   "positionInJourney": {
-    "a-ideia-renasce": 3
+    "mod-revolucoes": 1,
+    "trilha-como-nasceu-a-democracia": 5
   },
   "claims": [
     {

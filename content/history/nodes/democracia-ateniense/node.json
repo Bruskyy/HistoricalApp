@@ -7,10 +7,12 @@
   "name": "A democracia ateniense",
   "sensitive": false,
   "journeys": [
-    "nascimento-da-democracia"
+    "mod-grecia-democracia",
+    "trilha-como-nasceu-a-democracia"
   ],
   "positionInJourney": {
-    "nascimento-da-democracia": 1
+    "mod-grecia-democracia": 1,
+    "trilha-como-nasceu-a-democracia": 1
   },
   "claims": [
     {

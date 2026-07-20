@@ -7,10 +7,12 @@
   "name": "A República Romana",
   "sensitive": false,
   "journeys": [
-    "nascimento-da-democracia"
+    "mod-republica-imperio",
+    "trilha-como-nasceu-a-democracia"
   ],
   "positionInJourney": {
-    "nascimento-da-democracia": 2
+    "mod-republica-imperio": 1,
+    "trilha-como-nasceu-a-democracia": 2
   },
   "claims": [
     {

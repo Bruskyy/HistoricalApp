@@ -1,0 +1,41 @@
+{
+  "id": "trilha-como-nasceu-a-democracia",
+  "kind": "trail",
+  "order": 1,
+  "title": "Como nasceu a Democracia",
+  "icon": "🏛️",
+  "centralQuestion": "De onde veio a ideia de que o povo pode governar — e como ela sobreviveu 2.500 anos sem desaparecer?",
+  "thread": "Atenas → Roma → Copistas → Iluminismo → Revoluções → você",
+  "unlockAfterCollection": "imperio-romano",
+  "nodeOrder": [
+    "democracia-ateniense",
+    "republica-romana",
+    "resgate-dos-antigos",
+    "iluminismo",
+    "revolucoes-atlanticas"
+  ],
+  "comingNext": "Novas trilhas em escrita — o Arquivo não para",
+  "synthesis": {
+    "question": {
+      "id": "sintese-democracia-trilha",
+      "type": "connection",
+      "objective": true,
+      "prompt": "Última pergunta — e ela atravessa dois mil e quinhentos anos. Como a ideia de que o povo pode governar sobreviveu de Atenas até a Constituição de 1988?",
+      "options": [
+        "Por uma corrente de escolhas: Atenas propôs, Roma remontou em máquina de eleições e freios, copistas e humanistas preservaram e redescobriram, filósofos releram, revoluções promulgaram — cada época reacendeu a chama para responder ao próprio tempo",
+        "Ficou escondida, intacta, num livro só, até alguém achá-la pronta",
+        "Foi inventada do zero pelo Iluminismo, sem relação com Atenas ou Roma"
+      ],
+      "correct": 0,
+      "errorPath": "Você viu cada elo: nada estava intacto nem foi inventado do zero. Atenas deu o nome e a justificativa (o povo como fonte do poder); Roma deu a máquina (eleição, mandato, veto); monges e humanistas guardaram e redescobriram os textos; Montesquieu os releu; a Filadélfia e Paris promulgaram; 1988 escreveu em português. Sobreviver, para uma ideia, é ser escolhida de novo — século após século."
+    },
+    "reframe": [
+      "Você começou esta trilha com uma pergunta: de onde veio a ideia de que o povo pode governar — e como ela sobreviveu tanto tempo? A resposta que você atravessou é mais estranha, e mais bonita, do que parece: a democracia não foi inventada uma vez, nem sobreviveu sozinha. Ela foi proposta por Atenas, remontada por Roma, guardada por copistas, redescoberta por humanistas, relida por filósofos e promulgada por revoluções — um elo escolhendo reacender o anterior, geração após geração.",
+      "Da próxima vez que você votar, repare: o gesto é romano, a justificativa é ateniense, a doutrina que separa os poderes veio de uma releitura do Iluminismo — e a escolha de manter essa chama acesa, agora, é sua."
+    ],
+    "shift": {
+      "before": "Democracia: um sistema que a Grécia inventou e que chegou pronto até nós",
+      "after": "Democracia: uma corrente de 2.500 anos de gente escolhendo reacender a mesma pergunta — e você é o elo mais recente"
+    }
+  }
+}

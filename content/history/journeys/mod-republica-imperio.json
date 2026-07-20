@@ -1,0 +1,10 @@
+{
+  "id": "mod-republica-imperio",
+  "kind": "module",
+  "collectionId": "imperio-romano",
+  "order": 1,
+  "title": "Nascimento do Império",
+  "centralQuestion": "Se a democracia já existia em Atenas, por que Roma inventou outra máquina de poder?",
+  "nodeOrder": ["republica-romana"],
+  "comingNext": "Auge Romano, Estado Romano, Crises, Queda do Ocidente, Império Bizantino — em escrita"
+}

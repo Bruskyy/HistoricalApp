@@ -11,13 +11,25 @@ const template = readFileSync('prototype/template.html', 'utf-8');
 const pkg = JSON.parse(readFileSync('content/compiled/history.json', 'utf-8'));
 pkg.library = JSON.parse(readFileSync('content/library.json', 'utf-8'));
 
-// Estantes só podem referenciar jornadas que existem no pacote
-const journeyIds = new Set(pkg.journeys.map((j: { id: string }) => j.id));
+// Coleções só podem referenciar módulos que existem no pacote (LDD §1-2: Coleção → Módulo)
+const moduleIds = new Set(
+  pkg.journeys.filter((j: { kind?: string }) => j.kind === 'module').map((j: { id: string }) => j.id),
+);
 for (const d of pkg.library.domains) {
-  for (const sh of d.shelves ?? []) {
-    for (const jid of sh.journeys ?? []) {
-      if (!journeyIds.has(jid)) throw new Error(`estante ${sh.id} referencia jornada inexistente: ${jid}`);
+  for (const c of d.collections ?? []) {
+    for (const mid of c.modules ?? []) {
+      if (!moduleIds.has(mid)) throw new Error(`coleção ${c.id} referencia módulo inexistente: ${mid}`);
     }
+  }
+}
+
+// Trilhas (LDD §2.2) só podem desbloquear atrás de coleções que existem
+const collectionIds = new Set(
+  pkg.library.domains.flatMap((d: { collections?: { id: string }[] }) => d.collections ?? []).map((c: { id: string }) => c.id),
+);
+for (const j of pkg.journeys) {
+  if (j.kind === 'trail' && j.unlockAfterCollection && !collectionIds.has(j.unlockAfterCollection)) {
+    throw new Error(`trilha ${j.id} referencia coleção inexistente: ${j.unlockAfterCollection}`);
   }
 }
 

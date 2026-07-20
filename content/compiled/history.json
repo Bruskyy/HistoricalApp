@@ -201,78 +201,116 @@
   ],
   "journeys": [
     {
-      "id": "a-ideia-renasce",
-      "order": 2,
-      "title": "A Ideia Renasce",
-      "centralQuestion": "Como uma ideia sobrevive a 2.000 anos?",
-      "thread": "Copistas → Humanistas → Filósofos → Revoluções → 1988 → você",
+      "id": "mod-grecia-democracia",
+      "kind": "module",
+      "collectionId": "grecia-antiga",
+      "order": 1,
+      "title": "Nascimento da Democracia",
+      "centralQuestion": "De onde veio a ideia de que o povo pode governar?",
+      "nodeOrder": [
+        "democracia-ateniense"
+      ],
+      "comingNext": "Mais salões da Grécia Antiga em escrita — o Arquivo não para"
+    },
+    {
+      "id": "mod-republica-imperio",
+      "kind": "module",
+      "collectionId": "imperio-romano",
+      "order": 1,
+      "title": "Nascimento do Império",
+      "centralQuestion": "Se a democracia já existia em Atenas, por que Roma inventou outra máquina de poder?",
+      "nodeOrder": [
+        "republica-romana"
+      ],
+      "comingNext": "Auge Romano, Estado Romano, Crises, Queda do Ocidente, Império Bizantino — em escrita"
+    },
+    {
+      "id": "mod-resgate-luzes",
+      "kind": "module",
+      "collectionId": "iluminismo",
+      "order": 1,
+      "title": "O Resgate e as Luzes",
+      "centralQuestion": "Como uma ideia apagada por mil anos volta a acender o mundo?",
       "nodeOrder": [
         "resgate-dos-antigos",
-        "iluminismo",
-        "revolucoes-atlanticas"
+        "iluminismo"
       ],
-      "comingNext": "Próximas jornadas em escrita — o Arquivo não para",
+      "comingNext": "Novos módulos do Iluminismo em escrita — o Arquivo não para",
       "synthesis": {
         "question": {
-          "id": "sintese-renascimento",
+          "id": "sintese-resgate-luzes",
           "type": "connection",
           "objective": true,
-          "prompt": "Última pergunta — e ela atravessa dois mil anos. Como a ideia de que o povo pode governar sobreviveu da queda de Roma até a Constituição de 1988?",
+          "prompt": "Última pergunta deste módulo: o que copistas medievais, humanistas do Renascimento e filósofos como Locke e Montesquieu fizeram com as ideias antigas foi…",
           "options": [
-            "Por uma corrente de escolhas: copistas que copiaram, humanistas que redescobriram, filósofos que releram, revoluções que promulgaram — cada época reacendeu a chama para responder ao próprio tempo",
-            "Ficou escondida, intacta, num livro só, até alguém achá-la pronta",
-            "Foi reinventada do zero pelo Iluminismo, sem relação com os antigos"
+            "Religar um fio que o tempo tinha cortado: preservar, redescobrir e depois reler os textos antigos com perguntas novas — nunca inventar do zero",
+            "Inventar ideias completamente novas, sem relação com o mundo antigo",
+            "Traduzir os textos antigos sem mudar nada do que diziam"
           ],
           "correct": 0,
-          "errorPath": "Você viu cada elo: nada estava intacto nem foi inventado do zero. O Livro VI de Políbio passou por mãos de monges e tradutores; Montesquieu o releu; a Filadélfia e Paris o promulgaram; 1988 o escreveu em português. Sobreviver, para uma ideia, é ser escolhida de novo — século após século."
+          "errorPath": "Nada aqui nasceu do nada nem ficou intacto. Mosteiros e o mundo islâmico guardaram os textos; humanistas os caçaram e imprimiram; Locke e Montesquieu os leram de novo — e mudaram a pergunta de \"quem deve mandar\" para \"o que autoriza o poder\". Preservar, redescobrir, reler: esse é o fio."
         },
         "reframe": [
-          "Você começou esta jornada com uma pergunta: como uma ideia sobrevive a 2.000 anos? A resposta que você atravessou é desconcertante: ela não sobrevive — ela é ressuscitada, de propósito, por gente com nome e endereço. Um copista no ano 800. Um caçador de manuscritos em 1417. Um barão numa biblioteca em 1748. Delegados suando na Filadélfia em 1787. Constituintes em Brasília em 1988.",
-          "A democracia que você vive não é grega, nem romana, nem francesa: é a soma das releituras — e ela continua precisando do que sempre precisou: alguém que escolha reacendê-la. Neste momento, o elo mais recente da corrente de 2.500 anos é a sua geração."
+          "Você começou este módulo com uma pergunta: como uma ideia apagada por mil anos volta a acender o mundo? A resposta é que ela nunca ficou de fato apagada — ficou guardada, à espera de alguém que a lesse de novo com os problemas do seu próprio tempo.",
+          "Montesquieu não copiou Políbio: ele o leu perguntando por que reis absolutos deveriam temer um poder que se freia sozinho. É essa releitura — não a cópia — que vira Revolução."
         ],
         "shift": {
-          "before": "Ideias grandes sobrevivem sozinhas, guardadas em livros",
-          "after": "Ideias sobrevivem porque alguém, em cada século, escolhe reacendê-las — e o século atual é o seu turno"
+          "before": "O Iluminismo inventou a ideia de limitar o poder",
+          "after": "O Iluminismo releu uma ideia antiga com uma pergunta nova — e foi a pergunta nova que mudou o mundo"
         }
       }
     },
     {
-      "id": "nascimento-da-democracia",
+      "id": "mod-revolucoes",
+      "kind": "module",
+      "collectionId": "revolucoes-atlanticas",
       "order": 1,
-      "title": "O Nascimento da Democracia",
-      "centralQuestion": "De onde veio a ideia de que o povo pode governar?",
-      "thread": "Atenas → Roma → Iluminismo → 1988 → você",
+      "title": "As Revoluções Atlânticas",
+      "centralQuestion": "Como uma teoria de filósofo vira artigo de constituição?",
+      "nodeOrder": [
+        "revolucoes-atlanticas"
+      ],
+      "comingNext": "Mais módulos das Revoluções Atlânticas em escrita — o Arquivo não para"
+    },
+    {
+      "id": "trilha-como-nasceu-a-democracia",
+      "kind": "trail",
+      "order": 1,
+      "title": "Como nasceu a Democracia",
+      "icon": "🏛️",
+      "centralQuestion": "De onde veio a ideia de que o povo pode governar — e como ela sobreviveu 2.500 anos sem desaparecer?",
+      "thread": "Atenas → Roma → Copistas → Iluminismo → Revoluções → você",
+      "unlockAfterCollection": "imperio-romano",
       "nodeOrder": [
         "democracia-ateniense",
-        "republica-romana"
+        "republica-romana",
+        "resgate-dos-antigos",
+        "iluminismo",
+        "revolucoes-atlanticas"
       ],
-      "comingNext": "Iluminismo — quando a ideia renasce, mil anos depois",
+      "comingNext": "Novas trilhas em escrita — o Arquivo não para",
       "synthesis": {
         "question": {
-          "id": "sintese-democracia",
+          "id": "sintese-democracia-trilha",
           "type": "connection",
           "objective": true,
-          "prompt": "Última pergunta — e ela atravessa a jornada inteira. O sistema em que você vive (eleições, mandatos, três poderes — e o nome \"democracia\") é…",
+          "prompt": "Última pergunta — e ela atravessa dois mil e quinhentos anos. Como a ideia de que o povo pode governar sobreviveu de Atenas até a Constituição de 1988?",
           "options": [
-            "Um híbrido de 2.500 anos: de Atenas, a ideia de que o poder nasce do povo; de Roma, a máquina de eleições, mandatos e poderes que se freiam",
-            "A democracia ateniense, modernizada com tecnologia",
-            "Uma invenção do século XX, sem relação real com a Antiguidade"
+            "Por uma corrente de escolhas: Atenas propôs, Roma remontou em máquina de eleições e freios, copistas e humanistas preservaram e redescobriram, filósofos releram, revoluções promulgaram — cada época reacendeu a chama para responder ao próprio tempo",
+            "Ficou escondida, intacta, num livro só, até alguém achá-la pronta",
+            "Foi inventada do zero pelo Iluminismo, sem relação com Atenas ou Roma"
           ],
           "correct": 0,
-          "errorPath": "Repare no que você atravessou: o nome e a justificativa (o povo como fonte do poder) vêm de Atenas — mas Atenas sorteava, não elegia. A máquina que usamos (eleição, mandato com prazo, poderes se vigiando) é a resposta de Roma, relida pelo Iluminismo. Nosso sistema não copia nenhuma das duas cidades: ele é a conversa entre elas."
+          "errorPath": "Você viu cada elo: nada estava intacto nem foi inventado do zero. Atenas deu o nome e a justificativa (o povo como fonte do poder); Roma deu a máquina (eleição, mandato, veto); monges e humanistas guardaram e redescobriram os textos; Montesquieu os releu; a Filadélfia e Paris promulgaram; 1988 escreveu em português. Sobreviver, para uma ideia, é ser escolhida de novo — século após século."
         },
         "reframe": [
-          "Você começou com uma pergunta: de onde veio a ideia de que o povo pode governar? A resposta que você atravessou é mais estranha — e mais bonita — do que parece: a democracia não foi inventada uma vez. Ela foi proposta por Atenas (com sorteio e exclusões), recusada e remontada por Roma (com eleições e freios), e refundida pelo Iluminismo na fórmula que a Constituição de 1988 herda.",
-          "Da próxima vez que você votar, repare: o gesto é romano, a justificativa é ateniense — e a discussão sobre se isso basta continua aberta, 2.500 anos depois. A partir de hoje, você está dentro dela."
+          "Você começou esta trilha com uma pergunta: de onde veio a ideia de que o povo pode governar — e como ela sobreviveu tanto tempo? A resposta que você atravessou é mais estranha, e mais bonita, do que parece: a democracia não foi inventada uma vez, nem sobreviveu sozinha. Ela foi proposta por Atenas, remontada por Roma, guardada por copistas, redescoberta por humanistas, relida por filósofos e promulgada por revoluções — um elo escolhendo reacender o anterior, geração após geração.",
+          "Da próxima vez que você votar, repare: o gesto é romano, a justificativa é ateniense, a doutrina que separa os poderes veio de uma releitura do Iluminismo — e a escolha de manter essa chama acesa, agora, é sua."
         ],
         "shift": {
-          "before": "Democracia: um sistema que a Grécia inventou",
-          "after": "Democracia: uma discussão de 2.500 anos sobre quem merece o poder — ainda em aberto, e agora com você dentro"
+          "before": "Democracia: um sistema que a Grécia inventou e que chegou pronto até nós",
+          "after": "Democracia: uma corrente de 2.500 anos de gente escolhendo reacender a mesma pergunta — e você é o elo mais recente"
         }
-      },
-      "next": {
-        "journey": "a-ideia-renasce",
-        "provocation": "Você acabou de descobrir de onde veio a democracia. Mas… como uma ideia dessas sobreviveu quase 2.000 anos — atravessando a queda de Roma, impérios e fogueiras — sem desaparecer?"
       }
     }
   ],
@@ -286,10 +324,12 @@
       "name": "A democracia ateniense",
       "sensitive": false,
       "journeys": [
-        "nascimento-da-democracia"
+        "mod-grecia-democracia",
+        "trilha-como-nasceu-a-democracia"
       ],
       "positionInJourney": {
-        "nascimento-da-democracia": 1
+        "mod-grecia-democracia": 1,
+        "trilha-como-nasceu-a-democracia": 1
       },
       "claims": [
         {
@@ -520,10 +560,12 @@
       "name": "As luzes releem os antigos",
       "sensitive": false,
       "journeys": [
-        "a-ideia-renasce"
+        "mod-resgate-luzes",
+        "trilha-como-nasceu-a-democracia"
       ],
       "positionInJourney": {
-        "a-ideia-renasce": 2
+        "mod-resgate-luzes": 2,
+        "trilha-como-nasceu-a-democracia": 4
       },
       "claims": [
         {
@@ -778,10 +820,12 @@
       "name": "A República Romana",
       "sensitive": false,
       "journeys": [
-        "nascimento-da-democracia"
+        "mod-republica-imperio",
+        "trilha-como-nasceu-a-democracia"
       ],
       "positionInJourney": {
-        "nascimento-da-democracia": 2
+        "mod-republica-imperio": 1,
+        "trilha-como-nasceu-a-democracia": 2
       },
       "claims": [
         {
@@ -1015,10 +1059,12 @@
       "name": "O resgate dos antigos",
       "sensitive": false,
       "journeys": [
-        "a-ideia-renasce"
+        "mod-resgate-luzes",
+        "trilha-como-nasceu-a-democracia"
       ],
       "positionInJourney": {
-        "a-ideia-renasce": 1
+        "mod-resgate-luzes": 1,
+        "trilha-como-nasceu-a-democracia": 3
       },
       "claims": [
         {
@@ -1269,10 +1315,12 @@
       "name": "A ideia toma o poder",
       "sensitive": false,
       "journeys": [
-        "a-ideia-renasce"
+        "mod-revolucoes",
+        "trilha-como-nasceu-a-democracia"
       ],
       "positionInJourney": {
-        "a-ideia-renasce": 3
+        "mod-revolucoes": 1,
+        "trilha-como-nasceu-a-democracia": 5
       },
       "claims": [
         {

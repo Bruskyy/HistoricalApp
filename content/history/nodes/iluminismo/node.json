@@ -7,10 +7,12 @@
   "name": "As luzes releem os antigos",
   "sensitive": false,
   "journeys": [
-    "a-ideia-renasce"
+    "mod-resgate-luzes",
+    "trilha-como-nasceu-a-democracia"
   ],
   "positionInJourney": {
-    "a-ideia-renasce": 2
+    "mod-resgate-luzes": 2,
+    "trilha-como-nasceu-a-democracia": 4
   },
   "claims": [
     {

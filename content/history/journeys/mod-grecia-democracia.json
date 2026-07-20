@@ -1,0 +1,10 @@
+{
+  "id": "mod-grecia-democracia",
+  "kind": "module",
+  "collectionId": "grecia-antiga",
+  "order": 1,
+  "title": "Nascimento da Democracia",
+  "centralQuestion": "De onde veio a ideia de que o povo pode governar?",
+  "nodeOrder": ["democracia-ateniense"],
+  "comingNext": "Mais salões da Grécia Antiga em escrita — o Arquivo não para"
+}

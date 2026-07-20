@@ -203,8 +203,12 @@ function validateJourney(file: string, nodeIds: Set<string>): void {
     if (!nodeIds.has(n)) fail(id, `jornada referencia nó inexistente: ${n}`);
   }
 
+  // Módulo de 1 nó não tem arco a sintetizar (LDD §2.1); toda trilha e todo
+  // módulo com ≥2 nós precisam do momento "agora tudo faz sentido".
+  const needsSynthesis = j.kind !== 'module' || (j.nodeOrder?.length ?? 0) >= 2;
   const s = j.synthesis;
   if (!s) {
+    if (!needsSynthesis) return;
     fail(id, 'jornada SEM momento de síntese — não está pronta para publicar (LDD §2.1)');
     return;
   }

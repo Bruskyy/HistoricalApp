@@ -7,38 +7,67 @@
       "title": "História",
       "tagline": "Entenda como o mundo chegou até aqui",
       "status": "open",
-      "shelves": [
+      "collections": [
         {
-          "id": "poder-e-democracia",
+          "id": "grecia-antiga",
           "icon": "🏛️",
-          "title": "Poder & Democracia",
-          "journeys": ["nascimento-da-democracia", "a-ideia-renasce"],
-          "upcoming": [
-            { "icon": "👑", "title": "O rei que jurou que seu poder vinha de Deus — e perdeu a cabeça" },
-            { "icon": "🗳️", "title": "O pedaço de papel que consegue prender um rei" }
+          "title": "Grécia Antiga",
+          "tagline": "Onde a pergunta sobre quem pode governar começou",
+          "status": "open",
+          "modules": ["mod-grecia-democracia"],
+          "upcomingModules": [
+            { "icon": "⚔️", "title": "300 homens num desfiladeiro contra o maior império do mundo" },
+            { "icon": "🌍", "title": "O jovem que conquistou o mundo conhecido — e morreu aos 32" }
           ]
         },
         {
-          "id": "mundo-antigo",
-          "icon": "🏺",
-          "title": "Mundo Antigo",
-          "status": "writing",
-          "upcoming": [
-            { "icon": "⚔️", "title": "300 homens num desfiladeiro contra o maior império do mundo" },
-            { "icon": "🌍", "title": "O jovem que conquistou o mundo conhecido — e morreu aos 32" },
-            { "icon": "🦅", "title": "Como uma aldeia de pastores virou dona do Mediterrâneo" },
-            { "icon": "🗡️", "title": "23 facadas: por que os amigos de César o mataram?" },
-            { "icon": "✝️", "title": "A seita perseguida que conquistou o império perseguidor" },
-            { "icon": "🏚️", "title": "Roma caiu — ou nunca acabou?" }
+          "id": "imperio-romano",
+          "icon": "🦅",
+          "title": "Império Romano",
+          "tagline": "Como uma aldeia de pastores virou dona do Mediterrâneo",
+          "status": "open",
+          "modules": ["mod-republica-imperio"],
+          "upcomingModules": [
+            { "icon": "☀️", "title": "Auge Romano — a paz que durou 200 anos" },
+            { "icon": "🏛️", "title": "Estado Romano — a máquina por trás do império" },
+            { "icon": "✝️", "title": "Religião e Cultura — a seita perseguida que conquistou o império perseguidor" },
+            { "icon": "🔥", "title": "Crises — 23 facadas: por que os amigos de César o mataram?" },
+            { "icon": "🏚️", "title": "Queda do Ocidente — Roma caiu, ou nunca acabou?" },
+            { "icon": "👑", "title": "Império Bizantino — a metade de Roma que não caiu" }
+          ]
+        },
+        {
+          "id": "iluminismo",
+          "icon": "💡",
+          "title": "Iluminismo",
+          "tagline": "Quando ideias apagadas voltaram a acender o mundo",
+          "status": "open",
+          "modules": ["mod-resgate-luzes"],
+          "upcomingModules": [
+            { "icon": "📜", "title": "Rousseau e o contrato que ninguém assinou" },
+            { "icon": "🗽", "title": "Voltaire e a liberdade de dizer o que incomoda" }
+          ]
+        },
+        {
+          "id": "revolucoes-atlanticas",
+          "icon": "⚡",
+          "title": "Revoluções Atlânticas",
+          "tagline": "Quando a teoria virou artigo de constituição",
+          "status": "open",
+          "modules": ["mod-revolucoes"],
+          "upcomingModules": [
+            { "icon": "🗽", "title": "Filadélfia: delegados suando para inventar um país" },
+            { "icon": "🇫🇷", "title": "A Bastilha caiu — e o mundo não sabia o que viria depois" }
           ]
         },
         {
           "id": "idade-media",
           "icon": "⚔️",
           "title": "Idade Média",
+          "tagline": "Mil anos de trevas? A mentira que contaram sobre ela",
           "status": "writing",
-          "upcoming": [
-            { "icon": "🏰", "title": "Mil anos de trevas? A mentira que contaram sobre a Idade Média" },
+          "upcomingModules": [
+            { "icon": "🏰", "title": "O mundo feudal — quando a terra virava lealdade" },
             { "icon": "🕌", "title": "Enquanto a Europa esquecia os gregos, alguém guardava a luz" },
             { "icon": "🦠", "title": "O ano em que um terço da Europa morreu" }
           ]
@@ -47,8 +76,9 @@
           "id": "guerras-mundiais",
           "icon": "💣",
           "title": "Guerras Mundiais",
+          "tagline": "Como o mundo tropeçou duas vezes na mesma catástrofe",
           "status": "writing",
-          "upcoming": [
+          "upcomingModules": [
             { "icon": "💥", "title": "Um tiro em Sarajevo — e o mundo inteiro pegou fogo" },
             { "icon": "💣", "title": "A guerra que ninguém queria repetir — e veio pior" },
             { "icon": "❄️", "title": "A guerra sem tiros em que o mundo quase acabou duas vezes" }
@@ -58,9 +88,10 @@
           "id": "brasil",
           "icon": "🇧🇷",
           "title": "Brasil",
+          "tagline": "O país que nasceu como empresa",
           "status": "writing",
-          "upcoming": [
-            { "icon": "🚢", "title": "O país que nasceu como empresa" },
+          "upcomingModules": [
+            { "icon": "🚢", "title": "Brasil Colônia — o país que nasceu como empresa" },
             { "icon": "👑", "title": "O dia em que o império coube num navio fugindo de Napoleão" },
             { "icon": "🗳️", "title": "A república proclamada sem o povo saber" }
           ]
@@ -74,13 +105,14 @@
       "tagline": "Descubra as ideias que moldaram a humanidade",
       "status": "writing",
       "teaser": "Sócrates espera por você — ala em escrita",
-      "shelves": [
+      "collections": [
         {
           "id": "filosofia-grega",
           "icon": "🏛️",
           "title": "Filosofia Grega",
+          "tagline": "Sócrates, Platão, Aristóteles",
           "status": "writing",
-          "upcoming": [
+          "upcomingModules": [
             { "icon": "🗣️", "title": "O homem que só sabia que nada sabia — e morreu por perguntar" },
             { "icon": "🕯️", "title": "E se tudo que você já viu for sombra na parede?" },
             { "icon": "📐", "title": "O aluno que discordou do mestre e organizou o mundo" }
@@ -90,8 +122,9 @@
           "id": "estoicismo",
           "icon": "🏺",
           "title": "Estoicismo",
+          "tagline": "A arte de não sofrer duas vezes",
           "status": "writing",
-          "upcoming": [
+          "upcomingModules": [
             { "icon": "🧘", "title": "O escravo e o imperador que chegaram à mesma resposta" },
             { "icon": "🏛️", "title": "O homem mais poderoso do mundo escrevia à noite para não se perder" }
           ]
@@ -100,8 +133,9 @@
           "id": "existencialismo",
           "icon": "🌑",
           "title": "Existencialismo",
+          "tagline": "Nietzsche, Sartre, Camus",
           "status": "writing",
-          "upcoming": [
+          "upcomingModules": [
             { "icon": "⛰️", "title": "O filósofo que declarou a morte de Deus — e o que ele quis dizer" },
             { "icon": "🌑", "title": "Condenado a ser livre: por que a liberdade pesa tanto?" },
             { "icon": "☕", "title": "Se nada tem sentido, por que não desistir? A resposta de Camus" }

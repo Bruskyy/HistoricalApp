@@ -290,6 +290,7 @@
   .jbook:hover { transform: translateY(-1px); border-color: var(--era); }
   .jbook.done { border-color: var(--gold); border-left-color: var(--gold); }
   .jbook.sealed { opacity: .6; cursor: default; border-left-color: var(--line); }
+  .jbook.trail { border-left-color: var(--gold); background: linear-gradient(135deg, var(--paper-raised), color-mix(in srgb, var(--gold) 8%, var(--paper-raised))); }
   .jbook .jb-title { font-family: Georgia, serif; font-size: 17px; font-weight: 600; }
   .jbook .jb-q { font-family: Georgia, serif; font-size: 13.5px; font-style: italic; color: var(--ink-soft); line-height: 1.4; }
   .jbook .jb-stats { font-size: 12px; color: var(--ink-faint); }
@@ -396,15 +397,60 @@
 /* Conteúdo compilado, injetado por tools/build-prototype.ts — NÃO editar à mão. */
 const PACKAGE = __PACKAGE_JSON__;
 
-const JOURNEYS = [...PACKAGE.journeys].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+/* Coleção → Módulo → Nó (LDD §1-2, pivô "Biblioteca de Alexandria" v6).
+   `journeys` no pacote compilado guarda dois tipos, distinguidos por `kind`:
+   "module" (a forma de aprender dentro de uma coleção) e "trail" (formato
+   secundário que atravessa várias coleções — LDD §2.2). */
+const MODULES = PACKAGE.journeys.filter((j) => j.kind === 'module').sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+const TRAILS = PACKAGE.journeys.filter((j) => j.kind === 'trail');
 const nodeOf = (id) => PACKAGE.nodes.find((n) => n.id === id);
-const journeyNodes = (j) => j.nodeOrder.map(nodeOf);
-const NODES = JOURNEYS.flatMap(journeyNodes);
+const journeyNodes = (j) => j.nodeOrder.map(nodeOf); // funciona para módulo ou trilha
+const NODES = PACKAGE.nodes;
 const journeyDone = (j) => journeyNodes(j).every((n) => S.lit[n.id]);
-const journeyUnlocked = (ix) => ix === 0 || journeyDone(JOURNEYS[ix - 1]);
-const journeyOfNode = (nodeId) => JOURNEYS.find((j) => j.nodeOrder.includes(nodeId));
-const currentJourney = () => JOURNEYS.find((j) => !journeyDone(j)) ?? JOURNEYS[JOURNEYS.length - 1];
-const SEALED_BEFORE = ['Pré-História', 'Mesopotâmia', 'Egito'];
+
+function collectionForId(cid) {
+  for (const d of PACKAGE.library.domains)
+    for (const c of d.collections ?? [])
+      if (c.id === cid) return c;
+  return null;
+}
+function collectionOfModule(m) {
+  for (const d of PACKAGE.library.domains)
+    for (const c of d.collections ?? [])
+      if ((c.modules ?? []).includes(m.id)) return c;
+  return null;
+}
+function domainOfCollection(cid) {
+  return PACKAGE.library.domains.find((d) => (d.collections ?? []).some((c) => c.id === cid));
+}
+function collectionModules(c) {
+  return MODULES.filter((m) => (c.modules ?? []).includes(m.id)).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+}
+function moduleUnlocked(m) {
+  const c = collectionOfModule(m);
+  const mods = collectionModules(c);
+  const ix = mods.findIndex((x) => x.id === m.id);
+  return ix <= 0 || journeyDone(mods[ix - 1]);
+}
+/* Coleção completa = todo módulo já ABERTO nela está concluído — não exige
+   os módulos "em breve" (LDD §9.2: incompleto e honesto é o modelo). */
+function collectionDone(c) {
+  const mods = collectionModules(c);
+  return mods.length > 0 && mods.every(journeyDone);
+}
+function moduleOfNode(nodeId) { return MODULES.find((m) => m.nodeOrder.includes(nodeId)); }
+/* Trilha desbloqueada = a coleção-gatilho está completa (LDD §2.2: recompensa
+   de desbloqueio, não só uma categoria a mais na prateleira). */
+function trailUnlocked(t) {
+  if (!t.unlockAfterCollection) return true;
+  const c = collectionForId(t.unlockAfterCollection);
+  return c ? collectionDone(c) : false;
+}
+
+/* Caminho em curso (módulo OU trilha) — fonte única de verdade de "onde o
+   usuário está" para startNode/celebrateNode/etc.; um nó pode pertencer a
+   um módulo nativo e a uma ou mais trilhas ao mesmo tempo (ARCHITECTURE §5.1). */
+let CURRENT_PATH = null;
 
 const CONNECTION_LABELS = Object.fromEntries(
   PACKAGE.nodes.map((n) => [n.id, n.name]),
@@ -426,7 +472,7 @@ const S = Object.assign({
   lessonsDone: {},   // nodeId -> n
   nodeXp: 0,
   reviews: {},       // claimId -> { nodeId, dueAt, step }
-  events: [],        // log local do experimento (jornada concluída, "descobrir" clicado)
+  events: [],        // log local do experimento (coleção concluída, trilha desbloqueada...)
   thothStageSeen: 1, // último estágio de Thoth já celebrado
   startedAt: null,   // início da dupla (o "aniversário" futuro)
   timeShift: 0,      // atalho de teste "pular dias"
@@ -464,7 +510,7 @@ function gainXp(n, host) {
 }
 const THOTH_STAGES = ['Aprendiz de tinta', 'Escriba iniciado', 'Escriba do Arquivo'];
 function thothStage() {
-  const done = JOURNEYS.filter(journeyDone).length;
+  const done = MODULES.filter(journeyDone).length;
   return done >= 2 ? 3 : done >= 1 ? 2 : 1;
 }
 function thothAvatar(extra = '') {
@@ -537,17 +583,16 @@ let rightIx = 0;
 const verdictRight = () => `<div class="verdict right">✓ ${RIGHT_WORDS[rightIx++ % RIGHT_WORDS.length]}</div>`;
 const verdictMiss = () => `<div class="verdict miss">✕ Ainda não…</div>`;
 
-/* ---------- Corredor & Biblioteca (GDD §4: Biblioteca → Corredor → Salões) ---------- */
+/* ---------- Corredor & Biblioteca (GDD §4.0: Biblioteca → Coleção → Módulo → Salões) ---------- */
 function dueReviews() {
   return Object.entries(S.reviews)
     .filter(([, r]) => r.dueAt <= now())
     .map(([claimId, r]) => ({ claimId, nodeId: r.nodeId, step: r.step ?? 0 }));
 }
 
-function nodeUnlockedInJourney(node) {
-  const j = journeyOfNode(node.id);
-  const pos = j.nodeOrder.indexOf(node.id);
-  return pos === 0 || S.lit[j.nodeOrder[pos - 1]];
+function nodeUnlockedInPath(node, path) {
+  const pos = path.nodeOrder.indexOf(node.id);
+  return pos === 0 || S.lit[path.nodeOrder[pos - 1]];
 }
 
 function rescueCardHtml(due) {
@@ -573,68 +618,60 @@ function wireCommon(due) {
   }
 }
 
-/* A Biblioteca: home de quem retorna. O primeiro uso NUNCA cai aqui —
-   é guiado direto ao Corredor (VISION §17-D1: sem parede de escolha). */
-function libStats(d) {
-  let open = 0, soon = 0;
-  for (const sh of d.shelves ?? []) {
-    open += (sh.journeys ?? []).length;
-    soon += (sh.upcoming ?? []).length;
-  }
-  return { open, soon };
-}
-
-function domainOfJourney(jid) {
-  for (const d of PACKAGE.library.domains)
-    for (const sh of d.shelves ?? [])
-      if ((sh.journeys ?? []).includes(jid)) return d;
-  return PACKAGE.library.domains[0];
-}
-
 /* Coleção (GDD §4.0): memórias = afirmações do conteúdo aberto;
    acender um salão recupera as memórias dele. Números sempre honestos. */
-function memStats() {
+function memStatsFor(nodeList) {
   let total = 0, got = 0;
-  for (const n of NODES) {
+  for (const n of nodeList) {
     total += n.claims.length;
     if (S.lit[n.id]) got += n.claims.length;
   }
   return { got, total, pct: total ? Math.round((100 * got) / total) : 0 };
 }
+const memStats = () => memStatsFor(NODES);
 
-/* % da jornada em lições: salão aceso conta cheio; salão pela metade conta o que foi feito. */
-function journeyLessonPct(j) {
+/* % de um caminho (módulo/trilha) em lições: salão aceso conta cheio; salão
+   pela metade conta o que foi feito. */
+function pathLessonPct(path) {
   let done = 0, total = 0;
-  for (const n of journeyNodes(j)) {
+  for (const n of journeyNodes(path)) {
     total += n.lessons.length;
     done += S.lit[n.id] ? n.lessons.length : Math.min(S.lessonsDone[n.id] ?? 0, n.lessons.length);
   }
   return total ? Math.round((100 * done) / total) : 0;
 }
 
+function libStats(d) {
+  let open = 0, soon = 0;
+  for (const c of d.collections ?? []) {
+    open += c.status === 'open' ? 1 : 0;
+    soon += c.status === 'open' ? 0 : 1;
+  }
+  return { open, soon };
+}
+
 function continueCardHtml() {
   if (S.resume && !S.lit[S.resume.nodeId]) {
     const n = nodeOf(S.resume.nodeId);
-    const j = journeyOfNode(n.id);
-    const pct = journeyLessonPct(j);
+    const m = moduleOfNode(n.id);
+    const pct = pathLessonPct(m);
     return `
       <div class="card continue-card">
         <p class="eyebrow">⭐ continue de onde parou</p>
-        <div class="cc-title">${j.title}</div>
+        <div class="cc-title">${m.title}</div>
         <div class="jm">${n.name} · lição ${S.resume.lessonIx + 1} de ${n.lessons.length}</div>
         <div class="pctbar"><div style="width:${pct}%"></div></div>
         <button class="cta gold" id="continueBtn">▶ continuar — ${pct}%</button>
       </div>`;
   }
-  const target = NODES.find((n) => !S.lit[n.id] && nodeUnlockedInJourney(n) &&
-    journeyUnlocked(JOURNEYS.indexOf(journeyOfNode(n.id))));
+  const target = MODULES.flatMap(journeyNodes).find((n) => !S.lit[n.id] && nodeUnlockedInPath(n, moduleOfNode(n.id)) && moduleUnlocked(moduleOfNode(n.id)));
   if (!target) return '';
-  const tj = journeyOfNode(target.id);
-  const pct = journeyLessonPct(tj);
+  const tm = moduleOfNode(target.id);
+  const pct = pathLessonPct(tm);
   return `
     <div class="card continue-card">
       <p class="eyebrow">⭐ ${pct > 0 ? 'continue de onde parou' : 'próxima porta'}</p>
-      <div class="cc-title">${tj.title}</div>
+      <div class="cc-title">${tm.title}</div>
       <div class="jm">${target.name} · ${target.place}</div>
       <div class="pctbar"><div style="width:${pct}%"></div></div>
       <button class="cta gold" id="continueBtn2">▶ ${pct > 0 ? `continuar — ${pct}%` : 'entrar'}</button>
@@ -643,16 +680,16 @@ function continueCardHtml() {
 
 function wireContinue() {
   const c1 = $('continueBtn');
-  if (c1) c1.addEventListener('click', () => startNode(S.resume.nodeId));
+  if (c1) c1.addEventListener('click', () => { CURRENT_PATH = moduleOfNode(S.resume.nodeId); startNode(S.resume.nodeId); });
   const c2 = $('continueBtn2');
   if (c2) c2.addEventListener('click', () => {
-    const target = NODES.find((n) => !S.lit[n.id] && nodeUnlockedInJourney(n));
-    if (target) renderCorridor(journeyOfNode(target.id));
+    const target = MODULES.flatMap(journeyNodes).find((n) => !S.lit[n.id] && nodeUnlockedInPath(n, moduleOfNode(n.id)) && moduleUnlocked(moduleOfNode(n.id)));
+    if (target) renderCorridor(moduleOfNode(target.id));
   });
 }
 
-/* Home minimalista (feedback do fundador): bibliotecas em cima, continuar embaixo.
-   Quem chega olha para cima; quem retorna olha para baixo — as duas convivem. */
+/* Home minimalista (feedback do fundador): bibliotecas em cima, continuar
+   embaixo. Quem chega olha para cima; quem retorna olha para baixo. */
 function renderLibrary() {
   nav(null, 'biblioteca');
   setProgress(null);
@@ -664,8 +701,8 @@ function renderLibrary() {
     const { open, soon } = libStats(d);
     const mem = d.status === 'open' ? memStats() : null;
     const sub = d.status === 'open'
-      ? `${open} ${open === 1 ? 'jornada aberta' : 'jornadas abertas'} · ${soon} em escrita`
-      : `em escrita — ${soon} jornadas planejadas`;
+      ? `${open} ${open === 1 ? 'coleção aberta' : 'coleções abertas'} · ${soon} em escrita`
+      : `em escrita — ${soon} coleções planejadas`;
     return `
       <div class="card bib-card ${d.status === 'open' ? '' : 'sealed'}" data-domain="${d.id}" role="button" tabindex="0">
         <div class="domain-head"><span class="di">${d.icon}</span><span class="dt">${d.title}</span></div>
@@ -676,6 +713,12 @@ function renderLibrary() {
       </div>`;
   }).join('');
 
+  const unlockedTrails = TRAILS.filter(trailUnlocked);
+  const trailsHtml = unlockedTrails.length ? `
+    <div class="divider" aria-hidden="true"></div>
+    <p class="eyebrow">🏛️ grandes fios do arquivo</p>
+    ${unlockedTrails.map((t) => trailCardHtml(t)).join('')}` : '';
+
   screen().innerHTML = `
     ${due.length ? thoth('Guardião… sinto chamas vacilando. Três minutos e elas ficam suas.', false) + rescueCardHtml(due) : ''}
     <h2 class="serif" style="margin-top:2px">${lib.title}</h2>
@@ -683,6 +726,7 @@ function renderLibrary() {
     ${bibs}
     <div class="divider" aria-hidden="true"></div>
     ${continueCardHtml()}
+    ${trailsHtml}
   `;
 
   wireCommon(due);
@@ -692,49 +736,59 @@ function renderLibrary() {
     card.addEventListener('click', go);
     card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') go(); });
   });
+  wireTrailCards();
 }
 
-/* Uma biblioteca por vez: estantes com jornadas-livro e, sob cada estante,
-   o "em breve" — a antecipação é mecânica de produto (GDD §4.0), e os
-   números são sempre honestos: aberto é aberto, em escrita é em escrita. */
+function trailCardHtml(t) {
+  const tN = journeyNodes(t);
+  const lit = tN.filter((n) => S.lit[n.id]).length;
+  const doneT = lit === tN.length;
+  const pct = pathLessonPct(t);
+  return `<div class="jbook trail ${doneT ? 'done' : ''}" data-trail="${t.id}" role="button" tabindex="0">
+    <div class="jb-title">${t.icon ?? '🏛️'} ${t.title}</div>
+    <div class="jb-q">${t.centralQuestion}</div>
+    <div class="jb-stats">🚪 ${tN.length} salões · ${t.thread ?? ''}</div>
+    ${doneT
+      ? `<div class="jm"><span class="selo">✔ trilha concluída</span> <span>${tN.map((n) => n.emblem ?? '🔥').join(' ')}</span></div>`
+      : `<div class="pctbar"><div style="width:${pct}%"></div></div>
+         <div class="jb-cta">▶ ${pct > 0 ? `continuar — ${pct}%` : 'seguir o fio'}</div>`}
+  </div>`;
+}
+function wireTrailCards() {
+  screen().querySelectorAll('.jbook[data-trail]').forEach((card) => {
+    const go = () => renderTrail(TRAILS.find((x) => x.id === card.dataset.trail));
+    card.addEventListener('click', go);
+    card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') go(); });
+  });
+}
+
+/* Uma biblioteca por vez: coleções como porta de entrada (LDD §2 — o que a
+   pessoa já busca), cada uma com seus módulos. */
 function renderDomain(d) {
   nav(renderLibrary, `biblioteca de ${d.title.toLowerCase()}`);
   setProgress(null);
   closeTermBox();
   const due = dueReviews();
 
-  const shelvesHtml = (d.shelves ?? []).map((sh) => {
-    const cards = (sh.journeys ?? []).map((jid) => {
-      const j = JOURNEYS.find((x) => x.id === jid);
-      const jN = journeyNodes(j);
-      const lit = jN.filter((n) => S.lit[n.id]).length;
-      const doneJ = lit === jN.length;
-      const locked = !journeyUnlocked(JOURNEYS.indexOf(j));
-      const lessons = jN.reduce((a, n) => a + n.lessons.length, 0);
-      const mins = Math.max(5, Math.round((lessons * 4) / 5) * 5);
-      if (locked) {
-        return `<div class="jbook sealed">
-          <div class="jb-title">${j.title}</div>
-          <div class="jm">🔒 conclua “${JOURNEYS[JOURNEYS.indexOf(j) - 1].title}” para abrir</div>
-        </div>`;
-      }
-      const pct = journeyLessonPct(j);
-      return `<div class="jbook ${doneJ ? 'done' : ''}" data-journey="${j.id}" role="button" tabindex="0">
-        <div class="jb-title">${j.title}</div>
-        <div class="jb-q">${j.centralQuestion}</div>
-        <div class="jb-stats">🚪 ${jN.length} salões · 📖 ${lessons} lições · ⏱ ~${mins} min</div>
-        ${doneJ
-          ? `<div class="jm"><span class="selo">✔ jornada concluída</span> <span>${jN.map((n) => n.emblem ?? '🔥').join(' ')}</span></div>`
-          : `<div class="pctbar"><div style="width:${pct}%"></div></div>
-             <div class="jb-cta">▶ ${pct > 0 ? `continuar — ${pct}%` : 'começar'}</div>`}
+  const cards = (d.collections ?? []).map((c) => {
+    if (c.status !== 'open') {
+      return `<div class="jbook sealed" data-locked="1">
+        <div class="jb-title">${c.icon} ${c.title}</div>
+        <div class="jm">🔒 ${c.tagline ?? 'coleção em escrita'} — os escribas já trabalham nela</div>
       </div>`;
-    }).join('');
-    const soon = (sh.upcoming ?? []).length ? `
-      <div class="soon">
-        <p class="eyebrow">ainda escondidas nesta estante…</p>
-        ${(sh.upcoming ?? []).map((u) => `<div class="soon-row"><span>${u.icon}</span>${u.title}</div>`).join('')}
-      </div>` : '';
-    return `<div class="shelf-title"><span>${sh.icon}</span>${sh.title}</div>${cards}${soon}`;
+    }
+    const mods = collectionModules(c);
+    const cN = mods.flatMap(journeyNodes);
+    const litC = cN.filter((n) => S.lit[n.id]).length;
+    const doneC = collectionDone(c);
+    return `<div class="jbook ${doneC ? 'done' : ''}" data-collection="${c.id}" role="button" tabindex="0">
+      <div class="jb-title">${c.icon} ${c.title}</div>
+      <div class="jb-q">${c.tagline ?? ''}</div>
+      <div class="jb-stats">📚 ${mods.length} ${mods.length === 1 ? 'módulo aberto' : 'módulos abertos'} · ${(c.upcomingModules ?? []).length} em escrita</div>
+      ${doneC
+        ? `<div class="jm"><span class="selo">✔ coleção completa</span> <span>${cN.map((n) => n.emblem ?? '🔥').join(' ')}</span></div>`
+        : `<div class="bcount">🕯️ ${litC} de ${cN.length} salões acesos${litC ? ` · ${memStatsFor(cN).pct}% recuperado` : ''}</div>`}
+    </div>`;
   }).join('');
 
   const mem = memStats();
@@ -748,22 +802,95 @@ function renderDomain(d) {
       <div class="pctbar"><div style="width:${mem.pct}%"></div></div>
       <div class="bcount">${mem.pct}% desta Biblioteca reconstruída — continue explorando</div>
     </div>` : ''}
-    ${d.status === 'open' ? '' : `<div class="card domain-sealed"><div class="sealed-note">🔒 ${d.teaser ?? 'ala em escrita'} — os escribas já trabalham nas jornadas abaixo.</div></div>`}
-    ${shelvesHtml}
+    ${d.status === 'open' ? '' : `<div class="card domain-sealed"><div class="sealed-note">🔒 ${d.teaser ?? 'ala em escrita'} — os escribas já trabalham nas coleções abaixo.</div></div>`}
+    <p class="eyebrow">coleções</p>
+    ${cards}
   `;
 
   wireCommon(due);
-  screen().querySelectorAll('.jbook[data-journey]').forEach((card) => {
-    const go = () => renderCorridor(JOURNEYS.find((x) => x.id === card.dataset.journey));
+  screen().querySelectorAll('.jbook[data-collection]').forEach((card) => {
+    const go = () => renderCollection(d.collections.find((x) => x.id === card.dataset.collection));
     card.addEventListener('click', go);
     card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') go(); });
   });
 }
 
-/* O Corredor: a timeline de UMA jornada — não a home (feedback do fundador). */
+/* A Coleção: o conteúdo (o quê). Mostra os módulos — a forma de aprender —
+   como cards-livro, mais o "ainda escondidos" (mistério, não catálogo). */
+function renderCollection(c) {
+  const d = domainOfCollection(c.id);
+  nav(() => renderDomain(d), c.title.toLowerCase());
+  setProgress(null);
+  closeTermBox();
+  const due = dueReviews();
+  const mods = collectionModules(c);
+  const cN = mods.flatMap(journeyNodes);
+  const mem = memStatsFor(cN);
+  const doneC = collectionDone(c);
+
+  const modCards = mods.map((m) => {
+    const mN = journeyNodes(m);
+    const lit = mN.filter((n) => S.lit[n.id]).length;
+    const doneM = lit === mN.length;
+    const locked = !moduleUnlocked(m);
+    const lessons = mN.reduce((a, n) => a + n.lessons.length, 0);
+    const mins = Math.max(5, Math.round((lessons * 4) / 5) * 5);
+    if (locked) {
+      const mods2 = collectionModules(c);
+      const prevM = mods2[mods2.findIndex((x) => x.id === m.id) - 1];
+      return `<div class="jbook sealed">
+        <div class="jb-title">${m.title}</div>
+        <div class="jm">🔒 conclua “${prevM.title}” para abrir</div>
+      </div>`;
+    }
+    const pct = pathLessonPct(m);
+    return `<div class="jbook ${doneM ? 'done' : ''}" data-module="${m.id}" role="button" tabindex="0">
+      <div class="jb-title">${m.title}</div>
+      <div class="jb-q">${m.centralQuestion}</div>
+      <div class="jb-stats">🚪 ${mN.length} salões · 📖 ${lessons} lições · ⏱ ~${mins} min</div>
+      ${doneM
+        ? `<div class="jm"><span class="selo">✔ módulo concluído</span> <span>${mN.map((n) => n.emblem ?? '🔥').join(' ')}</span></div>`
+        : `<div class="pctbar"><div style="width:${pct}%"></div></div>
+           <div class="jb-cta">▶ ${pct > 0 ? `continuar — ${pct}%` : 'começar'}</div>`}
+    </div>`;
+  }).join('');
+
+  const soon = (c.upcomingModules ?? []).length ? `
+    <div class="soon">
+      <p class="eyebrow">ainda escondidos nesta coleção…</p>
+      ${(c.upcomingModules ?? []).map((u) => `<div class="soon-row"><span>${u.icon}</span>${u.title}</div>`).join('')}
+    </div>` : '';
+
+  screen().innerHTML = `
+    ${rescueCardHtml(due)}
+    <div class="domain-head big"><span class="di">${c.icon}</span><span class="dt">${c.title}</span></div>
+    <div class="dg">${c.tagline ?? ''}</div>
+    ${mem.total ? `
+    <div class="card collection">
+      <div class="bcount">🕯️ <b>${mem.got} de ${mem.total}</b> memórias recuperadas</div>
+      <div class="pctbar"><div style="width:${mem.pct}%"></div></div>
+      <div class="bcount">${mem.pct}% desta coleção reconstruída${doneC ? ' — coleção completa ✔' : ''}</div>
+    </div>` : ''}
+    <p class="eyebrow">módulos</p>
+    ${modCards}
+    ${soon}
+  `;
+
+  wireCommon(due);
+  screen().querySelectorAll('.jbook[data-module]').forEach((card) => {
+    const go = () => renderCorridor(MODULES.find((x) => x.id === card.dataset.module));
+    card.addEventListener('click', go);
+    card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') go(); });
+  });
+}
+
+/* O Corredor: a timeline de UM módulo (ou de UMA trilha) por vez — não a
+   home (feedback do fundador). Genérico sobre `j` (módulo ou trilha). */
 function renderCorridor(j) {
-  j = j ?? currentJourney();
-  nav(() => renderDomain(domainOfJourney(j.id)), j.title.toLowerCase());
+  CURRENT_PATH = j;
+  const isTrail = j.kind === 'trail';
+  const backTo = isTrail ? renderLibrary : (() => renderCollection(collectionOfModule(j)));
+  nav(backTo, j.title.toLowerCase());
   setProgress(null);
   closeTermBox();
   const jN = journeyNodes(j);
@@ -771,23 +898,23 @@ function renderCorridor(j) {
   const dueNodeIds = new Set(due.map((d) => d.nodeId));
   const done = journeyDone(j);
   const litInJ = jN.filter((n) => S.lit[n.id]).length;
-  const target = jN.find((n) => !S.lit[n.id] && nodeUnlockedInJourney(n));
-  const nextJ = j.next ? JOURNEYS.find((x) => x.id === j.next.journey) : null;
+  const target = jN.find((n) => !S.lit[n.id] && nodeUnlockedInPath(n, j));
 
   // Thoth fala apenas em evento (GDD §7.2): se fala toda vez, vira banner;
   // se aparece poucas vezes, vira acontecimento. No dia a dia, presença calada.
+  const label = isTrail ? 'trilha' : 'ala';
   const say = due.length
     ? 'As chamas vacilantes primeiro, Guardião — três minutos bastam.'
     : done
-      ? `A ala “${j.title}” inteira está acesa. ${nextJ ? 'E olha: a porta da próxima ala já range.' : 'A Biblioteca guarda as próximas portas.'}`
+      ? `A ${label} “${j.title}” inteira está acesa.`
       : litInJ === 0
-        ? `Uma ala nova, Guardião: ${j.title}. A primeira porta aberta é ${target ? target.place : jN[0].place}. Vamos?`
+        ? `${isTrail ? 'Uma trilha nova' : 'Uma ala nova'}, Guardião: ${j.title}. A primeira porta aberta é ${target ? target.place : jN[0].place}. Vamos?`
         : null;
 
   let rows = '';
   for (const node of jN) {
     const lit = !!S.lit[node.id];
-    if (!lit && !nodeUnlockedInJourney(node)) {
+    if (!lit && !nodeUnlockedInPath(node, j)) {
       const prev = nodeOf(j.nodeOrder[j.nodeOrder.indexOf(node.id) - 1]);
       rows += eraRow(node.place, 'sealed',
         `<div class="sealed-note">selada — acende quando ${prev.place} estiver iluminada</div>`);
@@ -814,14 +941,8 @@ function renderCorridor(j) {
         <div class="flame ${lit ? (nodeDue ? 'waver' : 'on') : ''}" style="font-size:22px">${lit ? '🔥' : '🕯️'}</div>
       </div>`, lit ? (node.emblem ?? '🔥') : null);
   }
-  if (done) {
-    rows += nextJ
-      ? eraRow(nextJ.title, 'open', `
-          <div class="node-card" data-nextj="${nextJ.id}" role="button" tabindex="0">
-            <div><div class="nm">➡ próxima ala</div><div class="st">${nextJ.centralQuestion}</div></div>
-            <div style="font-size:22px">🚪</div>
-          </div>`)
-      : eraRow('…', 'sealed', `<div class="sealed-note">${j.comingNext}</div>`);
+  if (done && !isTrail) {
+    rows += eraRow('…', 'sealed', `<div class="sealed-note">${j.comingNext}</div>`);
   }
 
   const missionCard = !done && target ? `
@@ -838,11 +959,11 @@ function renderCorridor(j) {
     ${rescueCardHtml(due)}
     ${missionCard}
     <div class="card journey-head">
-      <p class="eyebrow">jornada</p>
+      <p class="eyebrow">${label}</p>
       <div class="q">${j.centralQuestion}</div>
       <div class="prog">${j.title} · ${litInJ} de ${jN.length} salões acesos</div>
     </div>
-    <div class="mural" aria-label="o caminho construído nesta ala">${
+    <div class="mural" aria-label="o caminho construído nesta ${label}">${
       jN.map((n) => {
         const st = S.lit[n.id] ? 'lit' : (target && n.id === target.id) ? 'next' : '';
         return `<div class="arch ${st}" title="${n.place}">${S.lit[n.id] ? (n.emblem ?? '🔥') : ''}</div>`;
@@ -853,15 +974,20 @@ function renderCorridor(j) {
 
   wireCommon(due);
   const missionBtn = $('missionBtn');
-  if (missionBtn && target) missionBtn.addEventListener('click', () => startNode(target.id));
+  if (missionBtn && target) missionBtn.addEventListener('click', () => { CURRENT_PATH = j; startNode(target.id); });
   screen().querySelectorAll('.node-card[data-node]:not(.lit)').forEach((card) => {
     if (target && card.dataset.node === target.id && !due.length) card.classList.add('pulse');
-    const go = () => startNode(card.dataset.node);
+    const go = () => { CURRENT_PATH = j; startNode(card.dataset.node); };
     card.addEventListener('click', go);
     card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') go(); });
   });
-  const nextDoor = screen().querySelector('[data-nextj]');
-  if (nextDoor) nextDoor.addEventListener('click', () => renderCorridor(JOURNEYS.find((x) => x.id === nextDoor.dataset.nextj)));
+}
+
+/* Atalho: a Trilha usa o mesmo Corredor, só rotulado — mas primeiro checa
+   se ela está de fato desbloqueada (LDD §2.2). */
+function renderTrail(t) {
+  if (!trailUnlocked(t)) { renderLibrary(); return; }
+  renderCorridor(t);
 }
 
 /* ---------- o pergaminho de Thoth (diário da dupla) ---------- */
@@ -906,8 +1032,8 @@ function maybeEvolve(next) {
       <p class="eyebrow fade-in" style="animation-delay:.4s">seu companheiro evoluiu</p>
       <h1 class="fade-in" style="animation-delay:.6s">${THOTH_STAGES[st - 1]}</h1>
       <div class="fade-in" style="animation-delay:1.3s; width:100%; text-align:left">${thoth(st === 2
-        ? 'Guardião… minha pena mudou. Uma jornada inteira no pergaminho — eu não era capaz de desenhar assim antes de você. O Arquivo me deu um selo novo.'
-        : 'Duas jornadas completas. Os outros escribas agora me chamam de Escriba do Arquivo — mas nós dois sabemos de quem são essas chamas.', true)}</div>
+        ? 'Guardião… minha pena mudou. Um módulo inteiro no pergaminho — eu não era capaz de desenhar assim antes de você. O Arquivo me deu um selo novo.'
+        : 'Dois módulos completos. Os outros escribas agora me chamam de Escriba do Arquivo — mas nós dois sabemos de quem são essas chamas.', true)}</div>
       <div class="mural small fade-in" style="animation-delay:2s">${NODES.filter((n) => S.lit[n.id]).map((n) =>
         `<div class="arch lit">${n.emblem ?? '🔥'}</div>`).join('')}</div>
       <button class="cta gold fade-in" style="animation-delay:2.5s" id="go">continuar</button>
@@ -980,7 +1106,8 @@ function startNode(nodeId) {
 
 function startLesson(node, lessonIx) {
   const lesson = node.lessons[lessonIx];
-  const j = journeyOfNode(node.id);
+  const j = CURRENT_PATH ?? moduleOfNode(node.id);
+  CURRENT_PATH = j;
   const chip = `salão ${j.nodeOrder.indexOf(node.id) + 1}/${j.nodeOrder.length} · lição ${lessonIx + 1}/${node.lessons.length}`;
   // Retorno perfeito: o Arquivo lembra exatamente onde você está
   S.resume = { nodeId: node.id, lessonIx };
@@ -1090,23 +1217,23 @@ function renderLessonComplete(node, lessonIx) {
       <div class="fade-in" style="animation-delay:.9s; width:100%; text-align:left">${thoth('Marco registrado no pergaminho, Guardião. Respira — o Corredor guarda seu lugar.', true)}</div>
       <button class="cta gold fade-in" style="animation-delay:1.4s" id="go">voltar ao Corredor</button>
     </div>`);
-  $('go').addEventListener('click', () => renderCorridor(journeyOfNode(node.id)));
+  $('go').addEventListener('click', () => renderCorridor(CURRENT_PATH ?? moduleOfNode(node.id)));
 }
 
 /* Retorno perfeito: quem volta nunca precisa descobrir onde parou. */
 function renderWelcomeBack() {
   const r = S.resume;
   const node = nodeOf(r.nodeId);
-  const j = journeyOfNode(node.id);
-  const remainingSaloes = journeyNodes(j).filter((n) => !S.lit[n.id]).length;
+  const m = moduleOfNode(node.id);
+  const remainingSaloes = journeyNodes(m).filter((n) => !S.lit[n.id]).length;
   nav(null, null);
   setProgress(null);
   stepScreen(`
     <p class="eyebrow">bem-vindo de volta, Guardião</p>
-    ${thoth(`Guardei tudo exatamente onde você deixou: <b>${node.place}</b>, lição ${r.lessonIx + 1} de ${node.lessons.length}. ${remainingSaloes === 1 ? 'Falta só este salão para concluir a jornada.' : `Faltam ${remainingSaloes} salões nesta jornada.`}`)}
+    ${thoth(`Guardei tudo exatamente onde você deixou: <b>${node.place}</b>, lição ${r.lessonIx + 1} de ${node.lessons.length}. ${remainingSaloes === 1 ? 'Falta só este salão para concluir o módulo.' : `Faltam ${remainingSaloes} salões neste módulo.`}`)}
     <button class="cta gold" id="go">▶ continuar de onde parei</button>
     <button class="cta ghost" id="map">ver a Biblioteca</button>`);
-  $('go').addEventListener('click', () => startNode(node.id));
+  $('go').addEventListener('click', () => { CURRENT_PATH = m; startNode(node.id); });
   $('map').addEventListener('click', renderLibrary);
 }
 
@@ -1198,7 +1325,7 @@ function celebrateNode(node) {
   }
   persist();
   setProgress(100);
-  const j = journeyOfNode(node.id);
+  const j = CURRENT_PATH ?? moduleOfNode(node.id);
   const isLast = journeyDone(j);
   const totalLit = NODES.filter((n) => S.lit[n.id]).length;
   const say = totalLit === 1
@@ -1224,14 +1351,14 @@ function celebrateNode(node) {
   $('go').addEventListener('click', () => (isLast ? renderSynthesis(j) : renderCorridor(j)));
 }
 
-/* ---------- momento de síntese (regra de prontidão da jornada) ---------- */
+/* ---------- momento de síntese (regra de prontidão — LDD §2.1) ---------- */
 function renderSynthesis(j) {
   const syn = j.synthesis;
-  if (!syn) { celebrateJourney(j); return; }
+  if (!syn) { afterSynthesis(j); return; }
   nav(null, 'síntese');
   setProgress(null);
   stepScreen(`
-    <p class="eyebrow">síntese · a pergunta que atravessa a jornada</p>
+    <p class="eyebrow">síntese · a pergunta que atravessa ${j.kind === 'trail' ? 'a trilha' : 'o módulo'}</p>
     <div class="card" id="ic"></div>`);
   renderInteraction(syn.question, { claims: [] }, $('ic'), () => renderReframe(j));
 }
@@ -1247,41 +1374,33 @@ function renderReframe(j) {
       <div class="shift-arrow">↓</div>
       <div class="shift-row after"><span class="eyebrow">como você sai</span><p class="serif"><b>${syn.shift.after}</b></p></div>
     </div>
-    <button class="cta gold fade-in" style="animation-delay:${syn.reframe.length * 0.5 + 0.9}s" id="go">agora sim — ver a jornada</button>`);
-  $('go').addEventListener('click', () => celebrateJourney(j));
+    <button class="cta gold fade-in" style="animation-delay:${syn.reframe.length * 0.5 + 0.9}s" id="go">agora sim — ver o que você conquistou</button>`);
+  $('go').addEventListener('click', () => afterSynthesis(j));
 }
 
-function celebrateJourney(j) {
+/* Depois da síntese: módulo → checa se a coleção inteira ficou completa
+   (GDD §9.1, o maior marco de conteúdo); trilha → celebração de trilha. */
+function afterSynthesis(j) {
+  if (j.kind === 'trail') { celebrateTrail(j); return; }
+  const c = collectionOfModule(j);
+  if (collectionDone(c)) celebrateCollection(c);
+  else celebrateModule(j);
+}
+
+function celebrateModule(j) {
   setProgress(null);
-  S.events.push({ t: Date.now(), e: 'journey_complete', j: j.id });
+  S.events.push({ t: Date.now(), e: 'module_complete', j: j.id });
   persist();
   const jNodes = journeyNodes(j);
   const claims = jNodes.reduce((sum, n) => sum + n.claims.length, 0);
-  const nextJ = j.next ? JOURNEYS.find((x) => x.id === j.next.journey) : null;
-
-  const nextCard = nextJ
-    ? `
-      <div class="card fade-in" style="animation-delay:1.6s; width:100%; text-align:left">
-        <p class="eyebrow">mas…</p>
-        <p class="serif"><b>${j.next.provocation}</b></p>
-        <button class="cta gold" id="discoverBtn" style="margin-top:8px">▶ descobrir</button>
-      </div>
-      <button class="cta ghost fade-in" style="animation-delay:2.2s" id="go">por hoje chega — fechar a sessão</button>`
-    : `
-      <div class="card fade-in" style="animation-delay:1.6s; width:100%; text-align:left">
-        <p class="eyebrow">o Arquivo continua</p>
-        <p class="serif">${j.comingNext}</p>
-      </div>
-      <button class="cta gold fade-in" style="animation-delay:2.2s" id="go">fechar a sessão</button>`;
 
   stepScreen(`
     <div class="celebrate">
       <div class="jcard fade-in">
-        <p class="eyebrow">jornada concluída</p>
+        <p class="eyebrow">módulo concluído</p>
         <div class="jt">${j.title}</div>
-        <div class="mural small">${journeyNodes(j).map((n) =>
+        <div class="mural small">${jNodes.map((n) =>
           `<div class="arch lit" title="${n.place}">${n.emblem ?? '🔥'}</div>`).join('')}</div>
-        <div class="thread">${j.thread ?? ''}</div>
         <div class="stats">
           <div class="stat"><b>${jNodes.length}</b><span>salões acesos</span></div>
           <div class="stat"><b>${claims}</b><span>memórias guardadas</span></div>
@@ -1289,19 +1408,117 @@ function celebrateJourney(j) {
         </div>
       </div>
       <div class="fade-in" style="animation-delay:.8s; width:100%; text-align:left">
-        ${thoth('Você respondeu a pergunta da jornada, Guardião: <b>' + j.centralQuestion + '</b>', true)}
+        ${thoth('Você respondeu a pergunta do módulo, Guardião: <b>' + j.centralQuestion + '</b>', true)}
       </div>
-      ${nextCard}
+      <div class="card fade-in" style="animation-delay:1.6s; width:100%; text-align:left">
+        <p class="eyebrow">o Arquivo continua</p>
+        <p class="serif">${j.comingNext}</p>
+      </div>
+      <button class="cta gold fade-in" style="animation-delay:2.2s" id="go">fechar a sessão</button>
     </div>`);
-  const discover = $('discoverBtn');
-  if (discover && nextJ) discover.addEventListener('click', () => {
-    S.events.push({ t: Date.now(), e: 'next_journey_via_provocation', j: nextJ.id });
+  $('go').addEventListener('click', () => {
+    S.events.push({ t: Date.now(), e: 'session_closed_after_module', j: j.id });
     persist();
-    maybeEvolve(() => renderCorridor(nextJ)); // evolução antes da nova ala se abrir
+    maybeEvolve(renderSessionClose);
   });
-  const go = $('go');
-  if (go) go.addEventListener('click', () => {
-    S.events.push({ t: Date.now(), e: 'session_closed_after_journey', j: j.id });
+}
+
+/* ---------- Coleção Completa (GDD §9.1 — o maior marco de conteúdo) ---------- */
+function celebrateCollection(c) {
+  setProgress(null);
+  S.events.push({ t: Date.now(), e: 'collection_complete', c: c.id });
+  persist();
+  const cN = collectionModules(c).flatMap(journeyNodes);
+  const claims = cN.reduce((sum, n) => sum + n.claims.length, 0);
+
+  // Mapa de conexões: reaproveita node.connections já mapeado (LDD §2, passo 6) —
+  // nenhum conteúdo novo, só exibição do que já existe.
+  const echoTargets = new Map();
+  for (const n of cN) {
+    for (const conn of n.connections ?? []) {
+      if (!cN.some((x) => x.id === conn.to)) echoTargets.set(conn.to, true);
+    }
+  }
+  const echoRows = [...echoTargets.keys()];
+
+  const unlockedNow = TRAILS.find((t) => t.unlockAfterCollection === c.id && trailUnlocked(t));
+
+  stepScreen(`
+    <div class="celebrate">
+      <div class="jcard fade-in" style="border-color:var(--flame)">
+        <p class="eyebrow">🏛️ coleção completa</p>
+        <div class="jt">${c.title}</div>
+        <div class="mural small">${cN.map((n) =>
+          `<div class="arch lit" title="${n.place}">${n.emblem ?? '🔥'}</div>`).join('')}</div>
+        <div class="stats">
+          <div class="stat"><b>${cN.length}</b><span>salões acesos</span></div>
+          <div class="stat"><b>${claims}</b><span>memórias guardadas</span></div>
+          <div class="stat"><b>${S.xp}</b><span>xp</span></div>
+        </div>
+      </div>
+      <div class="fade-in" style="animation-delay:.8s; width:100%; text-align:left">
+        ${thoth(`${c.title} — compreendido, Guardião. Não é só mais um salão: é uma coleção inteira do Arquivo de volta à luz.`, true)}
+      </div>
+      ${echoRows.length ? `
+      <div class="card connections fade-in" style="animation-delay:1.6s; width:100%; text-align:left">
+        <p class="eyebrow">esta coleção ecoa em</p>
+        ${echoRows.map((to, i) => `<div class="cx" style="animation-delay:${1.8 + i * 0.3}s"><span class="tick">✔</span> ${prettify(to)}</div>`).join('')}
+      </div>` : ''}
+      ${unlockedNow ? `
+      <div class="card fade-in" style="animation-delay:2.4s; width:100%; text-align:left; border-color:var(--gold)">
+        <p class="eyebrow">🔓 você desbloqueou uma trilha</p>
+        <p class="serif"><b>${unlockedNow.icon ?? '🏛️'} ${unlockedNow.title}</b></p>
+        <p style="font-size:13.5px; color:var(--ink-soft); margin-top:4px">${unlockedNow.centralQuestion}</p>
+        <button class="cta gold" id="trailBtn" style="margin-top:8px">▶ seguir o fio agora</button>
+      </div>
+      <button class="cta ghost fade-in" style="animation-delay:3s" id="go">depois — fechar a sessão</button>`
+      : `<button class="cta gold fade-in" style="animation-delay:2.4s" id="go">fechar a sessão</button>`}
+    </div>`);
+  const trailBtn = $('trailBtn');
+  if (trailBtn) trailBtn.addEventListener('click', () => {
+    S.events.push({ t: Date.now(), e: 'trail_unlocked_entered', trail: unlockedNow.id });
+    persist();
+    maybeEvolve(() => renderTrail(unlockedNow));
+  });
+  $('go').addEventListener('click', () => {
+    S.events.push({ t: Date.now(), e: 'session_closed_after_collection', c: c.id });
+    persist();
+    maybeEvolve(renderSessionClose);
+  });
+}
+
+function celebrateTrail(t) {
+  setProgress(null);
+  S.events.push({ t: Date.now(), e: 'trail_complete', t: t.id });
+  persist();
+  const tNodes = journeyNodes(t);
+  const claims = tNodes.reduce((sum, n) => sum + n.claims.length, 0);
+
+  stepScreen(`
+    <div class="celebrate">
+      <div class="jcard fade-in">
+        <p class="eyebrow">trilha concluída</p>
+        <div class="jt">${t.title}</div>
+        <div class="mural small">${tNodes.map((n) =>
+          `<div class="arch lit" title="${n.place}">${n.emblem ?? '🔥'}</div>`).join('')}</div>
+        <div class="thread">${t.thread ?? ''}</div>
+        <div class="stats">
+          <div class="stat"><b>${tNodes.length}</b><span>salões acesos</span></div>
+          <div class="stat"><b>${claims}</b><span>memórias guardadas</span></div>
+          <div class="stat"><b>${S.xp}</b><span>xp</span></div>
+        </div>
+      </div>
+      <div class="fade-in" style="animation-delay:.8s; width:100%; text-align:left">
+        ${thoth('Você seguiu o fio inteiro, Guardião: <b>' + t.centralQuestion + '</b>', true)}
+      </div>
+      <div class="card fade-in" style="animation-delay:1.6s; width:100%; text-align:left">
+        <p class="eyebrow">o Arquivo continua</p>
+        <p class="serif">${t.comingNext ?? 'Novas trilhas em escrita — o Arquivo não para'}</p>
+      </div>
+      <button class="cta gold fade-in" style="animation-delay:2.2s" id="go">fechar a sessão</button>
+    </div>`);
+  $('go').addEventListener('click', () => {
+    S.events.push({ t: Date.now(), e: 'session_closed_after_trail', trail: t.id });
     persist();
     maybeEvolve(renderSessionClose);
   });
@@ -1326,7 +1543,8 @@ document.getElementById('resetBtn').addEventListener('click', (e) => {
   e.preventDefault();
   Object.assign(S, { xp: 0, lit: {}, lessonsDone: {}, nodeXp: 0, reviews: {}, timeShift: 0, events: [], thothStageSeen: 1, resume: null, startedAt: null });
   try { localStorage.removeItem(STORE_KEY); } catch {}
-  refreshXp(); renderCorridor(JOURNEYS[0]);
+  CURRENT_PATH = MODULES[0];
+  refreshXp(); renderCorridor(MODULES[0]);
 });
 $('backBtn').addEventListener('click', () => { if (NAV_BACK) NAV_BACK(); });
 $('thothChip').addEventListener('click', renderPergaminho);
@@ -1335,5 +1553,6 @@ $('thothChip').addEventListener('click', renderPergaminho);
 const totalLitBoot = NODES.filter((n) => S.lit[n.id]).length;
 if (S.resume && !S.lit[S.resume.nodeId]) renderWelcomeBack();
 else if (totalLitBoot > 0 || Object.keys(S.lessonsDone).length > 0) renderLibrary();
-else renderCorridor(JOURNEYS[0]);
+else renderCorridor(MODULES[0]);
+
 </script>

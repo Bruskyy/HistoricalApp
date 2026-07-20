@@ -1,0 +1,10 @@
+{
+  "id": "mod-revolucoes",
+  "kind": "module",
+  "collectionId": "revolucoes-atlanticas",
+  "order": 1,
+  "title": "As Revoluções Atlânticas",
+  "centralQuestion": "Como uma teoria de filósofo vira artigo de constituição?",
+  "nodeOrder": ["revolucoes-atlanticas"],
+  "comingNext": "Mais módulos das Revoluções Atlânticas em escrita — o Arquivo não para"
+}
