@@ -26,9 +26,8 @@
           "title": "Império Romano",
           "tagline": "Como uma aldeia de pastores virou dona do Mediterrâneo",
           "status": "open",
-          "modules": ["mod-republica-imperio"],
+          "modules": ["mod-republica-imperio", "mod-auge-romano"],
           "upcomingModules": [
-            { "icon": "☀️", "title": "Auge Romano — a paz que durou 200 anos" },
             { "icon": "🏛️", "title": "Estado Romano — a máquina por trás do império" },
             { "icon": "✝️", "title": "Religião e Cultura — a seita perseguida que conquistou o império perseguidor" },
             { "icon": "🔥", "title": "Crises — 23 facadas: por que os amigos de César o mataram?" },

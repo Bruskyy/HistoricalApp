@@ -195,5 +195,34 @@
       "absolutista"
     ],
     "definition": "Regime em que o rei concentra todo o poder, sem freios institucionais — justificado, no auge, como direito divino. O alvo direto de Locke, Montesquieu e 1789."
+  },
+  {
+    "id": "principado",
+    "term": "Principado",
+    "match": [
+      "principado"
+    ],
+    "definition": "O regime que Augusto inaugurou em 27 a.C.: poder absoluto de fato, vestido com as formas da antiga República — o imperador como \"primeiro cidadão\" (princeps), não como rei."
+  },
+  {
+    "id": "legiao",
+    "term": "Legião",
+    "match": [
+      "legião",
+      "legiões",
+      "legionário",
+      "legionários"
+    ],
+    "definition": "A unidade militar central do exército romano — cerca de 5.000 soldados de infantaria. Sua capacidade de se mover rápido por todo o império dependia diretamente da malha de estradas."
+  },
+  {
+    "id": "cidadania-romana",
+    "term": "Cidadania romana",
+    "match": [
+      "cidadania romana",
+      "cidadão romano",
+      "cidadãos romanos"
+    ],
+    "definition": "Status legal que garantia proteção sob o direito romano e o direito de apelar a um tribunal romano. Começou restrita a quem nascia em Roma; em 212 d.C., o Edito de Caracala a estendeu a quase todo homem livre do império."
   }
 ]

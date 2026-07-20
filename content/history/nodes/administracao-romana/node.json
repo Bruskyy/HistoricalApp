@@ -1,0 +1,115 @@
+{
+  "id": "administracao-romana",
+  "domain": "history",
+  "era": "antiguidade",
+  "place": "As Províncias",
+  "emblem": "🛣️",
+  "name": "A Máquina do Império",
+  "sensitive": false,
+  "journeys": ["mod-auge-romano"],
+  "positionInJourney": {
+    "mod-auge-romano": 2
+  },
+  "claims": [
+    {
+      "id": "malha-de-estradas",
+      "text": "O império construiu e manteve uma rede de mais de 80.000 km de estradas pavimentadas, concebida primariamente para movimentação militar rápida de legiões, que também acelerou comércio e comunicação administrativa entre Roma e as províncias.",
+      "epistemicClass": "established_fact",
+      "consensusPct": 95,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Chevallier, R. Roman Roads. University of California Press, 1976."
+        },
+        {
+          "type": "academic_book",
+          "ref": "Laurence, R. The Roads of Roman Italy. Routledge, 1999."
+        }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "causal",
+          "objective": true,
+          "prompt": "Por que as estradas romanas foram construídas primeiro para as legiões, e só depois viraram rotas de comércio?",
+          "options": [
+            "Um império do tamanho de Roma só se defendia se conseguisse mover exércitos rápido até a fronteira certa, a tempo — a prioridade era militar",
+            "Os comerciantes pressionaram o Senado a financiar a construção",
+            "As estradas surgiram como projeto de urbanização das cidades, sem relação com o exército"
+          ],
+          "correct": 0,
+          "errorPath": "A rede começou como infraestrutura militar — legiões precisavam alcançar qualquer fronteira em semanas, não meses. O comércio se beneficiou depois, andando sobre uma estrada que a guerra construiu primeiro."
+        }
+      ]
+    },
+    {
+      "id": "direito-unificador",
+      "text": "A extensão progressiva da cidadania romana e de um direito comum a povos conquistados funcionou como mecanismo de integração política, culminando no Edito de Caracala (212 d.C.), que estendeu a cidadania a quase todos os homens livres do império.",
+      "epistemicClass": "accepted_hypothesis",
+      "consensusPct": 85,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Sherwin-White, A. N. The Roman Citizenship. Oxford University Press, 1973."
+        },
+        {
+          "type": "academic_book",
+          "ref": "Ando, C. Imperial Rome AD 193 to 284. Edinburgh University Press, 2012."
+        }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "application",
+          "objective": true,
+          "prompt": "Um provincial recém-tornado cidadão romano, no auge do império, ganhava com isso…",
+          "options": [
+            "Proteção legal e direitos antes reservados a quem nascia em Roma — um vínculo formal com o Estado, não só militar",
+            "Isenção total de impostos pelo resto da vida",
+            "O direito automático de sentar no Senado"
+          ],
+          "correct": 0,
+          "errorPath": "Cidadania romana era, sobretudo, proteção jurídica — o direito de apelar a um tribunal romano, entre outras garantias. Não isentava de impostos nem dava assento automático no Senado; era um vínculo legal, não um prêmio econômico."
+        }
+      ]
+    },
+    {
+      "id": "romanizacao-debate",
+      "text": "O quanto a estabilidade do império dependia de \"romanização\" cultural genuína das elites provinciais versus coerção militar e interesse econômico em cooperar é um debate historiográfico ativo, com revisões recentes questionando o próprio conceito de \"romanização\" como narrativa única.",
+      "epistemicClass": "historiographical_interpretation",
+      "consensusPct": 50,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Woolf, G. Becoming Roman: The Origins of Provincial Civilization in Gaul. Cambridge University Press, 1998."
+        },
+        {
+          "type": "academic_book",
+          "ref": "Mattingly, D. Imperialism, Power, and Identity: Experiencing the Roman Empire. Princeton University Press, 2011."
+        }
+      ],
+      "debate": {
+        "question": "O império se sustentava porque as elites locais \"queriam ser romanas\", ou porque era vantajoso fingir que sim?",
+        "positions": [
+          {
+            "view": "Romanização real: elites provinciais adotaram língua, direito, arquitetura e carreira romana por identificação genuína com o projeto imperial.",
+            "acceptance": "tradicional, ainda influente"
+          },
+          {
+            "view": "Cooperação interessada: elites locais adotavam símbolos romanos para preservar poder e privilégio local — a categoria \"romanização\" simplifica experiências muito diferentes entre regiões do império.",
+            "acceptance": "revisionista, crescente"
+          }
+        ]
+      }
+    }
+  ],
+  "connections": [
+    { "to": "pax-romana", "type": "influence" },
+    { "to": "iluminismo", "type": "influence" },
+    { "to": "constituicao-brasileira-1988", "type": "echo" }
+  ],
+  "lessons": [
+    { "id": "as-estradas-que-seguravam-o-mundo", "file": "lesson-1.md" },
+    { "id": "cidadao-do-mundo-a-romana", "file": "lesson-2.md" }
+  ]
+}

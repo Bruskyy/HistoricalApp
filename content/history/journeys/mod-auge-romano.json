@@ -1,0 +1,33 @@
+{
+  "id": "mod-auge-romano",
+  "kind": "module",
+  "collectionId": "imperio-romano",
+  "order": 2,
+  "title": "Auge Romano",
+  "centralQuestion": "Como um império do tamanho da Europa inteira se sustentou por 200 anos de relativa paz?",
+  "nodeOrder": ["pax-romana", "administracao-romana"],
+  "comingNext": "Estado Romano, Religião e Cultura, Crises, Queda do Ocidente, Império Bizantino — em escrita",
+  "synthesis": {
+    "question": {
+      "id": "sintese-auge-romano",
+      "type": "connection",
+      "objective": true,
+      "prompt": "Última pergunta deste módulo: o que realmente segurou duzentos anos de Pax Romana de pé — o acordo de poder de Augusto, ou a máquina de estradas e cidadania que vinha depois dele?",
+      "options": [
+        "As duas coisas juntas: o acordo político deu a paz interna que permitiu construir a máquina, e a máquina (estradas, direito, cidadania) tornou essa paz sustentável — uma sem a outra não teria durado 200 anos",
+        "Só o exército: Roma se sustentava por puro medo da força militar, nada mais",
+        "Só a cidadania: as pessoas amavam tanto ser romanas que a paz se sustentava sozinha"
+      ],
+      "correct": 0,
+      "errorPath": "Nenhuma das duas peças bastava sozinha. O acordo de Augusto parou a guerra civil — mas sem estradas para mover legiões e sem um direito comum que desse às províncias um motivo para cooperar, a paz teria durado uma geração, não duzentos anos."
+    },
+    "reframe": [
+      "Você começou este módulo com uma pergunta: como um império tão grande se sustentou por tanto tempo? A resposta não é uma coisa só — é um acordo político (Augusto trocando o título de rei pelo poder de rei) somado a uma infraestrutura física e legal que tornou esse acordo funcional em escala: estradas que moviam legiões em semanas, direito que dava a um provincial um motivo real para preferir Roma a se revoltar.",
+      "E você viu também a borda dessa história: a mesma paz que os historiadores medem em estradas e comércio foi, para quem estava do lado errado da conquista, o nome dado à derrota. As duas coisas são verdadeiras ao mesmo tempo — e é isso que torna esse período mais interessante que um simples \"a paz durou 200 anos\"."
+    ],
+    "shift": {
+      "before": "Pax Romana: duzentos anos de paz no império romano",
+      "after": "Pax Romana: um acordo de poder sustentado por estradas e cidadania — paz de verdade para uns, conquista contínua para outros"
+    }
+  }
+}

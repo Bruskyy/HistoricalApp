@@ -1,0 +1,114 @@
+{
+  "id": "pax-romana",
+  "domain": "history",
+  "era": "antiguidade",
+  "place": "Roma Imperial",
+  "emblem": "🕊️",
+  "name": "A Pax Romana",
+  "sensitive": false,
+  "journeys": ["mod-auge-romano"],
+  "positionInJourney": {
+    "mod-auge-romano": 1
+  },
+  "claims": [
+    {
+      "id": "fim-guerras-civis",
+      "text": "Após décadas de guerras civis, Otaviano venceu Marco Antônio em Ácio (31 a.C.) e, a partir de 27 a.C., estabeleceu o Principado — mantendo as formas republicanas (Senado, cônsules) enquanto concentrava o poder militar e político real sob o título de Augusto.",
+      "epistemicClass": "established_fact",
+      "consensusPct": 96,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Syme, R. The Roman Revolution. Oxford University Press, 1939."
+        },
+        {
+          "type": "academic_book",
+          "ref": "Eck, W. The Age of Augustus. Blackwell, 2003."
+        }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "causal",
+          "objective": true,
+          "prompt": "Depois de vencer a última guerra civil, Augusto podia ter se coroado rei. Por que preferiu manter Senado e cônsules de fachada?",
+          "options": [
+            "Roma jurou nunca mais ter um rei (República romana, lição 1) — poder real sem o título evitava o destino de César",
+            "A lei romana proibia formalmente o título de rei em qualquer circunstância",
+            "O Senado ainda tinha poder militar suficiente para impedi-lo"
+          ],
+          "correct": 0,
+          "errorPath": "O Senado já não tinha exército próprio — Augusto controlava as legiões. A escolha foi de tato: César morreu por parecer querer ser rei; Augusto aprendeu a lição e vestiu o poder absoluto com roupas republicanas."
+        }
+      ]
+    },
+    {
+      "id": "paz-romana-fato",
+      "text": "O período iniciado por Augusto é convencionalmente chamado de Pax Romana: cerca de dois séculos (27 a.C.–180 d.C.) sem grandes guerras civis no núcleo do império, o que permitiu expansão sustentada do comércio, urbanização e obras públicas.",
+      "epistemicClass": "established_fact",
+      "consensusPct": 90,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Woolf, G. Rome: An Empire's Story. Oxford University Press, 2012."
+        },
+        {
+          "type": "primary_source",
+          "ref": "Plínio, o Velho. História Natural, XXVII.3 (menção antiga à \"pax Romana\")."
+        }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "application",
+          "objective": true,
+          "prompt": "Uma cidade provincial no auge da Pax Romana provavelmente via…",
+          "options": [
+            "Mais estradas, mais comércio e menos exércitos passando por perto do que em décadas de guerra civil",
+            "O mesmo nível de guerra de sempre, só que agora com Roma vencendo",
+            "Isolamento total do resto do império, sem nenhuma troca"
+          ],
+          "correct": 0,
+          "errorPath": "\"Paz\" aqui não é silêncio total — é a ausência da guerra civil que sangrou Roma por um século. Menos legiões brigando entre si significou mais estrada livre para mercador, não um mundo sem exército nenhum."
+        }
+      ]
+    },
+    {
+      "id": "paz-para-quem",
+      "text": "O quanto essa \"paz\" foi vivida como tal pelas populações provinciais e nas fronteiras — marcadas por revoltas (Judeia, Britânia) e conquista contínua — é objeto de debate historiográfico ativo.",
+      "epistemicClass": "historiographical_interpretation",
+      "consensusPct": 50,
+      "sources": [
+        {
+          "type": "primary_source",
+          "ref": "Tácito. Agricola, 30 (discurso atribuído ao chefe caledônio Cálgaco)."
+        },
+        {
+          "type": "academic_book",
+          "ref": "Mattingly, D. Imperialism, Power, and Identity: Experiencing the Roman Empire. Princeton University Press, 2011."
+        }
+      ],
+      "debate": {
+        "question": "A Pax Romana foi paz de verdade, ou o nome dado pelos vencedores à conquista?",
+        "positions": [
+          {
+            "view": "Foi uma paz real e mensurável: menos guerra civil, mais comércio, infraestrutura e integração legal — mesmo com custo real nas fronteiras.",
+            "acceptance": "majoritária"
+          },
+          {
+            "view": "\"Paz\" é a palavra de quem venceu: para as províncias conquistadas à força e mantidas sob ocupação militar, o termo mascara violência estrutural contínua (Tácito atribui a Cálgaco: \"fazem um deserto e chamam de paz\").",
+            "acceptance": "minoritária influente"
+          }
+        ]
+      }
+    }
+  ],
+  "connections": [
+    { "to": "republica-romana", "type": "contrast" },
+    { "to": "administracao-romana", "type": "influence" }
+  ],
+  "lessons": [
+    { "id": "um-acordo-duzentos-anos", "file": "lesson-1.md" },
+    { "id": "paz-para-quem", "file": "lesson-2.md" }
+  ]
+}

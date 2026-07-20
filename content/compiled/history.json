@@ -197,9 +197,74 @@
         "absolutista"
       ],
       "definition": "Regime em que o rei concentra todo o poder, sem freios institucionais — justificado, no auge, como direito divino. O alvo direto de Locke, Montesquieu e 1789."
+    },
+    {
+      "id": "principado",
+      "term": "Principado",
+      "match": [
+        "principado"
+      ],
+      "definition": "O regime que Augusto inaugurou em 27 a.C.: poder absoluto de fato, vestido com as formas da antiga República — o imperador como \"primeiro cidadão\" (princeps), não como rei."
+    },
+    {
+      "id": "legiao",
+      "term": "Legião",
+      "match": [
+        "legião",
+        "legiões",
+        "legionário",
+        "legionários"
+      ],
+      "definition": "A unidade militar central do exército romano — cerca de 5.000 soldados de infantaria. Sua capacidade de se mover rápido por todo o império dependia diretamente da malha de estradas."
+    },
+    {
+      "id": "cidadania-romana",
+      "term": "Cidadania romana",
+      "match": [
+        "cidadania romana",
+        "cidadão romano",
+        "cidadãos romanos"
+      ],
+      "definition": "Status legal que garantia proteção sob o direito romano e o direito de apelar a um tribunal romano. Começou restrita a quem nascia em Roma; em 212 d.C., o Edito de Caracala a estendeu a quase todo homem livre do império."
     }
   ],
   "journeys": [
+    {
+      "id": "mod-auge-romano",
+      "kind": "module",
+      "collectionId": "imperio-romano",
+      "order": 2,
+      "title": "Auge Romano",
+      "centralQuestion": "Como um império do tamanho da Europa inteira se sustentou por 200 anos de relativa paz?",
+      "nodeOrder": [
+        "pax-romana",
+        "administracao-romana"
+      ],
+      "comingNext": "Estado Romano, Religião e Cultura, Crises, Queda do Ocidente, Império Bizantino — em escrita",
+      "synthesis": {
+        "question": {
+          "id": "sintese-auge-romano",
+          "type": "connection",
+          "objective": true,
+          "prompt": "Última pergunta deste módulo: o que realmente segurou duzentos anos de Pax Romana de pé — o acordo de poder de Augusto, ou a máquina de estradas e cidadania que vinha depois dele?",
+          "options": [
+            "As duas coisas juntas: o acordo político deu a paz interna que permitiu construir a máquina, e a máquina (estradas, direito, cidadania) tornou essa paz sustentável — uma sem a outra não teria durado 200 anos",
+            "Só o exército: Roma se sustentava por puro medo da força militar, nada mais",
+            "Só a cidadania: as pessoas amavam tanto ser romanas que a paz se sustentava sozinha"
+          ],
+          "correct": 0,
+          "errorPath": "Nenhuma das duas peças bastava sozinha. O acordo de Augusto parou a guerra civil — mas sem estradas para mover legiões e sem um direito comum que desse às províncias um motivo para cooperar, a paz teria durado uma geração, não duzentos anos."
+        },
+        "reframe": [
+          "Você começou este módulo com uma pergunta: como um império tão grande se sustentou por tanto tempo? A resposta não é uma coisa só — é um acordo político (Augusto trocando o título de rei pelo poder de rei) somado a uma infraestrutura física e legal que tornou esse acordo funcional em escala: estradas que moviam legiões em semanas, direito que dava a um provincial um motivo real para preferir Roma a se revoltar.",
+          "E você viu também a borda dessa história: a mesma paz que os historiadores medem em estradas e comércio foi, para quem estava do lado errado da conquista, o nome dado à derrota. As duas coisas são verdadeiras ao mesmo tempo — e é isso que torna esse período mais interessante que um simples \"a paz durou 200 anos\"."
+        ],
+        "shift": {
+          "before": "Pax Romana: duzentos anos de paz no império romano",
+          "after": "Pax Romana: um acordo de poder sustentado por estradas e cidadania — paz de verdade para uns, conquista contínua para outros"
+        }
+      }
+    },
     {
       "id": "mod-grecia-democracia",
       "kind": "module",
@@ -317,6 +382,220 @@
     }
   ],
   "nodes": [
+    {
+      "id": "administracao-romana",
+      "domain": "history",
+      "era": "antiguidade",
+      "place": "As Províncias",
+      "emblem": "🛣️",
+      "name": "A Máquina do Império",
+      "sensitive": false,
+      "journeys": [
+        "mod-auge-romano"
+      ],
+      "positionInJourney": {
+        "mod-auge-romano": 2
+      },
+      "claims": [
+        {
+          "id": "malha-de-estradas",
+          "text": "O império construiu e manteve uma rede de mais de 80.000 km de estradas pavimentadas, concebida primariamente para movimentação militar rápida de legiões, que também acelerou comércio e comunicação administrativa entre Roma e as províncias.",
+          "epistemicClass": "established_fact",
+          "consensusPct": 95,
+          "sources": [
+            {
+              "type": "academic_book",
+              "ref": "Chevallier, R. Roman Roads. University of California Press, 1976."
+            },
+            {
+              "type": "academic_book",
+              "ref": "Laurence, R. The Roads of Roman Italy. Routledge, 1999."
+            }
+          ],
+          "reviewVariants": [
+            {
+              "id": "rv1",
+              "type": "causal",
+              "objective": true,
+              "prompt": "Por que as estradas romanas foram construídas primeiro para as legiões, e só depois viraram rotas de comércio?",
+              "options": [
+                "Um império do tamanho de Roma só se defendia se conseguisse mover exércitos rápido até a fronteira certa, a tempo — a prioridade era militar",
+                "Os comerciantes pressionaram o Senado a financiar a construção",
+                "As estradas surgiram como projeto de urbanização das cidades, sem relação com o exército"
+              ],
+              "correct": 0,
+              "errorPath": "A rede começou como infraestrutura militar — legiões precisavam alcançar qualquer fronteira em semanas, não meses. O comércio se beneficiou depois, andando sobre uma estrada que a guerra construiu primeiro."
+            }
+          ]
+        },
+        {
+          "id": "direito-unificador",
+          "text": "A extensão progressiva da cidadania romana e de um direito comum a povos conquistados funcionou como mecanismo de integração política, culminando no Edito de Caracala (212 d.C.), que estendeu a cidadania a quase todos os homens livres do império.",
+          "epistemicClass": "accepted_hypothesis",
+          "consensusPct": 85,
+          "sources": [
+            {
+              "type": "academic_book",
+              "ref": "Sherwin-White, A. N. The Roman Citizenship. Oxford University Press, 1973."
+            },
+            {
+              "type": "academic_book",
+              "ref": "Ando, C. Imperial Rome AD 193 to 284. Edinburgh University Press, 2012."
+            }
+          ],
+          "reviewVariants": [
+            {
+              "id": "rv1",
+              "type": "application",
+              "objective": true,
+              "prompt": "Um provincial recém-tornado cidadão romano, no auge do império, ganhava com isso…",
+              "options": [
+                "Proteção legal e direitos antes reservados a quem nascia em Roma — um vínculo formal com o Estado, não só militar",
+                "Isenção total de impostos pelo resto da vida",
+                "O direito automático de sentar no Senado"
+              ],
+              "correct": 0,
+              "errorPath": "Cidadania romana era, sobretudo, proteção jurídica — o direito de apelar a um tribunal romano, entre outras garantias. Não isentava de impostos nem dava assento automático no Senado; era um vínculo legal, não um prêmio econômico."
+            }
+          ]
+        },
+        {
+          "id": "romanizacao-debate",
+          "text": "O quanto a estabilidade do império dependia de \"romanização\" cultural genuína das elites provinciais versus coerção militar e interesse econômico em cooperar é um debate historiográfico ativo, com revisões recentes questionando o próprio conceito de \"romanização\" como narrativa única.",
+          "epistemicClass": "historiographical_interpretation",
+          "consensusPct": 50,
+          "sources": [
+            {
+              "type": "academic_book",
+              "ref": "Woolf, G. Becoming Roman: The Origins of Provincial Civilization in Gaul. Cambridge University Press, 1998."
+            },
+            {
+              "type": "academic_book",
+              "ref": "Mattingly, D. Imperialism, Power, and Identity: Experiencing the Roman Empire. Princeton University Press, 2011."
+            }
+          ],
+          "debate": {
+            "question": "O império se sustentava porque as elites locais \"queriam ser romanas\", ou porque era vantajoso fingir que sim?",
+            "positions": [
+              {
+                "view": "Romanização real: elites provinciais adotaram língua, direito, arquitetura e carreira romana por identificação genuína com o projeto imperial.",
+                "acceptance": "tradicional, ainda influente"
+              },
+              {
+                "view": "Cooperação interessada: elites locais adotavam símbolos romanos para preservar poder e privilégio local — a categoria \"romanização\" simplifica experiências muito diferentes entre regiões do império.",
+                "acceptance": "revisionista, crescente"
+              }
+            ]
+          }
+        }
+      ],
+      "connections": [
+        {
+          "to": "pax-romana",
+          "type": "influence"
+        },
+        {
+          "to": "iluminismo",
+          "type": "influence"
+        },
+        {
+          "to": "constituicao-brasileira-1988",
+          "type": "echo"
+        }
+      ],
+      "lessons": [
+        {
+          "id": "as-estradas-que-seguravam-o-mundo",
+          "title": "As estradas que seguravam o mundo",
+          "hook": "Uma revolta acabou de estourar na fronteira do Reno, a mais de mil quilômetros de Roma. Uma legião precisa chegar lá em semanas, não meses — ou a fronteira inteira cai. O que Roma constrói primeiro, antes mesmo de qualquer templo ou fórum?",
+          "narrative": [
+            "Foram mais de 80 mil quilômetros de estrada pavimentada — o suficiente para dar duas voltas na Terra. Retas onde dava, com fundação de pedra em camadas, drenagem para não afundar na chuva. A engenharia era, antes de tudo, militar: uma legião que levava meses para cruzar terreno bruto passou a levar semanas numa via romana.",
+            "Mas uma estrada não sabe quem a usa. Atrás das legiões vinham os mercadores, os correios do governo, os viajantes — e o comércio que crescia sobre a mesma pedra que a guerra tinha assentado primeiro."
+          ],
+          "echoes": [],
+          "interactions": [
+            {
+              "id": "i1",
+              "type": "situated_decision",
+              "claimId": "malha-de-estradas",
+              "objective": false,
+              "prompt": "Roma precisa mover legiões rápido por um território do tamanho da Europa inteira. O que ela constrói primeiro?",
+              "options": [
+                "Um exército permanente gigante em cada fronteira",
+                "Uma rede de estradas pavimentadas ligando Roma a todas as fronteiras",
+                "Navios de guerra em cada rio e costa"
+              ],
+              "errorPath": "Manter um exército gigante parado em cada fronteira custaria mais do que Roma podia pagar. A solução foi mover rápido, não ficar parado: estradas que levassem a legião certa ao lugar certo, na hora certa."
+            },
+            {
+              "id": "i2",
+              "type": "causal",
+              "claimId": "malha-de-estradas",
+              "objective": true,
+              "prompt": "Por que as estradas romanas foram construídas primeiro para as legiões, e só depois viraram rotas de comércio?",
+              "options": [
+                "Um império do tamanho de Roma só se defendia se conseguisse mover exércitos rápido até a fronteira certa, a tempo — a prioridade era militar",
+                "Os comerciantes pressionaram o Senado a financiar a construção",
+                "As estradas surgiram como projeto de urbanização das cidades, sem relação com o exército"
+              ],
+              "correct": 0,
+              "errorPath": "A rede começou como infraestrutura militar — legiões precisavam alcançar qualquer fronteira em semanas, não meses. O comércio se beneficiou depois, andando sobre uma estrada que a guerra construiu primeiro."
+            },
+            {
+              "id": "i3",
+              "type": "application",
+              "claimId": "direito-unificador",
+              "objective": true,
+              "prompt": "Um provincial recém-tornado cidadão romano, no auge do império, ganhava com isso…",
+              "options": [
+                "Proteção legal e direitos antes reservados a quem nascia em Roma — um vínculo formal com o Estado, não só militar",
+                "Isenção total de impostos pelo resto da vida",
+                "O direito automático de sentar no Senado"
+              ],
+              "correct": 0,
+              "errorPath": "Cidadania romana era, sobretudo, proteção jurídica — o direito de apelar a um tribunal romano, entre outras garantias. Não isentava de impostos nem dava assento automático no Senado; era um vínculo legal, não um prêmio econômico."
+            }
+          ],
+          "connection": "Agora você entende melhor: ✔ por que Roma construía estradas antes de qualquer outra coisa ✔ como uma via militar virou rota de comércio ✔ que a mesma engenharia que conquistava também integrava."
+        },
+        {
+          "id": "cidadao-do-mundo-a-romana",
+          "title": "Cidadão do mundo, à romana",
+          "hook": "No ano 212 d.C., o imperador Caracala assina um édito e, de um dia para o outro, quase todo homem livre do império — da Britânia à Síria — vira cidadão romano. Por que um imperador daria de graça o que Roma antes fazia povos conquistados suarem gerações para conquistar?",
+          "narrative": [
+            "A cidadania romana começou restrita — um privilégio de quem nascia em Roma ou o conquistava por serviço militar ou mérito excepcional. Mas ao longo dos séculos, o círculo foi se abrindo: primeiro para aliados italianos, depois para elites provinciais, depois para veteranos de guerra de qualquer origem.",
+            "Cada expansão trazia o mesmo pacote: proteção sob o direito romano, o direito de apelar a um tribunal romano, um vínculo formal com o Estado que ia além de \"território conquistado\". Em 212 d.C., o Edito de Caracala completou o movimento: cidadania para quase todo homem livre do império, de uma vez.",
+            "Por que fazer isso? A explicação mais aceita é fiscal e política — mais cidadãos significava mais gente sujeita a certos impostos romanos, e um império mais coeso é mais fácil de governar. Mas o quanto isso também refletia um sentimento real de pertencimento entre os provinciais é onde os historiadores discordam."
+          ],
+          "echoes": [],
+          "interactions": [
+            {
+              "id": "i1",
+              "type": "causal",
+              "claimId": "direito-unificador",
+              "objective": true,
+              "prompt": "Por que Roma preferiu estender cidadania e direito comum aos povos conquistados, em vez de mantê-los sempre como súditos sem direitos?",
+              "options": [
+                "Um vínculo legal formal integrava e estabilizava o império de um jeito que a pura ocupação militar não conseguia sozinha",
+                "Foi uma exigência religiosa dos deuses romanos",
+                "Roma não tinha soldados suficientes para manter a ocupação militar de outra forma"
+              ],
+              "correct": 0,
+              "errorPath": "Roma tinha exército de sobra para ocupar — a questão era o custo de manter isso para sempre. Direito e cidadania compartilhados criavam um interesse comum na estabilidade do sistema, mais barato e mais duradouro que só força."
+            },
+            {
+              "id": "i2",
+              "type": "source_interpretation",
+              "claimId": "romanizacao-debate",
+              "objective": false,
+              "prompt": "Uma elite provincial na Gália constrói um fórum ao estilo romano e manda os filhos aprenderem latim. Ela faz isso por identificação genuína com Roma, ou por cálculo de poder local? Explore o debate.",
+              "errorPath": "Debate historiográfico real, sem resposta fechada: o valor está em perceber que os dois motivos podem coexistir na mesma pessoa — e que reduzir tudo a um só é que os historiadores hoje evitam."
+            }
+          ],
+          "connection": "Agora você entende melhor: ✔ por que cidadania era o instrumento político mais poderoso de Roma ✔ o que motivou o Edito de Caracala ✔ por que \"romanização\" é uma palavra que historiadores hoje usam com cuidado."
+        }
+      ]
+    },
     {
       "id": "democracia-ateniense",
       "domain": "history",
@@ -810,6 +1089,231 @@
             }
           ],
           "connection": "Agora você entende melhor: ✔ de onde veio, elo por elo, a separação de poderes ✔ por que constituições desconfiam de todo mundo ✔ o livro que os revolucionários vão carregar ✔ o próximo salão: quando o papel vira poder."
+        }
+      ]
+    },
+    {
+      "id": "pax-romana",
+      "domain": "history",
+      "era": "antiguidade",
+      "place": "Roma Imperial",
+      "emblem": "🕊️",
+      "name": "A Pax Romana",
+      "sensitive": false,
+      "journeys": [
+        "mod-auge-romano"
+      ],
+      "positionInJourney": {
+        "mod-auge-romano": 1
+      },
+      "claims": [
+        {
+          "id": "fim-guerras-civis",
+          "text": "Após décadas de guerras civis, Otaviano venceu Marco Antônio em Ácio (31 a.C.) e, a partir de 27 a.C., estabeleceu o Principado — mantendo as formas republicanas (Senado, cônsules) enquanto concentrava o poder militar e político real sob o título de Augusto.",
+          "epistemicClass": "established_fact",
+          "consensusPct": 96,
+          "sources": [
+            {
+              "type": "academic_book",
+              "ref": "Syme, R. The Roman Revolution. Oxford University Press, 1939."
+            },
+            {
+              "type": "academic_book",
+              "ref": "Eck, W. The Age of Augustus. Blackwell, 2003."
+            }
+          ],
+          "reviewVariants": [
+            {
+              "id": "rv1",
+              "type": "causal",
+              "objective": true,
+              "prompt": "Depois de vencer a última guerra civil, Augusto podia ter se coroado rei. Por que preferiu manter Senado e cônsules de fachada?",
+              "options": [
+                "Roma jurou nunca mais ter um rei (República romana, lição 1) — poder real sem o título evitava o destino de César",
+                "A lei romana proibia formalmente o título de rei em qualquer circunstância",
+                "O Senado ainda tinha poder militar suficiente para impedi-lo"
+              ],
+              "correct": 0,
+              "errorPath": "O Senado já não tinha exército próprio — Augusto controlava as legiões. A escolha foi de tato: César morreu por parecer querer ser rei; Augusto aprendeu a lição e vestiu o poder absoluto com roupas republicanas."
+            }
+          ]
+        },
+        {
+          "id": "paz-romana-fato",
+          "text": "O período iniciado por Augusto é convencionalmente chamado de Pax Romana: cerca de dois séculos (27 a.C.–180 d.C.) sem grandes guerras civis no núcleo do império, o que permitiu expansão sustentada do comércio, urbanização e obras públicas.",
+          "epistemicClass": "established_fact",
+          "consensusPct": 90,
+          "sources": [
+            {
+              "type": "academic_book",
+              "ref": "Woolf, G. Rome: An Empire's Story. Oxford University Press, 2012."
+            },
+            {
+              "type": "primary_source",
+              "ref": "Plínio, o Velho. História Natural, XXVII.3 (menção antiga à \"pax Romana\")."
+            }
+          ],
+          "reviewVariants": [
+            {
+              "id": "rv1",
+              "type": "application",
+              "objective": true,
+              "prompt": "Uma cidade provincial no auge da Pax Romana provavelmente via…",
+              "options": [
+                "Mais estradas, mais comércio e menos exércitos passando por perto do que em décadas de guerra civil",
+                "O mesmo nível de guerra de sempre, só que agora com Roma vencendo",
+                "Isolamento total do resto do império, sem nenhuma troca"
+              ],
+              "correct": 0,
+              "errorPath": "\"Paz\" aqui não é silêncio total — é a ausência da guerra civil que sangrou Roma por um século. Menos legiões brigando entre si significou mais estrada livre para mercador, não um mundo sem exército nenhum."
+            }
+          ]
+        },
+        {
+          "id": "paz-para-quem",
+          "text": "O quanto essa \"paz\" foi vivida como tal pelas populações provinciais e nas fronteiras — marcadas por revoltas (Judeia, Britânia) e conquista contínua — é objeto de debate historiográfico ativo.",
+          "epistemicClass": "historiographical_interpretation",
+          "consensusPct": 50,
+          "sources": [
+            {
+              "type": "primary_source",
+              "ref": "Tácito. Agricola, 30 (discurso atribuído ao chefe caledônio Cálgaco)."
+            },
+            {
+              "type": "academic_book",
+              "ref": "Mattingly, D. Imperialism, Power, and Identity: Experiencing the Roman Empire. Princeton University Press, 2011."
+            }
+          ],
+          "debate": {
+            "question": "A Pax Romana foi paz de verdade, ou o nome dado pelos vencedores à conquista?",
+            "positions": [
+              {
+                "view": "Foi uma paz real e mensurável: menos guerra civil, mais comércio, infraestrutura e integração legal — mesmo com custo real nas fronteiras.",
+                "acceptance": "majoritária"
+              },
+              {
+                "view": "\"Paz\" é a palavra de quem venceu: para as províncias conquistadas à força e mantidas sob ocupação militar, o termo mascara violência estrutural contínua (Tácito atribui a Cálgaco: \"fazem um deserto e chamam de paz\").",
+                "acceptance": "minoritária influente"
+              }
+            ]
+          }
+        }
+      ],
+      "connections": [
+        {
+          "to": "republica-romana",
+          "type": "contrast"
+        },
+        {
+          "to": "administracao-romana",
+          "type": "influence"
+        }
+      ],
+      "lessons": [
+        {
+          "id": "um-acordo-duzentos-anos",
+          "title": "Um acordo, duzentos anos",
+          "hook": "Você acabou de vencer a última guerra civil romana. Seu rival está morto, as legiões são suas, o Senado não tem exército próprio para te deter. Júlio César, seu pai adotivo, teve exatamente esse poder — e foi esfaqueado 23 vezes por parecer querer ser rei. O que você faz com o poder que sobrou?",
+          "narrative": [
+            "Foi exatamente esse o dilema de Augusto — e ele resolveu com um truque. Manteve o Senado, os cônsules, as eleições: a maquinaria inteira da República continuou funcionando, ano após ano, como se nada tivesse mudado. Mas por trás da fachada, era ele quem controlava as legiões, o tesouro e, cada vez mais, quem seria eleito para o quê.",
+            "O resultado foi chamado depois de **Principado**: Augusto era formalmente \"o primeiro cidadão\" (*princeps*), não um rei — mas ninguém em Roma tinha dúvida sobre quem mandava.",
+            "E funcionou. Depois de quase um século de guerras civis — César contra Pompeu, depois Otaviano contra Marco Antônio — o acordo de Augusto abriu duzentos anos sem que romano matasse romano por causa do trono."
+          ],
+          "echoes": [],
+          "interactions": [
+            {
+              "id": "i1",
+              "type": "situated_decision",
+              "claimId": "fim-guerras-civis",
+              "objective": false,
+              "prompt": "O poder é seu. Como você o segura sem repetir o erro de César?",
+              "options": [
+                "Me coroo rei — o poder já é meu de qualquer jeito",
+                "Mantenho Senado e cônsules de fachada, e seguro o poder real por trás deles",
+                "Devolvo o poder ao Senado e me aposento"
+              ],
+              "errorPath": "Roma jurou nunca mais ter um rei desde 509 a.C. — o título matou César. Augusto (como Otaviano passou a se chamar) escolheu a segunda opção: todo o poder, nenhum dos títulos que o custariam a vida."
+            },
+            {
+              "id": "i2",
+              "type": "causal",
+              "claimId": "fim-guerras-civis",
+              "objective": true,
+              "prompt": "Por que Augusto manteve Senado e cônsules em vez de simplesmente se coroar rei?",
+              "options": [
+                "Roma jurou nunca mais ter um rei — poder real sem o título evitava o destino de César",
+                "A lei romana proibia formalmente o título de rei em qualquer circunstância",
+                "O Senado ainda tinha exército próprio suficiente para impedi-lo"
+              ],
+              "correct": 0,
+              "errorPath": "O Senado já não tinha exército — Augusto controlava as legiões sozinho. A escolha foi de tato político: César morreu por parecer querer ser rei; Augusto vestiu o mesmo poder com roupas republicanas."
+            },
+            {
+              "id": "i3",
+              "type": "application",
+              "claimId": "paz-romana-fato",
+              "objective": true,
+              "prompt": "Uma cidade provincial no auge da Pax Romana provavelmente via…",
+              "options": [
+                "Mais estradas, mais comércio e menos exércitos romanos brigando entre si do que em décadas de guerra civil",
+                "O mesmo nível de guerra de sempre, só que agora com um vencedor definido",
+                "Isolamento total do resto do império, sem nenhuma troca"
+              ],
+              "correct": 0,
+              "errorPath": "\"Paz\" aqui não é silêncio total — é a ausência da guerra civil que sangrou Roma por um século. Menos legiões brigando entre si significou mais estrada livre para o mercador, não um mundo sem exército nenhum."
+            }
+          ],
+          "connection": "Agora você entende melhor: ✔ por que Roma trocou república por império sem parecer que trocou ✔ o que significa \"Pax Romana\" de verdade ✔ por que o título de rei era mais perigoso que o poder de rei."
+        },
+        {
+          "id": "paz-para-quem",
+          "title": "Paz para quem?",
+          "hook": "Um general romano acaba de arrasar um povo rebelde nas fronteiras da Britânia. Um chefe local, antes de morrer em batalha, teria dito uma frase que o historiador romano Tácito registrou para a posteridade: \"Onde fazem um deserto, chamam de paz.\" Ele estava falando da mesma Pax Romana que você acabou de conhecer.",
+          "narrative": [
+            "A Pax Romana foi real: menos guerra civil, mais estrada, mais comércio, cidades crescendo sem medo de saque próximo. Mas essa paz tinha uma borda — e nela, a história muda de tom.",
+            "Nas fronteiras e nas províncias recém-conquistadas, \"paz\" muitas vezes significava **depois** da conquista, não **em vez dela**. A Judeia se revoltou mais de uma vez. A Britânia resistiu por décadas. Cada território \"pacificado\" tinha passado, primeiro, por uma guerra.",
+            "Por isso os historiadores hoje não perguntam apenas \"quão longa foi a Pax Romana\", mas **\"paz para quem, vista de onde\"**. Não existe resposta única — e essa é a resposta mais honesta que existe."
+          ],
+          "echoes": [],
+          "interactions": [
+            {
+              "id": "i1",
+              "type": "source_interpretation",
+              "claimId": "paz-para-quem",
+              "objective": false,
+              "prompt": "Um general vitorioso e o chefe de um povo recém-conquistado descrevem a Pax Romana de formas opostas. Explore por que os historiadores levam as duas versões a sério.",
+              "errorPath": "Debate historiográfico real, sem resposta fechada: o valor está em entender que \"paz\" é uma palavra que muda de significado dependendo de quem a diz — e ambos os lados deixaram registros que sobreviveram."
+            },
+            {
+              "id": "i2",
+              "type": "causal",
+              "claimId": "paz-romana-fato",
+              "objective": true,
+              "prompt": "Por que a \"Pax Romana\" era sentida de forma tão diferente no centro do império e nas fronteiras recém-conquistadas?",
+              "options": [
+                "O centro já não tinha guerra civil para se preocupar; a fronteira ainda vivia o processo de conquista e revolta que sustentava essa paz interna",
+                "Não havia diferença nenhuma — a experiência era idêntica em todo o império",
+                "As fronteiras eram, na verdade, mais pacíficas que o centro"
+              ],
+              "correct": 0,
+              "errorPath": "A paz interna do império dependia, em parte, de exércitos ocupados conquistando e defendendo fronteiras — a guerra não sumiu, só se deslocou para as bordas do mapa."
+            },
+            {
+              "id": "i3",
+              "type": "counterfactual",
+              "claimId": "fim-guerras-civis",
+              "objective": true,
+              "prompt": "Se Augusto tivesse perdido a batalha de Ácio para Marco Antônio, o mais provável é que…",
+              "options": [
+                "Roma continuaria em guerra civil por mais tempo, sob outro vencedor tentando o mesmo acordo",
+                "A República seria restaurada exatamente como era antes de César",
+                "Roma teria virado uma democracia direta, ao estilo ateniense"
+              ],
+              "correct": 0,
+              "errorPath": "Nada no colapso da República apontava para uma volta ao modelo antigo — o sistema de checks do Políbio já tinha quebrado décadas antes. Alguém ia vencer a guerra civil e fazer um acordo parecido; coube a Augusto ser esse alguém."
+            }
+          ],
+          "connection": "Agora você entende melhor: ✔ por que \"Pax Romana\" não é sinônimo de \"sem violência\" ✔ como historiadores leem a mesma paz de lados opostos ✔ que toda fronteira do império tinha uma guerra por trás da estrada pavimentada."
         }
       ]
     },
