@@ -11,7 +11,7 @@
 | # | Item | Dep. | P |
 |---|---|---|---|
 | E0.1 | Protótipo navegável (Figma): Corredor do Tempo, escolha de jornada por pergunta central, player de lição, celebração | — | P0 |
-| E0.2 | Roteiro e execução de teste com 5-8 usuários (personas Marina/Rafael); registrar leitura do Corredor e interesse por jornada | E0.1 | P0 |
+| E0.2 | Executar com 5-8 usuários o roteiro de [`PLAYTEST_E0.2.md`](PLAYTEST_E0.2.md) na coleção Império Romano (protótipo já jogável, à frente do Figma original de E0.1); gate obrigatório antes de qualquer jornada nova (LDD §2.3): média ≥8/10, em cada um dos 5 critérios, na coorte | E0.1 | P0 |
 | E0.3 | Identidade visual conceitual v1 (paleta pergaminho/tinta, 1 era com cor própria, Thoth em 3 estágios — esboço) | — | P0 |
 | E0.4 | Teste de naming (VISION §19): recall 24h, grafia por áudio, busca — Mneme vs. 2-3 alternativas; inclui nome do companheiro | E0.3 | P1 (P0 até R2) |
 
