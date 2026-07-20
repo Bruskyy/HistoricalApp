@@ -129,7 +129,7 @@ Como o universo amarra os sistemas do produto (cada um deixa de ser "feature" e 
 |---|---|
 | Timeline | **O Corredor do Tempo** — o grande salão central do Arquivo, que o usuário percorre e ilumina |
 | Companheiro | **Thoth**, um jovem escriba do Arquivo, aprendiz como o usuário — vocês crescem juntos |
-| Museu/coleções | **O Salão do Guardião** — a ala pessoal do usuário no Arquivo, onde cada era dominada ergue um artefato |
+| Museu/colecionáveis | **O Salão do Guardião** — a ala pessoal do usuário no Arquivo, onde cada era dominada ergue um artefato |
 | Títulos/níveis | Hierarquia do Arquivo: Curioso → Aprendiz → Escriba → Cronista → Historiador → Sábio → **Guardião da Memória** |
 | Ligas | **Ordens** de Guardiões que competem semanalmente |
 | Mapa mundial | **O Atlas Vivo** — regiões do mundo que ganham cor conforme o usuário domina suas histórias |
@@ -256,7 +256,7 @@ Comunidade ≠ rede social. O MVP não tem feed, chat nem guildas (seção 16) �
 
 ## 16. Visão vs. primeira versão utilizável: introdução gradual de sistemas
 
-> **Alerta incorporado do fundador:** este documento descreve dezenas de sistemas — museu, atlas, ligas, eventos, IA, coleções, títulos... A visão é o mapa; **o MVP é o primeiro passo, não a miniatura do mapa inteiro.** O risco real de um documento grandioso é o MVP virar um AAA. Esta seção é a defesa contra isso: cada sistema tem uma fase, e só entra quando a fase anterior provou sua tese (filtro da seção 2.1).
+> **Alerta incorporado do fundador:** este documento descreve dezenas de sistemas — museu, atlas, ligas, eventos, IA, colecionáveis, títulos... A visão é o mapa; **o MVP é o primeiro passo, não a miniatura do mapa inteiro.** O risco real de um documento grandioso é o MVP virar um AAA. Esta seção é a defesa contra isso: cada sistema tem uma fase, e só entra quando a fase anterior provou sua tese (filtro da seção 2.1).
 
 ### 16.1 MVP — o mínimo que valida a tese central ("aprender assim vicia?")
 
@@ -278,7 +278,7 @@ Comunidade ≠ rede social. O MVP não tem feed, chat nem guildas (seção 16) �
 | Fase | Pergunta que a fase valida | Sistemas introduzidos |
 |---|---|---|
 | **MVP** | O loop de aprendizado vicia? | Lista da seção 16.1 |
-| **V1** | A identidade aprofunda a retenção? | Salão do Guardião (museu), Atlas Vivo, coleções, hierarquia completa de títulos do Arquivo, desafio da semana, ranking semanal assíncrono, IA explicativa (seção 22) |
+| **V1** | A identidade aprofunda a retenção? | Salão do Guardião (museu), Atlas Vivo, colecionáveis, hierarquia completa de títulos do Arquivo, desafio da semana, ranking semanal assíncrono, IA explicativa (seção 22) |
 | **V2** | A camada coletiva multiplica o hábito? | Ordens (ligas), eventos temáticos mensais, retrospectiva anual, IA de conexões personalizadas |
 | **V3+** | A plataforma escala além do primeiro domínio? | Quiz mundial síncrono, personagens de IA persistentes, segundo domínio de conhecimento, B2B educação |
 

@@ -85,7 +85,7 @@
 
 ## Épicos V1+ (não detalhar agora — apenas reservados)
 
-- **EV1:** Salão do Guardião (museu) · Atlas Vivo · coleções · títulos completos · desafio da semana · ranking assíncrono · IA explicativa (VISION §22).
+- **EV1:** Salão do Guardião (museu) · Atlas Vivo · colecionáveis · títulos completos · desafio da semana · ranking assíncrono · IA explicativa (VISION §22).
 - **EV2:** Ordens (ligas) · eventos temáticos · retrospectiva anual · IA de conexões.
 - **EV3+:** quiz mundial · personagens IA persistentes · segundo domínio · B2B.
 

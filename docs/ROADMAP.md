@@ -8,7 +8,7 @@
 R0  Protótipo navegável (Figma)      → valida Corredor + escolha de módulo
 R1  Piloto fechado (coorte convidada)→ valida o loop (O1-O5 do PRD) + experimentos
 R2  MVP público (lojas)              → valida em coorte aberta; naming resolvido
-V1  Identidade                       → Museu, Atlas Vivo, coleções, IA explicativa,
+V1  Identidade                       → Museu, Atlas Vivo, colecionáveis, IA explicativa,
                                        desafio da semana, ranking assíncrono
 V2  Coletivo                         → Ordens (ligas), eventos temáticos, retrospectiva
 V3+ Plataforma                       → quiz mundial, IA persistente, 2º domínio, B2B
