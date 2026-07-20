@@ -56,6 +56,12 @@
     border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px;
     background: var(--paper-raised);
   }
+  .thoth-chip {
+    font-size: 15px; line-height: 1; width: 30px; height: 30px; border-radius: 50%;
+    border: 1px solid var(--line); background: var(--paper-raised); cursor: pointer;
+    display: flex; align-items: center; justify-content: center; padding: 0;
+  }
+  .thoth-chip:hover { border-color: var(--gold); }
   main { flex: 1; overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 14px; }
 
   .eyebrow { font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-faint); margin: 0 0 2px; }
@@ -304,6 +310,8 @@
   .domain-sealed { opacity: .75; }
   .continue-card { border: 1.5px solid var(--gold); }
   .cc-title { font-family: Georgia, serif; font-size: 17px; font-weight: 600; }
+  .collection { display: flex; flex-direction: column; gap: 6px; border: 1.5px solid var(--line); }
+  .collection .bcount:first-child { font-size: 13px; color: var(--ink); }
 
   /* Thoth evolui (GDD §7.1 — diferencial obrigatório VISION §16.1) */
   .thoth { position: relative; transition: box-shadow .6s ease, border-color .6s ease; }
@@ -372,7 +380,10 @@
       <button class="nav-back" id="backBtn" hidden aria-label="voltar ao Corredor">←</button>
       <div class="brand">Mneme<small id="navChip">protótipo</small></div>
     </div>
-    <div class="xp-chip" id="xpChip" hidden>0 XP</div>
+    <div style="display:flex; align-items:center; gap:8px">
+      <button class="thoth-chip" id="thothChip" hidden aria-label="ver o pergaminho de Thoth">📜</button>
+      <div class="xp-chip" id="xpChip" hidden>0 XP</div>
+    </div>
   </header>
   <div class="progress-track" id="ptrack" hidden><div class="progress-fill" id="pfill" style="width:0%"></div></div>
   <main id="screen"></main>
@@ -439,6 +450,7 @@ function setProgress(pct) {
   if (pct !== null) $('pfill').style.width = pct + '%';
 }
 function refreshXp() {
+  $('thothChip').hidden = litCount() === 0;
   $('xpChip').hidden = S.xp === 0;
   $('xpChip').textContent = S.xp + ' XP';
 }
@@ -459,7 +471,10 @@ function thothAvatar(extra = '') {
   const st = thothStage();
   return `<div class="thoth s${st} ${extra}">📜${st > 1 ? `<span class="tbadge">${st === 2 ? '✒️' : '🖋️'}</span>` : ''}</div>`;
 }
+/* Thoth só fala em evento real (GDD §7.2) — texto nulo = presença
+   silenciosa, sem bolha; falar toda hora vira banner, não companheiro. */
 function thoth(text, bounce = false) {
+  if (!text) return '';
   return `<div class="thoth-row">
     ${thothAvatar(bounce ? 'bounce' : '')}
     <div class="thoth-say">${text}</div>
@@ -576,6 +591,17 @@ function domainOfJourney(jid) {
   return PACKAGE.library.domains[0];
 }
 
+/* Coleção (GDD §4.0): memórias = afirmações do conteúdo aberto;
+   acender um salão recupera as memórias dele. Números sempre honestos. */
+function memStats() {
+  let total = 0, got = 0;
+  for (const n of NODES) {
+    total += n.claims.length;
+    if (S.lit[n.id]) got += n.claims.length;
+  }
+  return { got, total, pct: total ? Math.round((100 * got) / total) : 0 };
+}
+
 /* % da jornada em lições: salão aceso conta cheio; salão pela metade conta o que foi feito. */
 function journeyLessonPct(j) {
   let done = 0, total = 0;
@@ -636,15 +662,17 @@ function renderLibrary() {
 
   const bibs = lib.domains.map((d) => {
     const { open, soon } = libStats(d);
-    const litD = d.status === 'open' ? NODES.filter((n) => S.lit[n.id]).length : 0;
+    const mem = d.status === 'open' ? memStats() : null;
     const sub = d.status === 'open'
-      ? `${open} ${open === 1 ? 'jornada aberta' : 'jornadas abertas'} · ${soon} em escrita${litD ? ` · ${litD === 1 ? '1 salão aceso' : litD + ' salões acesos'}` : ''}`
+      ? `${open} ${open === 1 ? 'jornada aberta' : 'jornadas abertas'} · ${soon} em escrita`
       : `em escrita — ${soon} jornadas planejadas`;
     return `
       <div class="card bib-card ${d.status === 'open' ? '' : 'sealed'}" data-domain="${d.id}" role="button" tabindex="0">
         <div class="domain-head"><span class="di">${d.icon}</span><span class="dt">${d.title}</span></div>
         <div class="dg">${d.tagline}</div>
         <div class="bcount">${sub}</div>
+        ${mem && mem.got ? `<div class="pctbar"><div style="width:${mem.pct}%"></div></div>
+        <div class="bcount">🕯️ ${mem.got} de ${mem.total} memórias recuperadas — ${mem.pct}%</div>` : ''}
       </div>`;
   }).join('');
 
@@ -674,7 +702,6 @@ function renderDomain(d) {
   setProgress(null);
   closeTermBox();
   const due = dueReviews();
-  const litD = NODES.filter((n) => S.lit[n.id]).length;
 
   const shelvesHtml = (d.shelves ?? []).map((sh) => {
     const cards = (sh.journeys ?? []).map((jid) => {
@@ -704,16 +731,23 @@ function renderDomain(d) {
     }).join('');
     const soon = (sh.upcoming ?? []).length ? `
       <div class="soon">
-        <p class="eyebrow">em breve nesta estante</p>
+        <p class="eyebrow">ainda escondidas nesta estante…</p>
         ${(sh.upcoming ?? []).map((u) => `<div class="soon-row"><span>${u.icon}</span>${u.title}</div>`).join('')}
       </div>` : '';
     return `<div class="shelf-title"><span>${sh.icon}</span>${sh.title}</div>${cards}${soon}`;
   }).join('');
 
+  const mem = memStats();
   screen().innerHTML = `
     ${rescueCardHtml(due)}
     <div class="domain-head big"><span class="di">${d.icon}</span><span class="dt">${d.title}</span></div>
-    <div class="dg">${d.tagline}${d.status === 'open' && litD ? ` · ${litD === 1 ? '1 salão aceso' : litD + ' salões acesos'}` : ''}</div>
+    <div class="dg">${d.tagline}</div>
+    ${d.status === 'open' && mem.total ? `
+    <div class="card collection">
+      <div class="bcount">🕯️ <b>${mem.got} de ${mem.total}</b> memórias recuperadas</div>
+      <div class="pctbar"><div style="width:${mem.pct}%"></div></div>
+      <div class="bcount">${mem.pct}% desta Biblioteca reconstruída — continue explorando</div>
+    </div>` : ''}
     ${d.status === 'open' ? '' : `<div class="card domain-sealed"><div class="sealed-note">🔒 ${d.teaser ?? 'ala em escrita'} — os escribas já trabalham nas jornadas abaixo.</div></div>`}
     ${shelvesHtml}
   `;
@@ -740,13 +774,15 @@ function renderCorridor(j) {
   const target = jN.find((n) => !S.lit[n.id] && nodeUnlockedInJourney(n));
   const nextJ = j.next ? JOURNEYS.find((x) => x.id === j.next.journey) : null;
 
+  // Thoth fala apenas em evento (GDD §7.2): se fala toda vez, vira banner;
+  // se aparece poucas vezes, vira acontecimento. No dia a dia, presença calada.
   const say = due.length
     ? 'As chamas vacilantes primeiro, Guardião — três minutos bastam.'
     : done
       ? `A ala “${j.title}” inteira está acesa. ${nextJ ? 'E olha: a porta da próxima ala já range.' : 'A Biblioteca guarda as próximas portas.'}`
       : litInJ === 0
         ? `Uma ala nova, Guardião: ${j.title}. A primeira porta aberta é ${target ? target.place : jN[0].place}. Vamos?`
-        : `A porta de ${target ? target.place : '…'} está aberta.${target && (S.lessonsDone[target.id] ?? 0) > 0 ? ' Sua lição espera onde você parou.' : ''}`;
+        : null;
 
   let rows = '';
   for (const node of jN) {
@@ -1293,6 +1329,7 @@ document.getElementById('resetBtn').addEventListener('click', (e) => {
   refreshXp(); renderCorridor(JOURNEYS[0]);
 });
 $('backBtn').addEventListener('click', () => { if (NAV_BACK) NAV_BACK(); });
+$('thothChip').addEventListener('click', renderPergaminho);
 // Primeiro uso: guiado direto ao Corredor (sem parede de escolha — VISION §17-D1);
 // quem retorna cai na Biblioteca; quem parou no meio, no retorno perfeito.
 const totalLitBoot = NODES.filter((n) => S.lit[n.id]).length;

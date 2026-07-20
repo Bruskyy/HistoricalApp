@@ -14,8 +14,8 @@
           "title": "Poder & Democracia",
           "journeys": ["nascimento-da-democracia", "a-ideia-renasce"],
           "upcoming": [
-            { "icon": "👑", "title": "Absolutismo: o poder que não devia acabar" },
-            { "icon": "🗳️", "title": "A era das constituições" }
+            { "icon": "👑", "title": "O rei que jurou que seu poder vinha de Deus — e perdeu a cabeça" },
+            { "icon": "🗳️", "title": "O pedaço de papel que consegue prender um rei" }
           ]
         },
         {
@@ -24,12 +24,12 @@
           "title": "Mundo Antigo",
           "status": "writing",
           "upcoming": [
-            { "icon": "⚔️", "title": "As Guerras Médicas: Grécia contra o império" },
-            { "icon": "🌍", "title": "Alexandre e o mundo que ficou grego" },
-            { "icon": "🦅", "title": "Roma: da aldeia ao império" },
-            { "icon": "🗡️", "title": "César e a morte da República" },
-            { "icon": "✝️", "title": "Como o cristianismo conquistou Roma" },
-            { "icon": "🏚️", "title": "A queda de Roma" }
+            { "icon": "⚔️", "title": "300 homens num desfiladeiro contra o maior império do mundo" },
+            { "icon": "🌍", "title": "O jovem que conquistou o mundo conhecido — e morreu aos 32" },
+            { "icon": "🦅", "title": "Como uma aldeia de pastores virou dona do Mediterrâneo" },
+            { "icon": "🗡️", "title": "23 facadas: por que os amigos de César o mataram?" },
+            { "icon": "✝️", "title": "A seita perseguida que conquistou o império perseguidor" },
+            { "icon": "🏚️", "title": "Roma caiu — ou nunca acabou?" }
           ]
         },
         {
@@ -38,9 +38,9 @@
           "title": "Idade Média",
           "status": "writing",
           "upcoming": [
-            { "icon": "🏰", "title": "O mundo feudal" },
-            { "icon": "🕌", "title": "O islã e a luz que veio do Oriente" },
-            { "icon": "🦠", "title": "A Peste Negra: o ano em que o mundo parou" }
+            { "icon": "🏰", "title": "Mil anos de trevas? A mentira que contaram sobre a Idade Média" },
+            { "icon": "🕌", "title": "Enquanto a Europa esquecia os gregos, alguém guardava a luz" },
+            { "icon": "🦠", "title": "O ano em que um terço da Europa morreu" }
           ]
         },
         {
@@ -49,9 +49,9 @@
           "title": "Guerras Mundiais",
           "status": "writing",
           "upcoming": [
-            { "icon": "💥", "title": "1914: como o mundo tropeçou na guerra" },
-            { "icon": "💣", "title": "A Segunda Guerra: o mundo em chamas" },
-            { "icon": "❄️", "title": "Guerra Fria: o conflito que nunca explodiu" }
+            { "icon": "💥", "title": "Um tiro em Sarajevo — e o mundo inteiro pegou fogo" },
+            { "icon": "💣", "title": "A guerra que ninguém queria repetir — e veio pior" },
+            { "icon": "❄️", "title": "A guerra sem tiros em que o mundo quase acabou duas vezes" }
           ]
         },
         {
@@ -60,9 +60,9 @@
           "title": "Brasil",
           "status": "writing",
           "upcoming": [
-            { "icon": "🚢", "title": "Brasil Colônia: o país que nasceu empresa" },
-            { "icon": "👑", "title": "Um império nos trópicos" },
-            { "icon": "🗳️", "title": "A República brasileira: promessas e quedas" }
+            { "icon": "🚢", "title": "O país que nasceu como empresa" },
+            { "icon": "👑", "title": "O dia em que o império coube num navio fugindo de Napoleão" },
+            { "icon": "🗳️", "title": "A república proclamada sem o povo saber" }
           ]
         }
       ]
@@ -81,9 +81,9 @@
           "title": "Filosofia Grega",
           "status": "writing",
           "upcoming": [
-            { "icon": "🗣️", "title": "Sócrates e a arte de perguntar" },
-            { "icon": "🕯️", "title": "Platão: a caverna e a luz" },
-            { "icon": "📐", "title": "Aristóteles: o homem que organizou o mundo" }
+            { "icon": "🗣️", "title": "O homem que só sabia que nada sabia — e morreu por perguntar" },
+            { "icon": "🕯️", "title": "E se tudo que você já viu for sombra na parede?" },
+            { "icon": "📐", "title": "O aluno que discordou do mestre e organizou o mundo" }
           ]
         },
         {
@@ -92,8 +92,8 @@
           "title": "Estoicismo",
           "status": "writing",
           "upcoming": [
-            { "icon": "🧘", "title": "A arte de não sofrer duas vezes" },
-            { "icon": "🏛️", "title": "Marco Aurélio: o imperador que escrevia para si" }
+            { "icon": "🧘", "title": "O escravo e o imperador que chegaram à mesma resposta" },
+            { "icon": "🏛️", "title": "O homem mais poderoso do mundo escrevia à noite para não se perder" }
           ]
         },
         {
@@ -102,9 +102,9 @@
           "title": "Existencialismo",
           "status": "writing",
           "upcoming": [
-            { "icon": "⛰️", "title": "Nietzsche: martelo e aurora" },
-            { "icon": "🌑", "title": "Sartre e o peso da liberdade" },
-            { "icon": "☕", "title": "Camus: o absurdo e a revolta" }
+            { "icon": "⛰️", "title": "O filósofo que declarou a morte de Deus — e o que ele quis dizer" },
+            { "icon": "🌑", "title": "Condenado a ser livre: por que a liberdade pesa tanto?" },
+            { "icon": "☕", "title": "Se nada tem sentido, por que não desistir? A resposta de Camus" }
           ]
         }
       ]
