@@ -68,22 +68,32 @@ Módulos (assemblies separados, comunicação interna por interfaces — frontei
 
 ### 5.1 Conteúdo (publicado pelo pipeline, indexado no banco)
 
+> **v2 (pivô "Biblioteca de Alexandria", LDD §1-2):** dois níveis novos entre domínio e nó — `subject` (Assunto, porta de entrada e busca) e `module` (Módulo, grande tema de compreensão). `journey` não desaparece: passa a representar exclusivamente **Trilha** (LDD §2.2), o formato secundário que atravessa vários assuntos. `node_journey` já era N:N ordenado — é o que permite um nó pertencer ao seu módulo nativo *e* a uma ou mais trilhas sem duplicar conteúdo.
+
 ```
 domain(id, slug, name, ...)                    -- "history" é linha, não schema
-era(id, domain_id, order, name, color, ...)    -- contexto na timeline
-journey(id, domain_id, central_question, ...)  -- jornada
-node(id, era_id, name, sensitive:bool, ...)    -- nó da timeline
-node_journey(journey_id, node_id, position)    -- jornada atravessa nós (N:N ordenado)
+subject(id, domain_id, slug, name,             -- Assunto: porta de entrada e busca
+        tagline, status, ...)                  -- ("Império Romano", "Estoicismo")
+module(id, subject_id, order, central_question,-- Módulo: grande tema de compreensão
+       title, synthesis_json, ...)             -- dentro do assunto (LDD §2, passo 2)
+era(id, domain_id, order, name, color, ...)    -- contexto cronológico do nó (tag, não
+                                               -- mais container de navegação)
+node(id, module_id, era_id, name,              -- nó da timeline, pertence a 1 módulo
+     sensitive:bool, ...)                      -- (dono primário — não N:N)
+journey(id, domain_id, central_question,       -- Trilha (LDD §2.2): formato secundário
+        synthesis_json, ...)                   -- cross-assunto, rotulado como tal
+node_journey(journey_id, node_id, position)    -- trilha reaproveita nós de módulos
+                                               -- distintos (N:N ordenado)
 lesson(id, node_id, position, ...)             -- lição
 interaction(id, lesson_id, type, payload_ref)  -- 7 tipos do LDD §7
 claim(id, node_id, epistemic_class,            -- fato|hipótese|interpretação|debate
       consensus_pct, sources_json, ...)        -- afirmação atômica (unidade do SRS;
                                                -- EDITORIAL_POLICY §3-4)
 claim_variant(id, claim_id, type, payload_ref) -- variantes de pergunta p/ revisão
-connection(from_node, to_node, type, ...)      -- conhecimento conectado
+connection(from_node, to_node, type, ...)      -- conhecimento conectado / Ecos
 ```
 
-O *payload* pesado (textos, mídia, story cards) vive nos arquivos publicados na CDN, referenciado por hash/versão; o banco guarda o índice e os metadados necessários para agendamento e progressão.
+Diferença estrutural chave: **um nó pertence a exatamente um módulo** (dono primário, FK direta — é a curadoria do Assunto, LDD §2 passo 4), mas pode aparecer em **zero ou mais trilhas** (N:N via `node_journey`, LDD §2.2 — reaproveite, não duplique). O *payload* pesado (textos, mídia, story cards) vive nos arquivos publicados na CDN, referenciado por hash/versão; o banco guarda o índice e os metadados necessários para agendamento e progressão.
 
 ### 5.2 Progresso (o log de eventos + projeções)
 
@@ -152,6 +162,7 @@ Eventos têm ID gerado no cliente (ULID) → ingestão idempotente; reenvio apó
 | ADR-6 | PostgreSQL único (relacional + JSONB nos payloads) | Banco de documentos separado | Um banco para operar; JSONB cobre payloads flexíveis de interação |
 | ADR-7 | Container Apps | AKS / App Service clássico | Escala a zero no piloto, Docker nativo, upgrade de escala sem re-arquitetura |
 | ADR-8 | IA só na autoria no MVP (API Claude em scripts) | Tutor IA em produção no MVP | VISION §22/16.2: IA de runtime é V1+; autoria assistida entrega valor imediato sem custo por usuário |
+| ADR-9 | `subject`/`module` como níveis primários; `journey` retido só para Trilha (N:N) | Manter `journey` como unidade primária (modelo v1) | VISION v6/LDD §1-2: a porta de entrada é o Assunto, não a Jornada; nó pertence a um módulo por FK direta (curadoria), trilha reaproveita via N:N já existente — menor mudança de schema possível para o pivô |
 
 ---
 

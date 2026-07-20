@@ -43,7 +43,7 @@ O diagrama acima opera em três escalas de tempo simultâneas — a progressão 
 |---|---|---|---|
 | **Sessão** | 3-10 min | "Valeu a pena abrir o app agora?" | Conceito compreendido + feedback emocional imediato |
 | **Hábito** | dias | "Por que volto amanhã?" | Missão de revisão que só existe amanhã + streak + Thoth |
-| **Maestria** | semanas/meses | "Para onde tudo isso vai?" | Timeline acendendo, jornadas completas, títulos, momentos compartilháveis |
+| **Maestria** | semanas/meses | "Para onde tudo isso vai?" | Timeline acendendo, módulos completos, títulos, momentos compartilháveis |
 
 ### 1.2 Regra de ouro do documento
 
@@ -83,7 +83,7 @@ Pergunta obrigatória antes de congelar o MVP: **"o que acontece se removermos m
 
 **Núcleo irredutível (4 sistemas — sem qualquer um deles, não há produto):**
 1. Corredor do Tempo (o mundo)
-2. Jornadas/lições (o conteúdo — LDD)
+2. Módulos/lições (o conteúdo — LDD)
 3. Missões de revisão SRS (a memória)
 4. Thoth (a emoção)
 
@@ -112,9 +112,9 @@ Missão é a embalagem universal de qualquer atividade — aprender algo novo e 
 
 | Slot | Conteúdo | Fonte |
 |---|---|---|
-| 1 | Próxima lição da jornada ativa | Progressão normal |
+| 1 | Próxima lição do módulo ativo | Progressão normal |
 | 2 | Revisões pendentes do dia (se houver), vestidas de "memória se apagando" | Agendador SRS §6 |
-| 3 (opcional) | "Explorar": lição de outra jornada disponível, ou aprofundamento (LDD §4, camada 2) | Escolha do usuário |
+| 3 (opcional) | "Explorar": lição de outro módulo disponível, ou aprofundamento (LDD §4, camada 2) | Escolha do usuário |
 
 Completar o slot 1 **ou** o slot 2 conta para o streak — revisar vale tanto quanto aprender coisa nova (é aprendizado igual, pelo Princípio Fundamental).
 
@@ -129,11 +129,11 @@ Completar o slot 1 **ou** o slot 2 conta para o streak — revisar vale tanto qu
 
 O caminho é guiado, mas o jogador precisa sentir que dirige. Escolhas do MVP — nenhuma compromete o aprendizado, todas aumentam a sensação de autonomia:
 
-- **Escolha de jornada:** desde o onboarding, 2-3 jornadas disponíveis — o usuário decide *qual pergunta quer responder primeiro* ("De onde veio a democracia?" vs. "Como nascem os impérios?"). Trocar de jornada ativa é livre e sem punição.
+- **Escolha de módulo:** desde o onboarding, 2-3 módulos do assunto de lançamento disponíveis — o usuário decide *qual pergunta quer responder primeiro* ("Como a República morreu e o Império nasceu?" vs. "Por que Roma nunca foi derrotada no auge?"). Trocar de módulo ativo é livre e sem punição.
 - **Ordem da missão diária:** os slots (§3.1) podem ser feitos em qualquer ordem — revisar antes de aprender, ou o contrário.
 - **Escolha dentro da revisão:** quando há várias memórias vacilando, o usuário escolhe qual resgatar primeiro (as demais esperam — o teto do §6.3 protege).
 - **Decisões situadas nas lições** (LDD §7, tipo 7): "você vota?" — a agência *dentro* do conteúdo, a mais importante de todas.
-- **Slot de exploração** (§3.1, slot 3): mergulhar na camada de aprofundamento (LDD §4) ou espiar outra jornada — curiosidade nunca fica bloqueada atrás da missão do dia.
+- **Slot de exploração** (§3.1, slot 3): mergulhar na camada de aprofundamento (LDD §4) ou espiar outro módulo/assunto — curiosidade nunca fica bloqueada atrás da missão do dia.
 
 Regra: guiar o próximo passo ≠ trancar os outros. O caminho recomendado é sempre um toque; os alternativos, sempre visíveis.
 
@@ -147,24 +147,26 @@ Ao fim da última atividade: (1) resumo emocional — o que acendeu, o que Thoth
 
 **[Loop: "Avançar na Timeline" + "Desbloquear próximo nó"]**
 
-### 4.0 Hierarquia de navegação: Biblioteca → Jornada → Corredor → Salões → Lições
+### 4.0 Hierarquia de navegação: Biblioteca → Assunto → Módulo → Salões → Lições
 
-*(Adicionado na fase de refinamento, por proposta do fundador — navegação em níveis para o app deixar de despejar tudo numa tela só.)*
+*(v2, pivô "Biblioteca de Alexandria" — VISION v6/LDD §1-2: a porta de entrada deixa de ser a Jornada e passa a ser o Assunto. A estrutura de níveis abaixo, criada na fase de refinamento anterior, se mantém quase intacta — só o nível do meio muda de nome e de regra.)*
 
-- **A Biblioteca é a home de quem retorna — e é minimalista.** *(Refinada na 2ª rodada de feedback do fundador: a primeira versão despejava tudo numa tela; faltava foco.)* A home mostra apenas: o título "O que você quer entender hoje?", os cards das duas **Bibliotecas do Arquivo** (📜 História, 🧠 Filosofia) com contagens honestas ("2 jornadas abertas · 17 em escrita"), um divisor e o **⭐ Continue de onde parou** com barra de % da jornada. Quem chega olha para cima; quem retorna olha para baixo — as duas experiências convivem numa tela só. Tocar numa Biblioteca abre a **tela do domínio** com as estantes.
-- **Estantes são curadoria, não taxonomia.** O nível do meio agrupa jornadas por grande tema (🏛️ Poder & Democracia, 🏺 Mundo Antigo, ⚔️ Idade Média…), mas a jornada dentro da estante continua **livre para atravessar séculos e civilizações** — o fio cross-era é a USP e nenhuma hierarquia de navegação pode prendê-lo a uma única era.
-- **Cards de jornada parecem livros, não itens de lista.** Lombada colorida da era, título em serifa, a pergunta central em itálico, e os números de uma aventura: 🚪 salões, 📖 lições, ⏱ tempo estimado, barra de progresso com "▶ continuar — 57%". O cérebro deve ler "isso é uma aventura", não "isso é uma página". Sem estrelas decorativas: todo símbolo no card corresponde a algo real (emblemas conquistados, progresso feito) — avaliação fake é anti-mecânica (§14).
-- **Antecipação é mecânica de produto ("a biblioteca infinita") — e vende mistério, não lista conteúdo.** *(Refinada na 3ª rodada: "17 jornadas em escrita" é inventário, não emoção — o fundador pediu para vender curiosidade, não catálogo.)* Cada estante mostra, sob as jornadas abertas, a lista **"ainda escondidas nesta estante…"**: não títulos de aula, mas **ganchos narrativos** — a pergunta ou o acontecimento que faz o cérebro querer saber a resposta ("23 facadas: por que os amigos de César o mataram?", "O rei que jurou que seu poder vinha de Deus — e perdeu a cabeça"). Regra editorial: o gancho tem que ser **verdadeiro** — cada um corresponde a um evento/questão real que a jornada vai cobrir, nunca um clickbait vazio (EDITORIAL_POLICY). A Biblioteca de Filosofia inteira é navegável como promessa — estantes e jornadas visíveis, todas seladas, cada uma com seu próprio mistério ("E se tudo que você já viu for sombra na parede?"). Objetivo emocional: como Zelda mostra a montanha antes de deixar escalar — "há um mundo enorme esperando", e você já quer saber a resposta de um deles. Regra de honestidade numérica se mantém: "aberto" e "em escrita" nunca somam num único número.
-- **Coleção: o Arquivo se reconstrói, não só "você progride".** *(Adicionado na 3ª rodada.)* Cada Biblioteca aberta mostra quantas **memórias** (afirmações de conteúdo) já foram recuperadas do total que ela guarda — "12 de 20 memórias recuperadas — 60%" — com barra de progresso, no card da home e na tela do domínio. Não é XP nem nível: é a mesma métrica do "teste do print" (§ acima) expressa como coleção. A moldura narrativa importa: o usuário não está "completando lições", está **reconstruindo o Arquivo** — o que conversa diretamente com o universo (Grande Arquivo, memórias se apagando) em vez de com mecânica de app de estudo.
-- **O Corredor mostra UMA jornada por vez.** Ele deixa de ser a home e vira o que sempre quis ser: a recompensa espacial da jornada escolhida — o mural de arcadas, o fio de chamas, a próxima porta. Concluída a jornada, a porta da próxima ala aparece dentro do próprio Corredor (o "só mais um pouco" não exige voltar à Biblioteca).
-- **O primeiro uso NUNCA começa na Biblioteca.** A primeira sessão continua guiada direto ao primeiro salão (VISION §17-D1: sem parede de escolha). A Biblioteca só se revela quando existe algo a escolher — a partir do segundo dia. Corolário: a Biblioteca nunca mostra escolha vazia; domínios/estantes em escrita aparecem como promessa selada ("Sócrates espera por você"), não como opção quebrada.
-- **Missões de resgate aparecem em qualquer nível.** A memória vacilando fura a hierarquia: o card de resgate aparece na Biblioteca e no Corredor, porque o SRS não pertence a uma jornada — pertence ao Guardião.
+- **A Biblioteca é a home de quem retorna — e é minimalista.** A home mostra apenas: o título "O que você quer entender hoje?", os cards das duas **Bibliotecas do Arquivo** (📜 História, 🧠 Filosofia) com contagens honestas ("2 assuntos abertos · N em escrita"), um divisor e o **⭐ Continue de onde parou** com barra de % do assunto. Quem chega olha para cima; quem retorna olha para baixo — as duas experiências convivem numa tela só. Tocar numa Biblioteca abre a **tela do domínio** com os Assuntos.
+- **Assunto é a porta de entrada — o que a pessoa já busca, não uma estante de curadoria.** *(v2.)* "Império Romano", "Estoicismo", "Aristóteles": o nível do meio deixou de agrupar jornadas soltas por tema (estante) e virou o próprio destino — um substantivo pesquisável com módulos dentro. Cada card de Assunto mostra quantos módulos estão abertos, quantos em escrita, e a coleção de memórias recuperadas (abaixo).
+- **Dentro do Assunto, os Módulos são os grandes temas de compreensão — não uma lista cronológica.** Ex.: "Império Romano" abre em Nascimento do Império, Auge Romano, Estado Romano, Religião e Cultura, Crises, Queda do Ocidente, Império Bizantino (LDD §1-2). A ordem pode ser cronológica ou temática/transversal — o critério é o que ensina melhor, nunca a obrigação de uma única linha do tempo. Cada módulo aberto leva ao Corredor daquele módulo (abaixo); módulos ainda não escritos aparecem como mistério (próximo bullet).
+- **Cards de módulo/assunto parecem livros, não itens de lista.** Lombada colorida, título em serifa, a pergunta central em itálico, e os números de uma aventura: 🚪 salões, 📖 lições, ⏱ tempo estimado, barra de progresso com "▶ continuar — 57%". O cérebro deve ler "isso é uma aventura", não "isso é uma página". Sem estrelas decorativas: todo símbolo no card corresponde a algo real (emblemas conquistados, progresso feito) — avaliação fake é anti-mecânica (§14).
+- **Antecipação é mecânica de produto ("a biblioteca infinita") — e vende mistério, não lista conteúdo.** Módulos e assuntos ainda não escritos aparecem como **"ainda escondidos nesta estante…"**: não títulos de aula, mas **ganchos narrativos** — a pergunta ou o acontecimento que faz o cérebro querer saber a resposta ("23 facadas: por que os amigos de César o mataram?", "O rei que jurou que seu poder vinha de Deus — e perdeu a cabeça"). Regra editorial: o gancho tem que ser **verdadeiro** — cada um corresponde a um evento/questão real que o módulo vai cobrir quando for escrito, nunca um clickbait vazio (EDITORIAL_POLICY, Princípio 7). A Biblioteca de Filosofia inteira é navegável como promessa — assuntos e módulos visíveis, todos selados, cada um com seu próprio mistério ("E se tudo que você já viu for sombra na parede?"). Objetivo emocional: como Zelda mostra a montanha antes de deixar escalar — "há um mundo enorme esperando", e você já quer saber a resposta de um deles. Regra de honestidade numérica se mantém: "aberto" e "em escrita" nunca somam num único número (LDD §9.2, alerta de escopo).
+- **Coleção: o Arquivo se reconstrói, não só "você progride".** Cada Assunto aberto mostra quantas **memórias** (afirmações de conteúdo) já foram recuperadas do total que ele guarda — "12 de 20 memórias recuperadas — 60%" — com barra de progresso. Não é XP nem nível: é a mesma métrica do "teste do print" (abaixo) expressa como coleção. A moldura narrativa importa: o usuário não está "completando lições", está **reconstruindo o Arquivo** — o que conversa diretamente com o universo (Grande Arquivo, memórias se apagando) em vez de com mecânica de app de estudo.
+- **O Corredor mostra UM módulo por vez.** Ele continua sendo a recompensa espacial — o mural de arcadas, o fio de chamas, a próxima porta —, agora escopado ao módulo em curso em vez de à jornada inteira. Concluído o módulo, a porta do próximo módulo aparece dentro do próprio Corredor (o "só mais um pouco" não exige voltar à Biblioteca); concluído o último módulo, o Corredor entrega o momento de síntese do Assunto (LDD §2.1).
+- **Trilhas são um destino explícito, não o padrão.** *(v2 — decisão do fundador confirmada: o formato cross-assunto que antes era "jornada" sobrevive, rotulado.)* Uma Trilha ("De Atenas a 1988: como a democracia sobreviveu") nunca aparece como se fosse um Assunto comum — ela vive numa prateleira própria da Biblioteca ("Grandes Fios do Arquivo" ou nome a definir) e é descoberta também via **Eco** dentro de um nó que ela atravessa ("isso ecoa em outras 3 paradas — seguir o fio"). Tem seu próprio Corredor (mostrando só os nós da trilha, que já pertencem aos seus assuntos nativos) e sua própria síntese (LDD §2.2). Nunca compete com o Assunto pela primeira escolha do usuário.
+- **O primeiro uso NUNCA começa na Biblioteca.** A primeira sessão continua guiada direto ao primeiro salão de um módulo (VISION §17-D1: sem parede de escolha). A Biblioteca só se revela quando existe algo a escolher — a partir do segundo dia. Corolário: a Biblioteca nunca mostra escolha vazia; domínios/assuntos/módulos em escrita aparecem como promessa selada ("Sócrates espera por você"), não como opção quebrada.
+- **Missões de resgate aparecem em qualquer nível.** A memória vacilando fura a hierarquia: o card de resgate aparece na Biblioteca e no Corredor, porque o SRS não pertence a um módulo — pertence ao Guardião.
 
-- **Estrutura:** eras em sequência cronológica (Pré-História → ... → Era da Informação); dentro de cada era, os nós posicionados onde pertencem. As civilizações paralelas (China, Américas, África — LDD §8) aparecem como trilhos paralelos da mesma era, não como apêndice.
+- **Estrutura do Corredor:** nós de um módulo em sequência (cronológica ou temática — LDD §1); as civilizações paralelas (China, Américas, África — LDD §8) aparecem como trilhos paralelos, não como apêndice.
 - **Estados visuais do nó** = estados do LDD §6: apagado (bloqueado) → tênue (disponível) → **aceso** (Compreendido) → **chama firme** (Dominado) → **constelação** (Mestre). Nó em regressão: a chama visivelmente vacila — sem texto de culpa, o visual conta a história.
-- **Desbloqueio é por jornada, não estritamente linear:** concluir um nó de uma jornada libera o próximo nó *daquela jornada*, mesmo que salte séculos (o arco "Nascimento da Democracia" pula da Grécia ao Iluminismo). O Corredor mostra o salto como um **fio de conexão** atravessando as eras — a visualização literal do conhecimento conectado.
-- **MVP:** apenas as eras cobertas pelas 2-3 jornadas de lançamento existem visualmente; o resto do Corredor aparece como "salas ainda seladas" no horizonte — promessa visível de futuro sem custo de conteúdo.
-- **O mundo registra o progresso ("o teste do print").** O Corredor não *exibe* progresso — ele o *sofre*: o trilho entre salões acesos vira um fio de chama contínuo; cada salão concluído ergue seu **emblema** (campo de conteúdo do nó: 🏛️ Atenas, 🦅 Roma, 📖 Renascimento…) numa arcada iluminada do mural; a próxima porta aparece como escuridão com uma fresta de luz pulsando; alas de jornadas futuras são vultos quase invisíveis. **Critério de aceitação permanente:** um print do Corredor no primeiro dia e outro após duas jornadas devem parecer *lugares diferentes*. Barras e números são registro; o mundo transformado é a recompensa — o usuário olha para trás e enxerga o caminho que construiu. *(Adicionado na fase de refinamento, por diretriz do fundador após o playtest que revelou aprendizado sem sensação de avanço — é a extensão espacial da regra "nenhum marco é comunicado apenas por número" da VISION §14.1.)*
+- **Desbloqueio é por módulo, não estritamente linear:** concluir um nó de um módulo libera o próximo nó *daquele módulo*. Saltos entre séculos/civilizações distantes deixam de ser trabalho do módulo (que vive dentro de um só assunto) e passam a ser trabalho da **Trilha** (acima) — é ela quem mostra o fio de conexão atravessando assuntos, a visualização literal do conhecimento conectado.
+- **MVP:** apenas os módulos do assunto de lançamento existem visualmente; os demais módulos do mesmo assunto, e os demais assuntos, aparecem como "salas ainda seladas" no horizonte — promessa visível de futuro sem custo de conteúdo (LDD §9.2, alerta de escopo: lançar com 2-3 módulos de UM assunto, não um assunto "completo").
+- **O mundo registra o progresso ("o teste do print").** O Corredor não *exibe* progresso — ele o *sofre*: o trilho entre salões acesos vira um fio de chama contínuo; cada salão concluído ergue seu **emblema** (campo de conteúdo do nó: 🏛️ Atenas, 🦅 Roma, 📖 Renascimento…) numa arcada iluminada do mural; a próxima porta aparece como escuridão com uma fresta de luz pulsando; módulos futuros são vultos quase invisíveis. **Critério de aceitação permanente:** um print do Corredor no primeiro dia e outro após dois módulos devem parecer *lugares diferentes*. Barras e números são registro; o mundo transformado é a recompensa — o usuário olha para trás e enxerga o caminho que construiu.
 
 ## 5. XP, níveis e títulos
 
@@ -194,7 +196,7 @@ Curva de custo crescente: XP para o nível *n* ≈ `100 × n^1.5` (nível 2: ~28
 
 ### 5.3 Títulos do Arquivo (hipótese, não certeza)
 
-> **Alerta registrado:** títulos são uma camada gamificada clássica — e é possível que nos testes ninguém ligue para "virei Cronista" e todo mundo ligue para **"terminei Roma"**. Se for isso que os dados mostrarem, os títulos são substituídos por marcos de conteúdo real como identidade pública do progresso (era concluída, jornada completa), e a hierarquia do Arquivo vira detalhe cosmético ou sai. Tratar esta subseção inteira como hipótese de piloto, no mesmo regime do XP (§5.0).
+> **Alerta registrado:** títulos são uma camada gamificada clássica — e é possível que nos testes ninguém ligue para "virei Cronista" e todo mundo ligue para **"terminei Roma"**. Se for isso que os dados mostrarem, os títulos são substituídos por marcos de conteúdo real como identidade pública do progresso (módulo concluído, assunto completo), e a hierarquia do Arquivo vira detalhe cosmético ou sai. Tratar esta subseção inteira como hipótese de piloto, no mesmo regime do XP (§5.0).
 
 **Se existirem, títulos não são compráveis com XP** — cada um tem um portão de compreensão (Princípio Fundamental aplicado à progressão):
 
@@ -203,8 +205,8 @@ Curva de custo crescente: XP para o nível *n* ≈ `100 × n^1.5` (nível 2: ~28
 | Curioso | Início |
 | Aprendiz | Nível 3 + 1 nó Dominado |
 | Escriba | Nível 6 + 5 nós Dominados |
-| Cronista | Nível 10 + 1 jornada completa + 12 nós Dominados |
-| Historiador | Nível 16 + 3 jornadas + 30 nós Dominados |
+| Cronista | Nível 10 + 1 módulo completo + 12 nós Dominados |
+| Historiador | Nível 16 + 3 módulos + 30 nós Dominados |
 | Sábio | Nível 25 + 60 nós Dominados + 10 nós Mestre |
 | Guardião da Memória | Nível 40 + domínio de eras inteiras + 30 nós Mestre |
 
@@ -272,14 +274,14 @@ Gatilhos são **marcos de compreensão**, nunca XP bruto:
 | Estágio | Gatilho (hipótese) | Mudança visível |
 |---|---|---|
 | 1. Aprendiz de tinta | Início | Pequeno, pena simples, pergaminho em branco |
-| 2. Escriba iniciado | 1ª jornada completa | Cresce; pena ornamentada; 1º selo de cera no pergaminho |
-| 3. Escriba do Arquivo | 10 nós Dominados + 2ª jornada | Vestes; o pergaminho dele exibe as eras que *vocês* dominaram |
+| 2. Escriba iniciado | 1º módulo completo | Cresce; pena ornamentada; 1º selo de cera no pergaminho |
+| 3. Escriba do Arquivo | 10 nós Dominados + 2º módulo | Vestes; o pergaminho dele exibe as eras que *vocês* dominaram |
 
 Regra narrativa: **Thoth aprende com o usuário** — o pergaminho dele é o diário da dupla. Cada era dominada adiciona um desenho ao pergaminho; itens de época (toga romana etc.) vêm de marcos específicos. É "aprendemos juntos", não "alimente o bichinho".
 
 ### 7.2 Estados emocionais
 
-- **Thoth fala só quando tem algo a dizer.** *(Refinado na 3ª rodada de feedback: "se ele fala toda vez, vira banner; se aparece poucas vezes, vira evento".)* Fora de um evento real — memória vacilando, ala nova desbloqueada, jornada concluída, evolução, aniversário — Thoth fica **presente, mas calado**: um ícone fixo no cabeçalho, sempre tocável para abrir o pergaminho, sem bolha de fala. A Biblioteca e o Corredor em estado estável (nada pendente, sem marco novo) não têm mensagem nenhuma dele. Isso protege o valor de quando ele *de fato* fala.
+- **Thoth fala só quando tem algo a dizer.** *(Refinado na 3ª rodada de feedback: "se ele fala toda vez, vira banner; se aparece poucas vezes, vira evento".)* Fora de um evento real — memória vacilando, ala nova desbloqueada, módulo concluído, evolução, aniversário — Thoth fica **presente, mas calado**: um ícone fixo no cabeçalho, sempre tocável para abrir o pergaminho, sem bolha de fala. A Biblioteca e o Corredor em estado estável (nada pendente, sem marco novo) não têm mensagem nenhuma dele. Isso protege o valor de quando ele *de fato* fala.
 - **Celebrando** (marco recente), **concentrado** (durante lições), **solene** (nós de tragédia — LDD §8: sem confete em genocídio), **saudade** (ausência de 3+ dias).
 - **Saudade sem culpa** — a diferença para o Duo é de tom, e é inegociável: *"Thoth guardou uma memória para mostrar a você"* (presente que espera), nunca *"Thoth está triste porque você o abandonou"* (dívida emocional). Notificações seguem a mesma regra (§12).
 - **Aniversário** (data de início da dupla) — pequeno ritual anual, precursor da Retrospectiva (VISION §14.2).
@@ -371,6 +373,6 @@ Valores a instrumentar e revisar após o piloto (todos os números deste documen
 | Intervalos SRS | 3d → 14d → 45d → 120d | Taxa de acerto em revisão fora de 80-90% |
 | Limiar de Dominado | 80% das afirmações | North Star inflada ou inatingível |
 | Teto diário de revisões | 15 afirmações | Abandono correlacionado a dias de revisão pesada |
-| Gatilhos de estágio do Thoth | 1ª jornada / 10 nós + 2ª jornada | % de usuários que veem o estágio 2 antes do D30 (meta: maioria dos retidos) |
+| Gatilhos de estágio do Thoth | 1º módulo / 10 nós + 2º módulo | % de usuários que veem o estágio 2 antes do D30 (meta: maioria dos retidos) |
 | Selos do Tempo | 1 a cada 7 dias, máx. 2 | Quebras de streak seguidas de churn |
 | Banda de dificuldade por interação | 60-85% acerto (LDD §9.3) | Interações fora da banda |

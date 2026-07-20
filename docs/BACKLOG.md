@@ -10,8 +10,8 @@
 
 | # | Item | Dep. | P |
 |---|---|---|---|
-| E0.1 | Protótipo navegável (Figma): Corredor do Tempo, escolha de jornada por pergunta central, player de lição, celebração | — | P0 |
-| E0.2 | Roteiro e execução de teste com 5-8 usuários (personas Marina/Rafael); registrar leitura do Corredor e interesse por jornada | E0.1 | P0 |
+| E0.1 | Protótipo navegável (Figma): Corredor do Tempo, escolha de módulo por pergunta central, player de lição, celebração | — | P0 |
+| E0.2 | Roteiro e execução de teste com 5-8 usuários (personas Marina/Rafael); registrar leitura do Corredor e interesse por módulo | E0.1 | P0 |
 | E0.3 | Identidade visual conceitual v1 (paleta pergaminho/tinta, 1 era com cor própria, Thoth em 3 estágios — esboço) | — | P0 |
 | E0.4 | Teste de naming (VISION §19): recall 24h, grafia por áudio, busca — Mneme vs. 2-3 alternativas; inclui nome do companheiro | E0.3 | P1 (P0 até R2) |
 
@@ -21,7 +21,7 @@
 |---|---|---|---|
 | E1.1 | Contratar/parceirizar revisor especialista (história) — sem isso não há publicação (LDD §9.1) | — | P0 |
 | E1.2 | Definir formato de autoria (`node.json` + Markdown estruturado) e repositório de conteúdo (ARCH §7) | — | P0 |
-| E1.3 | Escrever a jornada-piloto completa pelo pipeline LDD §2, medindo tempo por etapa (LDD §9.2) | E1.1, E1.2 | P0 |
+| E1.3 | Escrever o módulo-piloto completo pelo pipeline LDD §2, medindo tempo por etapa (LDD §9.2) | E1.1, E1.2 | P0 |
 | E1.4 | Validador de conteúdo em CI (checklist LDD §10 mecanizado) | E1.2 | P0 |
 | E1.5 | Scripts de IA para autoria (extração de claims, rascunhos de variantes — saída como PR; ARCH §7.4, ADR-8) | E1.2 | P1 |
 | E1.6 | Jornadas 2-3 para o R2 (com o processo recalibrado por E1.3) | E1.3 | P0 (R2) |
@@ -45,11 +45,11 @@
 | E3.1 | Pacote TS compartilhado: SRS (GDD §6.2), estados de nó (LDD §6), montagem de missão diária — com suíte de cenários versionada (ADR-4) | E2.1 | P0 |
 | E3.2 | Porta C# do motor validada contra a mesma suíte | E3.1 | P0 |
 | E3.3 | Projeções server-side: `user_claim_state`, `user_node_state`, streak (ARCH §5.2) | E3.2, E2.5 | P0 |
-| E3.4 | Pipeline de publicação de conteúdo: build do pacote, Blob+CDN, manifesto, download sob demanda no app + offline da jornada ativa (RF-03.5, RNF-2) | E1.2, E2.2 | P0 |
+| E3.4 | Pipeline de publicação de conteúdo: build do pacote, Blob+CDN, manifesto, download sob demanda no app + offline do módulo ativo (RF-03.5, RNF-2) | E1.2, E2.2 | P0 |
 
 ## Épico E4 — Loop vertical fino (R1) — *primeira fatia jogável de ponta a ponta*
 
-> Objetivo: **uma** lição real da jornada-piloto, jogável offline, com celebração e revisão agendada — antes de qualquer sistema de suporte. É o teste do núcleo irredutível (GDD §1.5) em software.
+> Objetivo: **uma** lição real do módulo-piloto, jogável offline, com celebração e revisão agendada — antes de qualquer sistema de suporte. É o teste do núcleo irredutível (GDD §1.5) em software.
 
 | # | Item | Dep. | P |
 |---|---|---|---|
@@ -81,7 +81,7 @@
 | E6.2 | Rodar piloto ≥4 semanas; entrevistas qualitativas (momentos "aha", Thoth, universo — sinais de fracasso da VISION §9.1) | E6.1 | P0 |
 | E6.3 | Decisões registradas: XP visível?, títulos vs. marcos?, calibração SRS/XP revisada (O5 do PRD) | E6.2 | P0 |
 | E6.4 | Ajustes do piloto + naming aplicado (ficha das lojas, marca) | E6.3, E0.4 | P0 |
-| E6.5 | Lançamento R2 nas lojas com 2-3 jornadas (E1.6) | E6.4, E1.6 | P0 |
+| E6.5 | Lançamento R2 nas lojas com 2-3 módulos de 1 assunto (E1.6) | E6.4, E1.6 | P0 |
 
 ## Épicos V1+ (não detalhar agora — apenas reservados)
 
@@ -101,4 +101,4 @@ E2.1 → E2.2/E2.3 → E2.5 → E3.* → E4.* → E5.* ┼→ E6.1 → E6.2 → 
 E0.1 → E0.2 (valida antes de E4 congelar UX) ┘         E0.4 ──────→ E6.4
 ```
 
-O item mais arriscado do plano inteiro é **E1.3** (jornada-piloto): é caminho crítico, depende de contratação (E1.1) e é onde o método (LDD) encontra a realidade. Começar por ele.
+O item mais arriscado do plano inteiro é **E1.3** (módulo-piloto): é caminho crítico, depende de contratação (E1.1) e é onde o método (LDD) encontra a realidade. Começar por ele.

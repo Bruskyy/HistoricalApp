@@ -1,8 +1,10 @@
 # Learning Design Document (LDD)
 
-> **Por que este documento existe e vem antes do GDD:** o diferencial do produto não é a gamificação — é **como o conteúdo é ensinado**. A gamificação (GDD) recompensa progressão; este documento define o que *é* progressão: como nasce uma jornada, como uma lição é estruturada, o que significa "aprendido" e como se avalia compreensão em vez de memorização. Todas as fórmulas do GDD (XP, evolução do companheiro, North Star) referenciam as definições daqui.
+> **Por que este documento existe e vem antes do GDD:** o diferencial do produto não é a gamificação — é **como o conteúdo é ensinado**. A gamificação (GDD) recompensa progressão; este documento define o que *é* progressão: como nasce um assunto, como uma lição é estruturada, o que significa "aprendido" e como se avalia compreensão em vez de memorização. Todas as fórmulas do GDD (XP, evolução do companheiro, North Star) referenciam as definições daqui.
 >
 > Documento subordinado ao [`VISION.md`](VISION.md) — em especial ao Princípio Fundamental (*recompensar compreensão, nunca apenas tempo; errar ensina, nunca custa*) e aos princípios pedagógicos da seção 11 — e à [`EDITORIAL_POLICY.md`](EDITORIAL_POLICY.md), da qual este documento é a implementação operacional (cadeia: VISION > EDITORIAL_POLICY > LDD > GDD > PRD).
+>
+> **v2 (pivô "Biblioteca de Alexandria", VISION v6):** o modelo de conteúdo ganha dois níveis — **Assunto** (porta de entrada e busca) e **Módulo** (grande tema de compreensão dentro do assunto) — entre Domínio e Nó. Jornada deixa de ser a unidade de topo e vira **Trilha**: um formato secundário e explícito para quando a pergunta central só existe *entre* assuntos (§2.2). Nada muda no que já existia abaixo do nó (claims, SRS, taxonomia de perguntas, checklist de publicação) — a mudança é só na camada de curadoria e navegação.
 
 ---
 
@@ -11,50 +13,69 @@
 Hierarquia única para todos os domínios presentes e futuros (História é a primeira instância):
 
 ```
-Domínio            (História; futuramente Filosofia, Economia...)
- └─ Era/Região     (contexto na timeline: Antiguidade, Idade Média...)
-     └─ Jornada    (arco narrativo: "O Nascimento da Democracia")
-         └─ Nó     (unidade de domínio: "A democracia ateniense")
+Domínio              (História; Filosofia — VISION §5)
+ └─ Assunto          (porta de entrada e busca: "Império Romano",
+    │                 "Estoicismo", "Aristóteles" — LDD §2)
+     └─ Módulo       (grande tema de compreensão dentro do assunto:
+        │             "Nascimento do Império", "Religião e Cultura")
+         └─ Nó       (unidade de domínio, curada: só os
+             │        acontecimentos indispensáveis ao módulo)
              └─ Lição       (sessão de ~3 min; um nó tem 2-5 lições)
                  └─ Interação  (pergunta, decisão, ordenação...)
              └─ Afirmações   (claims atômicos do nó, com nível de
                               consenso e fontes — alimentam o SRS)
+
+ └─ Trilha           (formato secundário: arco que atravessa vários
+                       assuntos — "De Atenas a 1988" — LDD §2.2)
 ```
 
 Definições que o resto da documentação usa:
 
-- **Nó** é a unidade de progresso da timeline e da North Star Metric. Um nó "acende" no Corredor do Tempo quando é **Compreendido** e conta para a North Star quando é **Dominado** (seção 6).
+- **Assunto** é a unidade de descoberta e busca — o que uma pessoa real digitaria ("Império Romano"), não uma pergunta. É o nível que aparece na Biblioteca como porta de entrada padrão (GDD §4.0). Um assunto nasce de um substantivo relevante da História/Filosofia com massa crítica de conteúdo próprio — nunca de um recorte artificialmente estreito só para preencher a estante.
+- **Módulo** é o arco narrativo dentro de um assunto — o que "Jornada" costumava ser, agora escopado a um único assunto. Nasce de uma pergunta (a regra do §2 continua valendo, só migrou de nível): "Como a República morreu e o Império nasceu?" é o módulo "Nascimento do Império". A ordem dos módulos pode ser cronológica (Nascimento → Auge → Crises → Queda) ou temática/transversal (um módulo como "Religião e Cultura" não é um ponto no tempo, é um corte que atravessa todo o assunto) — as duas formas convivem dentro do mesmo assunto.
+- **Nó** é a unidade de progresso da timeline e da North Star Metric, curada dentro de um módulo (critério de corte inalterado: §2). Um nó "acende" no Corredor do Tempo quando é **Compreendido** e conta para a North Star quando é **Dominado** (seção 6).
+- **Trilha** é o formato secundário para quando uma pergunta central só existe *atravessando* assuntos ("De onde veio a ideia de que o povo pode governar?" cruza Grécia Antiga, Império Romano, Iluminismo, Revoluções, Brasil). Reaproveita nós que já existem dentro de seus assuntos nativos — não duplica conteúdo. Detalhada em §2.2.
 - **Afirmação (claim)** é a menor unidade de conhecimento verificável ("Atenas instituiu o sorteio de cargos públicos", "o consenso sobre a data X é ~72%"). Cada afirmação carrega: texto, nível de consenso, fontes, e as variantes de pergunta que a avaliam. **O SRS agenda afirmações, não lições** — é isso que permite a "memória de Roma se apagando" ser cirúrgica.
-- **Conexão** é um vínculo tipado entre nós (causa → consequência, influência, analogia), inclusive entre eras distantes (Grécia → Constituição Brasileira). As conexões alimentam o "conhecimento conectado" e as perguntas de nível Mestre (seção 6).
+- **Conexão** é um vínculo tipado entre nós (causa → consequência, influência, analogia), inclusive entre assuntos distantes (Grécia → Constituição Brasileira) — a camada leve e sempre presente (aparece como "Eco" na lição, LDD §3). Uma Trilha é uma sequência *guiada e com síntese própria* de conexões que juntas contam uma história; uma conexão solta é só um lembrete de que o mapa é uma rede (seção 6).
 
-## 2. Como nasce uma jornada (pipeline editorial)
+## 2. Como nasce um Assunto (pipeline editorial)
 
-Toda jornada passa por este funil, nesta ordem:
+Todo assunto passa por este funil, nesta ordem:
 
-1. **Pergunta central.** Uma jornada nunca nasce de um tema ("Grécia Antiga"), nasce de uma pergunta que uma pessoa real faria ("De onde veio a ideia de que o povo pode governar?"). Se a pergunta não desperta curiosidade em alguém da persona Marina, a jornada não é aprovada.
-2. **Arco narrativo.** A resposta é estruturada como história com forma dramática: contexto → tensão → virada → consequências → legado no presente. Toda jornada termina conectando ao mundo atual do usuário (por que isso importa hoje) — é o que separa "jornada" de "curso".
-3. **Seleção de nós.** Escolher os 5-12 nós que contam esse arco. Critério de corte: um nó entra se sua remoção quebra a cadeia causal da narrativa; não entra "porque é importante em geral" (isso é enciclopédia, não jornada).
-4. **Mapeamento de afirmações, consenso e classe epistêmica.** Para cada nó, listar as afirmações atômicas e classificá-las em **dois eixos independentes** (EDITORIAL_POLICY, Princípios 1-3):
+1. **O assunto nasce de um substantivo, não de uma pergunta.** *(v2 — a inversão deliberada do pivô "Biblioteca de Alexandria".)* "Império Romano", "Estoicismo", "Aristóteles" — o que uma pessoa real digitaria ou buscaria, não uma pergunta lapidada. Critério de aprovação: precisa ter massa crítica de conteúdo próprio para render pelo menos 2-3 módulos reais — um assunto criado só para caber um nó solto é escopo artificial (viola VISION §2.1).
+2. **Curadoria de módulos.** Definir os **grandes temas de compreensão** que, juntos, respondem "por que este assunto importa e como ele funciona" (ex., Império Romano: Nascimento do Império, Auge Romano, Estado Romano, Religião e Cultura, Crises, Queda do Ocidente, Império Bizantino). Cada módulo **nasce de uma pergunta** que uma pessoa real faria — a regra antiga da seção 2 não desapareceu, só migrou de nível: "Como a República morreu e o Império nasceu?" é a pergunta central do módulo "Nascimento do Império". Se a pergunta não desperta curiosidade em alguém da persona Marina, o módulo não é aprovado. A ordem dos módulos pode ser cronológica ou temática/transversal (LDD §1) — o critério é o que ensina melhor, não a obrigação de uma linha do tempo única.
+3. **Arco narrativo por módulo.** A resposta de cada módulo é estruturada como história com forma dramática: contexto → tensão → virada → consequências → legado no presente. É o que separa "módulo" de "capítulo de enciclopédia".
+4. **Seleção de nós.** Para cada módulo, escolher os 3-8 nós que contam esse arco. Critério de corte (agora também o Princípio 7 da EDITORIAL_POLICY): um nó entra se sua remoção quebra a cadeia causal do módulo; não entra "porque é importante em geral" — isso é enciclopédia, não curadoria.
+5. **Mapeamento de afirmações, consenso e classe epistêmica.** Para cada nó, listar as afirmações atômicas e classificá-las em **dois eixos independentes** (EDITORIAL_POLICY, Princípios 1-3):
    - **Banda de consenso:** forte (≥90%), majoritário (70-90%), disputado (40-70%), hipótese minoritária (<40%) — com fontes e os principais lados do debate para as duas últimas faixas. Percentuais são **avaliações editoriais da literatura**, feitas na revisão especializada, e devem ser defensáveis quando o usuário tocar no indicador.
    - **Classe epistêmica:** fato estabelecido · hipótese aceita · interpretação historiográfica · debate em aberto (tabela na EDITORIAL_POLICY, Princípio 3). A classe determina como a afirmação pode ser cobrada: fatos podem ter "resposta certa"; interpretações e debates **nunca** viram pergunta objetiva (regra da seção 7) — viram exploração de perspectivas.
    - **Regra anti-falso-balanceamento:** hipótese minoritária nunca é apresentada com o mesmo peso do consenso (Princípio 1); ela vive nas camadas de aprofundamento, nomeada como minoritária.
    - **Fontes:** cada afirmação referencia fontes conforme a hierarquia da EDITORIAL_POLICY (Princípio 4): obras acadêmicas e artigos revisados por pares sustentam claims; material de divulgação pode inspirar linguagem/ganchos, nunca sustentar conteúdo.
-5. **Mapeamento de conexões.** Registrar o que este nó desbloqueia de compreensão em outros nós/jornadas (alimenta o "conhecimento conectado" e o planejamento de jornadas futuras).
-6. **Escrita das lições e interações** conforme seções 3-5.
-7. **Revisão especializada.** Nenhuma jornada publica sem revisão por pessoa com formação na área (resposta direta à fraqueza fatal do Paladin). O revisor valida: precisão factual, classificação de consenso, e se as simplificações são omissões legítimas ou distorções (seção 4).
-8. **Teste de calibração.** Rodar com usuários reais antes do lançamento: taxa de acerto por interação entre 60-85% (abaixo: lição não ensinou ou pergunta mal escrita; acima: pergunta trivial demais para gerar aprendizado).
+6. **Mapeamento de conexões.** Registrar o que este nó desbloqueia de compreensão em outros nós/módulos/assuntos (alimenta o "conhecimento conectado", os Ecos e o planejamento de Trilhas futuras — §2.2).
+7. **Escrita das lições e interações** conforme seções 3-5.
+8. **Revisão especializada.** Nenhum módulo publica sem revisão por pessoa com formação na área (resposta direta à fraqueza fatal do Paladin). O revisor valida: precisão factual, classificação de consenso, e se as simplificações são omissões legítimas ou distorções (seção 4).
+9. **Teste de calibração.** Rodar com usuários reais antes do lançamento: taxa de acerto por interação entre 60-85% (abaixo: lição não ensinou ou pergunta mal escrita; acima: pergunta trivial demais para gerar aprendizado).
 
 ### 2.1 O momento de síntese (regra de prontidão — diretriz do fundador)
 
-> **Toda jornada termina com um momento de síntese. Se a conclusão não provocar o "agora tudo faz sentido", a jornada não está pronta — independentemente das métricas de engajamento.**
+> **Todo assunto — e toda trilha — termina com um momento de síntese. Se a conclusão não provocar o "agora tudo faz sentido", não está pronto — independentemente das métricas de engajamento.**
 
-O usuário não deve apenas concluir uma sequência de lições; deve perceber que **enxerga um pedaço da História de forma diferente**. Estrutura obrigatória do momento (campo `synthesis` da jornada, exigido pelo validador — jornada sem síntese não publica):
+O usuário não deve apenas concluir uma sequência de módulos; deve perceber que **enxerga o assunto de forma diferente**. Estrutura obrigatória do momento (campo `synthesis`, exigido pelo validador — nada publica sem síntese):
 
-1. **Pergunta final** que só pode ser respondida cruzando os nós da jornada (tipo conexão — a primeira pergunta "nível Mestre" que o usuário encontra). É o clique ativo: ele *faz* a síntese antes de lê-la.
-2. **Reenquadramento**: 1-3 parágrafos que devolvem a pergunta central respondida e reorganizam o que foi visto numa ideia única e memorável — idealmente ancorada num gesto da vida do usuário ("da próxima vez que você votar…").
+1. **Pergunta final** que só pode ser respondida cruzando os módulos do assunto (tipo conexão — a primeira pergunta "nível Mestre" que o usuário encontra). É o clique ativo: ele *faz* a síntese antes de lê-la.
+2. **Reenquadramento**: 1-3 parágrafos que devolvem a pergunta implícita do assunto ("por que Roma mudou o mundo") respondida, reorganizando o que foi visto numa ideia única e memorável — idealmente ancorada num gesto da vida do usuário.
 3. **Mudança de olhar explícita**: "como você chegou" vs. "como você sai" — a crença inicial riscada, a nova compreensão em destaque.
 
-Só depois da síntese vem a celebração (card, estatísticas, tease da próxima jornada). Celebrar antes de compreender inverte a recompensa: a festa é pelo entendimento, não pelo término.
+Só depois da síntese vem a celebração (card, estatísticas, tease do próximo assunto). Celebrar antes de compreender inverte a recompensa: a festa é pelo entendimento, não pelo término.
+
+### 2.2 Trilhas: o formato cross-assunto (secundário, deliberado)
+
+> **Decisão do fundador (v6):** o padrão que originalmente definia "jornada" — um arco que atravessa vários assuntos, como "Atenas → Roma → Iluminismo → 1988" — não desaparece. Vira **Trilha**: um formato secundário, explicitamente rotulado como tal, nunca a porta de entrada padrão (essa é o Assunto, §2 e GDD §4.0).
+
+- **Quando uma Trilha se justifica.** Só quando a pergunta central **não pode existir dentro de um único assunto** — "De onde veio a ideia de que o povo pode governar?" exige Grécia *e* Roma *e* Iluminismo *e* Brasil na mesma resposta. Se a pergunta cabe dentro de um assunto só, ela é um módulo, não uma trilha (não duplicar por vaidade de formato).
+- **Reaproveita nós, não os duplica.** Uma trilha referencia nós que já existem dentro de seus assuntos nativos (um nó pode pertencer a um módulo *e* a uma ou mais trilhas ao mesmo tempo — o schema já suporta nó em múltiplas jornadas, ARCHITECTURE §5.1). Escrever um nó uma vez, reaproveitar em quantas trilhas fizer sentido.
+- **Pipeline:** passos 1 ("pergunta central, nunca tema" — a regra original desta seção, agora exclusiva das trilhas), 3, 6-9 acima se aplicam normalmente; o passo 2 (curadoria de módulos) não existe — a trilha seleciona nós diretamente através dos assuntos que atravessa. Síntese própria obrigatória (§2.1).
+- **Descoberta:** uma trilha nunca é o caminho padrão de ninguém. Ela aparece como Eco dentro de um nó que ela atravessa ("isso ecoa em outras 3 paradas — ver a trilha completa") ou numa prateleira própria da Biblioteca (GDD §4.0) — sempre op-in, sempre rotulada como uma experiência diferente do assunto que o usuário está visitando.
 
 ## 3. Anatomia de uma lição de ~3 minutos
 
@@ -152,7 +173,7 @@ Um nó Dominado pode **regredir** silenciosamente se as revisões passarem a fal
 
 | Papel | Responsabilidade | Pode ser acumulado? |
 |---|---|---|
-| **Editor de jornada** | Dono do arco: pergunta central, seleção de nós, tom, coerência narrativa | Sim, com Redator |
+| **Editor de assunto** | Dono do recorte: curadoria de módulos, pergunta central de cada um, seleção de nós, tom, coerência narrativa | Sim, com Redator |
 | **Redator de aprendizagem** | Escreve lições, interações e caminhos do erro conforme as seções 3-5 e 7 | Sim, com Editor |
 | **Revisor especialista** | Formação na área: valida precisão, classificação de consenso e legitimidade das simplificações | **Não** — precisa ser independente de quem escreveu |
 | **IA assistente de produção** | Extrai claims de fontes, rascunha variações de pergunta e de revisão SRS, sugere conexões | Acelera qualquer papel; **não aprova nada** |
@@ -161,7 +182,9 @@ Realidade de time pequeno: no início, duas pessoas bastam (editor+redator numa,
 
 ### 9.2 Quanto tempo dura produzir
 
-Alvo inicial (hipótese a validar): uma jornada de 6-10 nós (~20-40 lições) em **3-6 semanas** com uma dupla + IA assistente. A primeira jornada produzida é o **piloto de processo**: medir o tempo real de cada etapa do pipeline (seção 2), descobrir onde a IA realmente acelera e recalibrar a estimativa **antes** de planejar o catálogo de lançamento (2-3 jornadas, VISION §16.1). Nenhum plano de conteúdo é confiável antes desse piloto.
+Alvo inicial (hipótese a validar): um **módulo** de 3-8 nós (~10-30 lições) em **2-4 semanas** com uma dupla + IA assistente — a mesma ordem de grandeza que antes valia para uma "jornada" inteira, porque um módulo é aproximadamente do tamanho que uma jornada costumava ter. O primeiro módulo produzido é o **piloto de processo**: medir o tempo real de cada etapa do pipeline (seção 2), descobrir onde a IA realmente acelera e recalibrar a estimativa antes de comprometer qualquer catálogo maior.
+
+> **Alerta de escopo (v2, crítica ao pivô "Biblioteca de Alexandria"):** um assunto como "Império Romano" descrito com 7 módulos completos é **~25-45 nós** — 4 a 6 vezes o conteúdo total do MVP original (2-3 jornadas de 5-12 nós cada, VISION §16.1). Adotar a estrutura Assunto→Módulo desde já é a decisão certa (fixa a arquitetura de conteúdo antes de escalar autoria); **lançar um assunto inteiro e "completo" não é.** O caminho crítico do PRD (§9, "conteúdo atrasa o piloto") e do BACKLOG (E1.3) já tratava a produção de conteúdo como o maior risco de execução do projeto — este pivô aumenta esse risco se o primeiro assunto for tratado como precisa nascer inteiro. **Recomendação:** o catálogo de lançamento continua sendo 2-3 unidades no tamanho de hoje — só que agora nomeadas e navegáveis como **2-3 módulos de um único assunto** (ex.: só "Nascimento do Império" e "Auge Romano" de "Império Romano"), com os demais módulos aparecendo como promessa ("ainda escondidas nesta estante…", já implementado no protótipo) até o processo estar calibrado. Um assunto pode — e deve — ficar visivelmente incompleto por um bom tempo; incompleto e honesto sobre isso é o modelo, não uma falha dele (EDITORIAL_POLICY, Princípio 7).
 
 ### 9.3 Como medir dificuldade
 
@@ -169,14 +192,14 @@ Dificuldade é **medida, não intuída**:
 
 - Instrumentar cada interação: taxa de erro + tempo de resposta, agregados por lição e por nó.
 - Banda alvo de acerto: 60-85% (seção 2, passo 8). Fora da banda → volta para reescrita. Exceção: perguntas de nível Mestre (seção 7, tipo 5) podem ficar abaixo da banda por design.
-- Curva dentro da jornada: os primeiros nós mais acessíveis, dificuldade crescendo com o arco — a jornada ensina o usuário a jogá-la.
+- Curva dentro do módulo (ou da trilha): os primeiros nós mais acessíveis, dificuldade crescendo com o arco — o próprio percurso ensina o usuário a jogá-lo.
 - Monitorar por persona: o que é trivial para Beatriz pode ser opaco para Marina; divergência grande entre personas numa mesma interação é sinal de problema de linguagem, não de conteúdo.
 
 ## 10. Checklist de publicação de um nó
 
 Antes de qualquer nó ir ao ar:
 
-- [ ] Pergunta central da jornada responde "por que alguém se importaria?"
+- [ ] Pergunta central do módulo (ou da trilha) responde "por que alguém se importaria?"
 - [ ] Claims atômicos extraídos, com banda de consenso **e** classe epistêmica classificadas, fontes vinculadas conforme a hierarquia da EDITORIAL_POLICY (nenhum claim sustentado por material de divulgação)
 - [ ] Nenhuma interpretação/debate cobrado como pergunta objetiva; nenhum falso balanceamento (minoritária apresentada como par do consenso)
 - [ ] Revisão especializada concluída (precisão + consenso + simplificações legítimas)
@@ -186,7 +209,7 @@ Antes de qualquer nó ir ao ar:
 - [ ] Conexões mapeadas (o que este nó desbloqueia de compreensão)
 - [ ] Tom/celebração calibrados ao conteúdo (seção 8)
 - [ ] Calibração testada: acerto entre 60-85% por interação
-- [ ] (Para jornadas) Momento de síntese completo: pergunta de conexão + reenquadramento + mudança de olhar (seção 2.1) — **sem síntese, a jornada não publica**
+- [ ] (Para o último módulo de um assunto, e para toda trilha) Momento de síntese completo: pergunta de conexão + reenquadramento + mudança de olhar (seção 2.1) — **sem síntese, o assunto/a trilha não publica**
 
 ---
 
