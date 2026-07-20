@@ -6,9 +6,9 @@
   "emblem": "👑",
   "name": "Quem faz um imperador?",
   "sensitive": false,
-  "journeys": ["mod-estado-romano"],
+  "journeys": ["mod-auge-romano"],
   "positionInJourney": {
-    "mod-estado-romano": 1
+    "mod-auge-romano": 2
   },
   "claims": [
     {

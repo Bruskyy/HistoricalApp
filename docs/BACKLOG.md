@@ -24,7 +24,7 @@
 | E1.3 | Escrever a jornada-piloto completa pelo pipeline LDD §2, medindo tempo por etapa (LDD §9.2) | E1.1, E1.2 | P0 |
 | E1.4 | Validador de conteúdo em CI (checklist LDD §10 mecanizado) | E1.2 | P0 |
 | E1.5 | Scripts de IA para autoria (extração de claims, rascunhos de variantes — saída como PR; ARCH §7.4, ADR-8) | E1.2 | P1 |
-| E1.6 | Jornadas 2-5 para o R2, fechando o arco da coleção de lançamento (com o processo recalibrado por E1.3) | E1.3 | P0 (R2) |
+| E1.6 | Jornadas 4-5 para o R2, fechando o arco da coleção de lançamento (com o processo recalibrado por E1.3) — bloqueado até um playtest validar as 3 jornadas já escritas e reorganizadas (LDD §2.3) | E1.3, E0.2 | P0 (R2) |
 
 ## Épico E2 — Fundação técnica (R1)
 

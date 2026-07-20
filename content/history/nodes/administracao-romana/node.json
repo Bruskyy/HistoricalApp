@@ -6,9 +6,9 @@
   "emblem": "🛣️",
   "name": "A Máquina do Império",
   "sensitive": false,
-  "journeys": ["mod-auge-romano"],
+  "journeys": ["mod-estado-romano"],
   "positionInJourney": {
-    "mod-auge-romano": 2
+    "mod-estado-romano": 1
   },
   "claims": [
     {

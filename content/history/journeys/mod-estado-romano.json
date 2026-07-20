@@ -3,31 +3,31 @@
   "kind": "module",
   "collectionId": "imperio-romano",
   "order": 3,
-  "title": "Como um punhado de romanos governava um continente inteiro?",
-  "centralQuestion": "Como um homem só conseguia governar um território do tamanho de toda a Europa?",
-  "nodeOrder": ["sucessao-imperial", "governo-provincial"],
+  "title": "Como um punhado de romanos administrava um continente inteiro?",
+  "centralQuestion": "Sem telefone, sem trem, sem burocracia digital — que máquina real permitia administrar um território do tamanho da Europa?",
+  "nodeOrder": ["administracao-romana", "governo-provincial"],
   "comingNext": "Duas jornadas fecham o arco de Império Romano: a queda, e o que ficou depois — em escrita",
   "synthesis": {
     "question": {
       "id": "sintese-estado-romano",
       "type": "connection",
       "objective": true,
-      "prompt": "Última pergunta desta jornada: o que a ausência de lei de sucessão fixa e o modelo de governadores provinciais têm em comum?",
+      "prompt": "Última pergunta desta jornada: o que a rede de estradas e o sistema de governadores provinciais têm em comum?",
       "options": [
-        "As duas coisas resolviam o mesmo problema pela mesma lógica: confiar poder concentrado a uma pessoa e torcer para que a lealdade dela (do exército, do governador) segurasse o sistema — sem nenhuma regra escrita garantindo isso",
-        "Nada em comum — sucessão era um problema só de Roma, governo provincial só das fronteiras",
-        "As duas coisas eram reguladas por leis escritas e rígidas, sem espaço para disputa"
+        "As duas são partes da mesma máquina: uma rede física (estradas, direito comum) que movia tropas, mercadorias e informação rápido, e uma rede humana (governadores, tributos) que garantia que cada província fosse administrada e pagasse sua parte — sem essa dupla infraestrutura, nenhum território tão grande se sustentava com a tecnologia da época",
+        "Nada em comum — estradas eram projeto de engenharia, governo provincial era projeto político",
+        "As duas surgiram só depois da queda do império, como parte da reconstrução medieval"
       ],
       "correct": 0,
-      "errorPath": "Repare no padrão: nem a coroa nem o comando de uma província tinham uma regra fixa e vinculante por trás. Os dois dependiam de confiança pessoal e lealdade militar — o que explica por que o mesmo ano, 69 d.C., expôs a fragilidade dos dois ao mesmo tempo."
+      "errorPath": "Pense em escala: um território do tamanho da Europa, sem telefone nem trem. As estradas moviam gente e ordens; os governadores e o sistema de tributos garantiam que cada província continuasse funcionando entre uma visita imperial e outra. Tire qualquer uma das duas peças e o império não se sustenta."
     },
     "reframe": [
-      "Você começou esta jornada com uma pergunta: como um homem só governava um território do tamanho da Europa? A resposta tem uma face impressionante — estradas, direito, governadores, tributos, uma máquina real de administração — e uma face frágil: quase nada disso tinha regra fixa por trás. O imperador confiava no exército para não se voltar contra ele; o governador de fronteira era escolhido por lealdade pessoal, não por processo.",
-      "É um império que parecia sólido como pedra e, por dentro, dependia inteiro de relações de confiança que podiam quebrar de um dia para o outro — como quebraram, repetidamente, ao longo de sua história."
+      "Você começou esta jornada com uma pergunta: como um punhado de romanos administrava um continente inteiro? A resposta não é mágica, é engenharia — mais de 80 mil km de estradas pavimentadas, construídas primeiro para mover legiões, mas que também levavam ordens, impostos e comércio entre Roma e qualquer província em semanas, não meses.",
+      "E onde a estrada terminava, um governador entrava — com poder militar e judicial concentrado numa só pessoa, cobrando o tributo que sustentava o sistema inteiro. Nenhuma das duas peças sozinha administra um império: juntas, formavam a máquina real por trás do poder que a jornada anterior mostrou por dentro."
     ],
     "shift": {
-      "before": "O império romano era governado por uma burocracia sólida e previsível",
-      "after": "O império romano era uma máquina real de administração apoiada sobre confiança pessoal e lealdade militar — sólida até que alguém decidisse que não devia mais ser"
+      "before": "Um território do tamanho da Europa só podia ser administrado por uma burocracia central enorme, parecida com um Estado moderno",
+      "after": "Um território do tamanho da Europa era administrado por uma malha física de estradas e uma malha humana de governadores e tributos — uma máquina real, mas muito mais enxuta do que qualquer burocracia moderna"
     }
   }
 }

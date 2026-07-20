@@ -261,33 +261,33 @@
       "collectionId": "imperio-romano",
       "order": 2,
       "title": "Como Roma manteve a paz por 200 anos?",
-      "centralQuestion": "Como um império do tamanho da Europa inteira se sustentou por 200 anos de relativa paz?",
+      "centralQuestion": "Um sistema conseguia durar 200 anos sem nunca escrever a regra mais básica de todas — quem manda depois do imperador?",
       "nodeOrder": [
         "pax-romana",
-        "administracao-romana"
+        "sucessao-imperial"
       ],
-      "comingNext": "\"Como um punhado de romanos governava um continente inteiro?\" — a próxima jornada já espera",
+      "comingNext": "\"Como um punhado de romanos administrava um continente inteiro?\" — a próxima jornada já espera",
       "synthesis": {
         "question": {
           "id": "sintese-auge-romano",
           "type": "connection",
           "objective": true,
-          "prompt": "Última pergunta desta jornada: o que realmente segurou duzentos anos de Pax Romana de pé — o acordo de poder de Augusto, ou a máquina de estradas e cidadania que vinha depois dele?",
+          "prompt": "Última pergunta desta jornada: o que a paz de Augusto e a crise de 69 d.C. têm em comum?",
           "options": [
-            "As duas coisas juntas: o acordo político deu a paz interna que permitiu construir a máquina, e a máquina (estradas, direito, cidadania) tornou essa paz sustentável — uma sem a outra não teria durado 200 anos",
-            "Só o exército: Roma se sustentava por puro medo da força militar, nada mais",
-            "Só a cidadania: as pessoas amavam tanto ser romanas que a paz se sustentava sozinha"
+            "As duas nasceram do mesmo desenho de poder: Augusto trocou a guerra civil por um sistema baseado em lealdade pessoal e controle militar, sem nunca formalizar uma regra de sucessão — o que trouxe 200 anos de estabilidade enquanto havia consenso sobre quem mandava, e abriu a porta para guerra civil no instante em que esse consenso quebrou",
+            "Nada em comum — a paz foi uma conquista militar, a sucessão foi um problema administrativo à parte",
+            "As duas foram resolvidas por uma lei de sucessão votada pelo Senado, sem espaço para disputa militar"
           ],
           "correct": 0,
-          "errorPath": "Nenhuma das duas peças bastava sozinha. O acordo de Augusto parou a guerra civil — mas sem estradas para mover legiões e sem um direito comum que desse às províncias um motivo para cooperar, a paz teria durado uma geração, não duzentos anos."
+          "errorPath": "Repare: as duas vêm da mesma fonte. O poder de Augusto nunca foi um cargo formal com regras escritas — era controle pessoal sobre o exército e o Senado. Isso trouxe paz enquanto havia acordo sobre quem mandava, e explodiu em guerra civil assim que esse acordo quebrou, em 69 d.C."
         },
         "reframe": [
-          "Você começou esta jornada com uma pergunta: como um império tão grande se sustentou por tanto tempo? A resposta não é uma coisa só — é um acordo político (Augusto trocando o título de rei pelo poder de rei) somado a uma infraestrutura física e legal que tornou esse acordo funcional em escala: estradas que moviam legiões em semanas, direito que dava a um provincial um motivo real para preferir Roma a se revoltar.",
-          "E você viu também a borda dessa história: a mesma paz que os historiadores medem em estradas e comércio foi, para quem estava do lado errado da conquista, o nome dado à derrota. As duas coisas são verdadeiras ao mesmo tempo — e é isso que torna esse período mais interessante que um simples \"a paz durou 200 anos\"."
+          "Você começou esta jornada com uma pergunta: como Roma manteve a paz por 200 anos? A resposta tem duas partes que parecem contraditórias, mas são a mesma coisa. Augusto trocou o caos da guerra civil por um sistema real de estabilidade — impostos, comércio e cidades floresceram sem uma nova guerra devastando o núcleo do império por gerações.",
+          "Mas esse sistema nunca resolveu a pergunta mais simples de todas: quem vem depois? Sem uma lei de sucessão, cada transição de poder dependia de sorte, lealdade militar e acaso — e quando essa sorte acabava, como em 69 d.C., o mesmo sistema que trouxe duzentos anos de paz podia produzir uma guerra civil em meses."
         ],
         "shift": {
-          "before": "Pax Romana: duzentos anos de paz no império romano",
-          "after": "Pax Romana: um acordo de poder sustentado por estradas e cidadania — paz de verdade para uns, conquista contínua para outros"
+          "before": "A Pax Romana foi duzentos anos de paz garantida por um governo estável e previsível",
+          "after": "A Pax Romana foi duzentos anos de paz real — construída sobre um sistema de poder pessoal que nunca resolveu quem viria depois, e que por isso podia quebrar a qualquer sucessão mal-resolvida"
         }
       }
     },
@@ -296,10 +296,10 @@
       "kind": "module",
       "collectionId": "imperio-romano",
       "order": 3,
-      "title": "Como um punhado de romanos governava um continente inteiro?",
-      "centralQuestion": "Como um homem só conseguia governar um território do tamanho de toda a Europa?",
+      "title": "Como um punhado de romanos administrava um continente inteiro?",
+      "centralQuestion": "Sem telefone, sem trem, sem burocracia digital — que máquina real permitia administrar um território do tamanho da Europa?",
       "nodeOrder": [
-        "sucessao-imperial",
+        "administracao-romana",
         "governo-provincial"
       ],
       "comingNext": "Duas jornadas fecham o arco de Império Romano: a queda, e o que ficou depois — em escrita",
@@ -308,22 +308,22 @@
           "id": "sintese-estado-romano",
           "type": "connection",
           "objective": true,
-          "prompt": "Última pergunta desta jornada: o que a ausência de lei de sucessão fixa e o modelo de governadores provinciais têm em comum?",
+          "prompt": "Última pergunta desta jornada: o que a rede de estradas e o sistema de governadores provinciais têm em comum?",
           "options": [
-            "As duas coisas resolviam o mesmo problema pela mesma lógica: confiar poder concentrado a uma pessoa e torcer para que a lealdade dela (do exército, do governador) segurasse o sistema — sem nenhuma regra escrita garantindo isso",
-            "Nada em comum — sucessão era um problema só de Roma, governo provincial só das fronteiras",
-            "As duas coisas eram reguladas por leis escritas e rígidas, sem espaço para disputa"
+            "As duas são partes da mesma máquina: uma rede física (estradas, direito comum) que movia tropas, mercadorias e informação rápido, e uma rede humana (governadores, tributos) que garantia que cada província fosse administrada e pagasse sua parte — sem essa dupla infraestrutura, nenhum território tão grande se sustentava com a tecnologia da época",
+            "Nada em comum — estradas eram projeto de engenharia, governo provincial era projeto político",
+            "As duas surgiram só depois da queda do império, como parte da reconstrução medieval"
           ],
           "correct": 0,
-          "errorPath": "Repare no padrão: nem a coroa nem o comando de uma província tinham uma regra fixa e vinculante por trás. Os dois dependiam de confiança pessoal e lealdade militar — o que explica por que o mesmo ano, 69 d.C., expôs a fragilidade dos dois ao mesmo tempo."
+          "errorPath": "Pense em escala: um território do tamanho da Europa, sem telefone nem trem. As estradas moviam gente e ordens; os governadores e o sistema de tributos garantiam que cada província continuasse funcionando entre uma visita imperial e outra. Tire qualquer uma das duas peças e o império não se sustenta."
         },
         "reframe": [
-          "Você começou esta jornada com uma pergunta: como um homem só governava um território do tamanho da Europa? A resposta tem uma face impressionante — estradas, direito, governadores, tributos, uma máquina real de administração — e uma face frágil: quase nada disso tinha regra fixa por trás. O imperador confiava no exército para não se voltar contra ele; o governador de fronteira era escolhido por lealdade pessoal, não por processo.",
-          "É um império que parecia sólido como pedra e, por dentro, dependia inteiro de relações de confiança que podiam quebrar de um dia para o outro — como quebraram, repetidamente, ao longo de sua história."
+          "Você começou esta jornada com uma pergunta: como um punhado de romanos administrava um continente inteiro? A resposta não é mágica, é engenharia — mais de 80 mil km de estradas pavimentadas, construídas primeiro para mover legiões, mas que também levavam ordens, impostos e comércio entre Roma e qualquer província em semanas, não meses.",
+          "E onde a estrada terminava, um governador entrava — com poder militar e judicial concentrado numa só pessoa, cobrando o tributo que sustentava o sistema inteiro. Nenhuma das duas peças sozinha administra um império: juntas, formavam a máquina real por trás do poder que a jornada anterior mostrou por dentro."
         ],
         "shift": {
-          "before": "O império romano era governado por uma burocracia sólida e previsível",
-          "after": "O império romano era uma máquina real de administração apoiada sobre confiança pessoal e lealdade militar — sólida até que alguém decidisse que não devia mais ser"
+          "before": "Um território do tamanho da Europa só podia ser administrado por uma burocracia central enorme, parecida com um Estado moderno",
+          "after": "Um território do tamanho da Europa era administrado por uma malha física de estradas e uma malha humana de governadores e tributos — uma máquina real, mas muito mais enxuta do que qualquer burocracia moderna"
         }
       }
     },
@@ -453,10 +453,10 @@
       "name": "A Máquina do Império",
       "sensitive": false,
       "journeys": [
-        "mod-auge-romano"
+        "mod-estado-romano"
       ],
       "positionInJourney": {
-        "mod-auge-romano": 2
+        "mod-estado-romano": 1
       },
       "claims": [
         {
@@ -2358,10 +2358,10 @@
       "name": "Quem faz um imperador?",
       "sensitive": false,
       "journeys": [
-        "mod-estado-romano"
+        "mod-auge-romano"
       ],
       "positionInJourney": {
-        "mod-estado-romano": 1
+        "mod-auge-romano": 2
       },
       "claims": [
         {
