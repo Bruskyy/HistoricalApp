@@ -81,9 +81,9 @@ O conhecimento evolui; a plataforma trata isso como característica, não como c
 
 ## Princípio 7 — Curadoria é edição, não enciclopédia
 
-*(Adicionado v6, pivô "Biblioteca de Alexandria" — VISION §3.)* O Mneme não promete cobertura exaustiva de um assunto — promete que **tudo que está presente é indispensável para a compreensão**, e o que falta ainda não foi escrito, nunca omitido por engano.
+*(Adicionado v6, pivô "Biblioteca de Alexandria" — VISION §3.)* O Mneme não promete cobertura exaustiva de uma coleção — promete que **tudo que está presente é indispensável para a compreensão**, e o que falta ainda não foi escrito, nunca omitido por engano.
 
-- **Critério de corte é sempre pedagógico, nunca de completude.** Um módulo ou nó entra porque sua ausência quebra a compreensão do tema; não entra "porque é importante em geral" — isso é enciclopédia, não curadoria (operacionalização já existente: LDD §2, passo de seleção de nós, agora aplicado a dois níveis — módulos dentro de um assunto, nós dentro de um módulo).
+- **Critério de corte é sempre pedagógico, nunca de completude.** Um módulo ou nó entra porque sua ausência quebra a compreensão do tema; não entra "porque é importante em geral" — isso é enciclopédia, não curadoria (operacionalização já existente: LDD §2, passo de seleção de nós, agora aplicado a dois níveis — módulos dentro de uma coleção, nós dentro de um módulo).
 - **Curadoria não é o mesmo que viés.** Recortar não é distorcer: a régua de corte é "o que é indispensável para responder à pergunta do módulo", auditável e reproduzível — não preferência pessoal do redator. Módulos e nós que ficaram de fora ficam registrados no plano editorial, não escondidos.
 - **A promessa pública é diferente da promessa de uma enciclopédia.** Onde a Wikipédia promete "tudo sobre X", o Mneme promete "o que você precisa para entender X de verdade" — essa diferença é compromisso editorial, não limitação de conteúdo a esconder (VISION §7).
 

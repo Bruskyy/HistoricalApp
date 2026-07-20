@@ -20,7 +20,7 @@ Metas numéricas são hipóteses a recalibrar após a primeira coorte — o comp
 
 ## 2. Escopo
 
-**Dentro (MVP — VISION §16.1, GDD):** Biblioteca com 1 Assunto de lançamento e 2-3 módulos completos dentro dele (LDD §1-2, §9.2 — mesmo volume de conteúdo que "2-3 jornadas" significava antes do pivô v6, só reorganizado); Corredor do Tempo por módulo; lições + interações (LDD §3, §7); agendador SRS por afirmação com missões de revisão; Thoth com 3 estágios; streak compassivo com Selos do Tempo; XP/níveis/títulos (como hipóteses instrumentadas); nível de consenso; 2 cards compartilháveis; estatísticas essenciais; onboarding com vitória antes do cadastro; notificação diária única; ferramenta interna mínima de conteúdo; instrumentação e experimentos.
+**Dentro (MVP — VISION §16.1, GDD):** Biblioteca com 1 Coleção de lançamento e 2-3 módulos completos dentro dela (LDD §1-2, §9.2 — mesmo volume de conteúdo que "2-3 jornadas" significava antes do pivô v6, só reorganizado); Corredor do Tempo por módulo; lições + interações (LDD §3, §7); agendador SRS por afirmação com missões de revisão; Thoth com 3 estágios; streak compassivo com Selos do Tempo; XP/níveis/títulos (como hipóteses instrumentadas); nível de consenso; 2 cards compartilháveis; estatísticas essenciais; onboarding com vitória antes do cadastro; notificação diária única; ferramenta interna mínima de conteúdo; instrumentação e experimentos.
 
 **Fora (não construir agora):** museu, Atlas Vivo, ligas/ranking, eventos, quiz mundial, IA conversacional em produção, segundo domínio, B2B, moeda gastável, social profundo (VISION §16.2-16.3, GDD §10, §13).
 
@@ -30,14 +30,14 @@ Numeração `RF-XX.Y`. Cada bloco referencia o documento que o especifica em det
 
 ### RF-01 — Onboarding (GDD §2, VISION §17-D1)
 1. Primeira lição jogável **antes** de qualquer cadastro; progresso local preservado ao criar conta depois.
-2. Fluxo: boas-vindas de Thoth (≤3 telas) → escolha de módulo (2-3 opções do assunto de lançamento, pela *pergunta central* de cada um) → primeira lição → primeira celebração → convite de cadastro.
+2. Fluxo: boas-vindas de Thoth (≤3 telas) → escolha de módulo (2-3 opções da coleção de lançamento, pela *pergunta central* de cada um) → primeira lição → primeira celebração → convite de cadastro.
 3. Cadastro por e-mail e provedores sociais (Apple/Google); recusa de cadastro não bloqueia o uso local por até N dias (parâmetro).
 4. Pedido de permissão de notificação só **após** a primeira celebração, nunca na abertura.
 
 ### RF-02 — Corredor do Tempo (GDD §4)
 1. Timeline por módulo, navegável, com nós nos 5 estados visuais (apagado/tênue/aceso/chama firme/constelação) + estado "vacilando" (regressão).
-2. Desbloqueio por módulo; Trilhas (LDD §2.2) mostram fios de conexão quando atravessam vários assuntos.
-3. Módulos/assuntos não cobertos pelo conteúdo de lançamento aparecem como "salas seladas" com gancho narrativo (GDD §4.0), sem interação além de teaser.
+2. Desbloqueio por módulo; Trilhas (LDD §2.2) mostram fios de conexão quando atravessam várias coleções.
+3. Módulos/coleções não cobertos pelo conteúdo de lançamento aparecem como "salas seladas" com gancho narrativo (GDD §4.0), sem interação além de teaser.
 4. Toque em nó aceso: resumo do nó, afirmações-chave, conexões, acesso ao aprofundamento (LDD §4).
 
 ### RF-03 — Lições e interações (LDD §3, §7; GDD §6.4)
@@ -189,7 +189,7 @@ Marco com card → card na celebração (passo 4) → 1 toque para compartilhar 
 |---|---|---|
 | **R0 — Protótipo de papel/Figma** | Loop de sessão navegável; teste da pergunta central dos módulos | Usuários entendem o Corredor sem explicação; escolhem módulo com interesse genuíno |
 | **R1 — Piloto fechado** (coorte convidada) | RF-01→13 com 1 módulo completo | O1-O5 medidos; decisão registrada dos experimentos (XP, títulos); calibração do GDD Apêndice A revisada |
-| **R2 — MVP público (lojas)** | 2-3 módulos de 1 assunto; naming test resolvido (VISION §19); ajustes do piloto | Metas O1-O2 confirmadas em coorte aberta |
+| **R2 — MVP público (lojas)** | 2-3 módulos de 1 coleção; naming test resolvido (VISION §19); ajustes do piloto | Metas O1-O2 confirmadas em coorte aberta |
 | **V1+** | VISION §16.2 (museu, Atlas, IA explicativa...) | Cada fase valida sua pergunta antes da próxima |
 
 **Caminho crítico de conteúdo:** o 1º módulo (piloto de processo editorial — LDD §9.2) precisa começar produção **antes** do desenvolvimento terminar; conteúdo, não código, é o gargalo provável do R1.
@@ -199,7 +199,7 @@ Marco com card → card na celebração (passo 4) → 1 toque para compartilhar 
 | Risco | Mitigação |
 |---|---|
 | Conteúdo atrasa o piloto (gargalo editorial) | Iniciar o módulo-piloto já na fase de arquitetura; medir o processo (LDD §9.2) |
-| Escopo de conteúdo inflar com o pivô "Biblioteca de Alexandria" (um assunto "completo" tem 4-6× o conteúdo de uma jornada) | Lançamento continua em 2-3 módulos de um único assunto, não o assunto inteiro; demais módulos ficam como mistério "em breve" (LDD §9.2, alerta de escopo; GDD §4.0) |
+| Escopo de conteúdo inflar com o pivô "Biblioteca de Alexandria" (uma coleção "completa" tem 4-6× o conteúdo de uma jornada) | Lançamento continua em 2-3 módulos de uma única coleção, não a coleção inteira; demais módulos ficam como mistério "em breve" (LDD §9.2, alerta de escopo; GDD §4.0) |
 | Naming não resolvido trava a ficha das lojas | Teste de naming (VISION §19) durante o desenvolvimento do R1, antes do R2 |
 | Escopo crescer dentro do MVP | Qualquer RF novo passa pelo filtro VISION §2.1 + aprovação explícita do fundador |
 | SRS mal calibrado frustra (pilha ou trivialidade) | Painel de calibração ativo desde R1; parâmetros server-side ajustáveis sem release |

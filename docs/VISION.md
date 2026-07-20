@@ -10,7 +10,7 @@
 >
 > **v5** — decisão de escopo do fundador: o produto será **somente História e Filosofia** (seção 5). A lista aberta de domínios futuros sai da visão; a engine continua domínio-agnóstica como decisão de arquitetura, não como promessa de expansão.
 >
-> **v6** — pivô de identidade do fundador: o Mneme não é um produto de cursos/jornadas — é **uma Biblioteca de Alexandria interativa**. A porta de entrada deixa de ser a Jornada e passa a ser o **Assunto** (o que uma pessoa realmente busca: "Império Romano", "Estoicismo", "Aristóteles"); dentro do assunto, o conteúdo se organiza por **grandes temas de compreensão** (módulos), não por lista cronológica exaustiva. Jornada não desaparece: vira o formato de consumo dentro de um assunto, e o padrão cross-era que ela inaugurou sobrevive como **Trilha** — um formato secundário e deliberado, não mais a porta principal (seção 3, seção 7, seção 12). Detalhamento operacional completo no `LEARNING_DESIGN.md` §1-2 e no `GAME_DESIGN.md` §4.0.
+> **v6** — pivô de identidade do fundador: o Mneme não é um produto de cursos/jornadas — é **uma Biblioteca de Alexandria interativa**. A porta de entrada deixa de ser a Jornada e passa a ser a **Coleção** (o que uma pessoa realmente busca: "Império Romano", "Estoicismo", "Aristóteles"); dentro da coleção, o conteúdo se organiza por **grandes temas de compreensão** (módulos), não por lista cronológica exaustiva. Jornada não desaparece: vira o formato de consumo dentro de uma coleção, e o padrão cross-era que ela inaugurou sobrevive como **Trilha** — um formato secundário e deliberado, não mais a porta principal, agora também uma **experiência de desbloqueio**: terminar uma coleção revela a próxima trilha, montada com os módulos que já existem (seção 3, seção 7, seção 12; celebração de Coleção Completa detalhada no `GAME_DESIGN.md` §9.1).
 
 ---
 
@@ -53,15 +53,15 @@ Este filtro se aplica inclusive aos sistemas já descritos neste documento: cada
 
 **O Mneme é uma Biblioteca de Alexandria interativa — não um app de cursos.** *(v6, diretriz do fundador.)*
 
-Ninguém pensa "qual jornada do Mneme fala sobre a Revolução Francesa?" — pensa "quero entender a Revolução Francesa". O produto entra pela porta que a pessoa já busca: o **Assunto** (Império Romano, Primeira Guerra Mundial, Estoicismo, Aristóteles). A partir daí, o Mneme conduz — nunca despeja: dentro do assunto, o conteúdo é organizado por **grandes temas de compreensão** (módulos), com apenas os acontecimentos indispensáveis para responder cada tema, não uma lista exaustiva de datas. Primeiro o conceito, depois os acontecimentos que o sustentam — nunca o contrário.
+Ninguém pensa "qual jornada do Mneme fala sobre a Revolução Francesa?" — pensa "quero entender a Revolução Francesa". O produto entra pela porta que a pessoa já busca: a **Coleção** (Império Romano, Primeira Guerra Mundial, Estoicismo, Aristóteles) — o **conteúdo**, o que existe para aprender. A partir daí, o Mneme conduz — nunca despeja: dentro da coleção, o conteúdo é organizado por **grandes temas de compreensão** (módulos) — a **forma de aprender**, com apenas os acontecimentos indispensáveis para responder cada tema, não uma lista exaustiva de datas. Primeiro o conceito, depois os acontecimentos que o sustentam — nunca o contrário. Essa distinção (conteúdo vs. forma de aprender) é o que torna o produto uma plataforma: as mesmas coleções e módulos, os mesmos "blocos", alimentam a Biblioteca, o Corredor, as Trilhas e qualquer futura forma de explorar o Arquivo — em vez de cada experiência exigir conteúdo próprio.
 
-Isso não abandona a timeline — ela migra de escopo. O **Corredor do Tempo** continua sendo a recompensa visual e a estrutura de navegação de *cada* assunto (o usuário caminha os módulos e salões de "Império Romano" como sempre caminhou uma jornada), só deixa de ser uma única linha cronológica global da humanidade que o produto tenta preencher inteira. Onde o Duolingo tem "o caminho", nós temos **o assunto que você entrou para entender** — e o Corredor é como ele se vê e se sente.
+Isso não abandona a timeline — ela migra de escopo. O **Corredor do Tempo** continua sendo a recompensa visual e a estrutura de navegação de *cada* coleção (o usuário caminha os módulos e salões de "Império Romano" como sempre caminhou uma jornada), só deixa de ser uma única linha cronológica global da humanidade que o produto tenta preencher inteira. Onde o Duolingo tem "o caminho", nós temos **a coleção que você entrou para entender** — e o Corredor é como ela se vê e se sente.
 
 **Posicionamento em uma frase:** a Wikipédia responde "aqui está tudo sobre Roma"; um curso tradicional responde "assista às aulas 1, 2 e 3"; o Mneme responde **"venha entender por que Roma mudou o mundo"** — e conduz por uma narrativa curada, conectada ao resto da História (seção 7).
 
 Sobre essa espinha dorsal, o propósito: transformar o ato de adquirir conhecimento profundo — não trivial, não superficial — em um hábito diário tão envolvente quanto um jogo, começando por História e construído desde o dia 1 como uma **engine de domínios de conhecimento**, não como um app de nicho único.
 
-*Justificativa da timeline como coração de cada assunto (e não como feature): nenhum concorrente de história tem timeline navegável e gamificada (lacuna #2 da Etapa 1) — é a estrutura de navegação mais natural para o domínio, a mais intuitiva para o usuário ("estou no início do Império, falta muito para a Queda de Roma") e ainda está completamente livre no mercado.*
+*Justificativa da timeline como coração de cada coleção (e não como feature): nenhum concorrente de história tem timeline navegável e gamificada (lacuna #2 da Etapa 1) — é a estrutura de navegação mais natural para o domínio, a mais intuitiva para o usuário ("estou no início do Império, falta muito para a Queda de Roma") e ainda está completamente livre no mercado.*
 
 ## 4. Problema de mercado que resolve
 
@@ -168,7 +168,7 @@ Professor que atribui jornadas à turma (oportunidade B2B validada pelo modelo K
 5. **Conhecimento é uma rede, não uma lista** — todo tópico concluído explicita o que conecta.
 6. **Repetição espaçada como motor invisível** — o usuário sente que "o app sabe o que eu preciso revisar", nunca configura um algoritmo.
 
-> O detalhamento operacional destes princípios (como nasce um assunto, anatomia de uma lição, o que conta como "aprendido", como escrever perguntas de compreensão) vive no [`LEARNING_DESIGN.md`](LEARNING_DESIGN.md) — etapa nova do roadmap, anterior ao GDD.
+> O detalhamento operacional destes princípios (como nasce uma coleção, anatomia de uma lição, o que conta como "aprendido", como escrever perguntas de compreensão) vive no [`LEARNING_DESIGN.md`](LEARNING_DESIGN.md) — etapa nova do roadmap, anterior ao GDD.
 
 ## 12. Princípios de gamificação
 
@@ -180,7 +180,7 @@ Professor que atribui jornadas à turma (oportunidade B2B validada pelo modelo K
 - **Conhecimento conectado** — ao concluir Grécia: "Agora você entende melhor: ✔ Democracia ✔ Roma ✔ Iluminismo ✔ Revolução Francesa ✔ Constituição Brasileira".
 - **Streak compassivo** — congelamento generoso, retomada sem culpa (Finch), rejeitando punição (Habitica) e ansiedade de streak (crítica ao Duolingo).
 - **Ligas/Ordens como camada opcional** — visível para o segmento competitivo (Rafael), nunca o gancho principal para Marina/Beatriz.
-- **Assunto, não curso** *(v6)* — a porta de entrada é "Império Romano", não "Curso de História Antiga"; dentro dele, módulos por grande tema de compreensão (Nascimento do Império, Auge Romano, Crises, Queda...), cada um com só os nós indispensáveis (LDD §2). O padrão cross-era que definia "jornada" nas versões anteriores da visão — "Grécia → Sócrates → Platão → Roma → Iluminismo → Revolução Francesa → Brasil" — sobrevive como **Trilha**: um formato secundário e deliberado para quando a pergunta central só existe *entre* assuntos (LDD §2.2), descoberto via Ecos ou uma prateleira própria da Biblioteca — nunca a porta principal.
+- **Coleção, não curso** *(v6)* — a porta de entrada é "Império Romano", não "Curso de História Antiga"; dentro dela, módulos por grande tema de compreensão (Nascimento do Império, Auge Romano, Crises, Queda...), cada um com só os nós indispensáveis (LDD §2). O padrão cross-era que definia "jornada" nas versões anteriores da visão — "Grécia → Sócrates → Platão → Roma → Iluminismo → Revolução Francesa → Brasil" — sobrevive como **Trilha**: um formato secundário e deliberado para quando a pergunta central só existe *entre* coleções (LDD §2.2), montado reaproveitando módulos que já existem (nenhuma lição nova) e descoberto via Ecos, via desbloqueio ao concluir uma coleção, ou numa prateleira própria da Biblioteca — nunca a porta principal.
 
 ## 13. Progressão unificada
 
@@ -261,7 +261,7 @@ Comunidade ≠ rede social. O MVP não tem feed, chat nem guildas (seção 16) �
 ### 16.1 MVP — o mínimo que valida a tese central ("aprender assim vicia?")
 
 1. Corredor do Tempo navegável como tela central de progresso.
-2. 1 Assunto de lançamento com 2-3 módulos completos, produzidos pelo pipeline do LDD (§1-2) — mesmo volume de conteúdo que "2-3 jornadas" significava antes do pivô v6 (LDD §9.2, alerta de escopo).
+2. 1 Coleção de lançamento com 2-3 módulos completos, produzidos pelo pipeline do LDD (§1-2) — mesmo volume de conteúdo que "2-3 jornadas" significava antes do pivô v6 (LDD §9.2, alerta de escopo).
 3. Lições + repetição espaçada de ponta a ponta, vestidas de "memórias se apagando" — nunca expostas como configuração.
 4. Thoth com 3 estágios visuais de evolução ligados a marcos reais.
 5. Streak compassivo.

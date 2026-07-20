@@ -81,7 +81,7 @@
 | E6.2 | Rodar piloto ≥4 semanas; entrevistas qualitativas (momentos "aha", Thoth, universo — sinais de fracasso da VISION §9.1) | E6.1 | P0 |
 | E6.3 | Decisões registradas: XP visível?, títulos vs. marcos?, calibração SRS/XP revisada (O5 do PRD) | E6.2 | P0 |
 | E6.4 | Ajustes do piloto + naming aplicado (ficha das lojas, marca) | E6.3, E0.4 | P0 |
-| E6.5 | Lançamento R2 nas lojas com 2-3 módulos de 1 assunto (E1.6) | E6.4, E1.6 | P0 |
+| E6.5 | Lançamento R2 nas lojas com 2-3 módulos de 1 coleção (E1.6) | E6.4, E1.6 | P0 |
 
 ## Épicos V1+ (não detalhar agora — apenas reservados)
 
