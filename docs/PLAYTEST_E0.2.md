@@ -8,6 +8,18 @@ Validar a qualidade da experiência da coleção atual (as 3 jornadas já escrit
 
 O objetivo não é medir memorização de fatos. O objetivo é medir **compreensão estrutural**: o usuário construiu um mapa mental que consegue reconstruir e explicar, ou só reconhece fatos que viu passar na tela?
 
+## Registro contínuo — o momento de "agora entendi" (todas as etapas)
+
+Cada jornada foi projetada para produzir exatamente um momento de clareza: o usuário troca uma explicação ingênua por uma mais sofisticada (LDD §2, passo 3 — Regra do Momento de Clareza). Esse momento é o dado mais importante do teste, e pode acontecer em qualquer etapa, não só na 3 — fique atento durante o teste inteiro, não só quando perguntar diretamente.
+
+Sinais a registrar, com o momento exato (etapa + o que estava na tela):
+- uma frase espontânea do tipo "ah, então é por isso que…" ou "eu achava que era X, mas na verdade…";
+- uma mudança de expressão facial (sobrancelha, sorriso, pausa de surpresa);
+- uma pausa mais longa que o normal antes de continuar — sinal de reprocessamento;
+- uma conexão espontânea que o participante faz sozinho, sem o app apontar para ela.
+
+Se esse momento não aparecer em nenhuma das três jornadas, é o sinal mais forte de que a Regra do Momento de Clareza ainda não está sendo entregue — mais forte que qualquer nota da Etapa 6.
+
 ## Participante
 
 Preferencialmente alguém que **não possua conhecimento profundo sobre História Romana** — a leitura de alguém com base prévia (que preenche lacunas mentalmente sem perceber) não revela os pontos em que a narrativa ainda exige conhecimento prévio.
@@ -43,7 +55,7 @@ Perguntar, uma jornada por vez:
 
 Se o participante responder usando suas próprias palavras, a jornada cumpriu seu papel.
 
-> **Nota de quem escreveu o conteúdo (não editar esta seção sem revalidar com o fundador):** a pergunta da Jornada 1 acima assume que o conteúdo já conta "o problema que Augusto resolveu". Ao revisar o nó atual (`republica-romana`) antes deste roteiro ir a campo, encontrei uma lacuna: as duas lições existentes descrevem a *estrutura* da República (eleição vs. sorteio, o "governo misto" de Políbio, o legado em Montesquieu e na Constituição de 1988) — nenhuma delas narra a *queda* da República nem menciona Augusto; ele só aparece na Jornada 2. Ou seja, o título da Jornada 1 ("Como Roma deixou de ser uma República?") promete uma história que o conteúdo atual não entrega — e a pergunta acima do roteiro, tal como está, pode gerar um "não sei" que não é sobre clareza narrativa, e sim sobre um nó que ainda não existe. Duas saídas possíveis, nenhuma aplicada ainda (congelamento de conteúdo em vigor): **(a)** ajustar a pergunta desta etapa para o que a Jornada 1 realmente entrega hoje (ex.: "que problema a mistura de cônsules, Senado e assembleias tentava resolver, segundo Políbio?"), rodando o teste como está; **(b)** manter a pergunta e tratar um "não sei" aqui como sinal de que a Jornada 1 precisa de um nó novo sobre a queda da República — decisão que caberia à mesma disciplina do LDD §2.3 (melhorar antes de expandir), não a uma escrita apressada. Fica para o fundador decidir antes de rodar o teste.
+> **Nota de quem escreveu o conteúdo — decisão do fundador, já tomada:** a pergunta da Jornada 1 acima assume que o conteúdo já conta "o problema que Augusto resolveu". Ao revisar o nó atual (`republica-romana`), encontrei uma lacuna: as duas lições existentes descrevem a *estrutura* da República (eleição vs. sorteio, o "governo misto" de Políbio, o legado em Montesquieu e na Constituição de 1988) — nenhuma delas narra a *queda* da República nem menciona Augusto; ele só aparece na Jornada 2. Um "não sei" aqui pode não ser sobre clareza narrativa — pode ser sobre um nó que ainda não existe. **Decisão: rodar o teste exatamente como está, sem tocar no conteúdo.** Se ninguém sentir essa falta espontaneamente, o vazio não vira trabalho — ele não incomoda quem joga. Se várias pessoas demonstrarem a lacuna por conta própria, corrigimos a narrativa depois. O playtest decide, não a suposição de quem escreveu.
 
 ## Etapa 4 — Retenção do mapa
 
@@ -80,8 +92,10 @@ A coleção só é considerada concluída — liberando as próximas jornadas (q
 
 Se qualquer critério ficar abaixo de 8: o próximo trabalho não é escrever mais conteúdo — é melhorar a coleção existente (LDD §2.3).
 
-## Frases-alvo desta rodada (para conferir a resposta da pergunta final da Etapa 6)
+## Momentos de clareza desta rodada (antes → depois, para conferir a Etapa 6 e o registro contínuo)
 
-- **Jornada 1** — "Como Roma deixou de ser uma República?": ver nota da Etapa 3 acima — a frase-alvo pretendida ("Roma deixou de ser uma República porque as instituições deixaram de conseguir controlar o poder militar") ainda não é o que o nó atual entrega.
-- **Jornada 2** — "Como Roma manteve a paz por 200 anos?": "A Pax Romana existiu porque Augusto criou um equilíbrio político eficiente, mas esse equilíbrio nunca resolveu a sucessão imperial."
-- **Jornada 3** — "Como um punhado de romanos administrava um continente inteiro?": "Roma governava um continente porque construiu uma máquina administrativa extremamente eficiente."
+- **Jornada 1** — "Como Roma deixou de ser uma República?": alvo pretendido pelo título — antes, *"Roma virou um Império porque apareceu um ditador"*; depois, *"Roma virou um Império porque as instituições republicanas deixaram de conseguir controlar o próprio sucesso militar"*. Ver nota da Etapa 3: o nó atual ainda não entrega esse depois — não corrigir antes do playtest.
+- **Jornada 2** — "Como Roma manteve a paz por 200 anos?": antes, *"Roma ficou em paz porque tinha um exército forte"*; depois, *"Roma permaneceu estável porque Augusto construiu um equilíbrio político extremamente eficiente — mas esse mesmo sistema nunca resolveu o problema da sucessão"*.
+- **Jornada 3** — "Como um punhado de romanos administrava um continente inteiro?": antes, *"Roma administrava tudo porque tinha muitos soldados e funcionários"*; depois, *"Roma governava um continente porque construiu uma máquina administrativa extremamente eficiente — estradas e direito, governadores e tributos, funcionando como uma peça só"*.
+
+*(Jornada 4 — "queda de Roma", ainda não escrita: alvo já registrado para quando entrar em produção — antes, "os bárbaros destruíram Roma"; depois, "as invasões aceleraram um processo de enfraquecimento que já existia havia séculos".)*
