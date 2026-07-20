@@ -7,6 +7,8 @@
   "centralQuestion": "De onde veio a ideia de que o povo pode governar — e como ela sobreviveu 2.500 anos sem desaparecer?",
   "thread": "Atenas → Roma → Copistas → Iluminismo → Revoluções → você",
   "unlockAfterCollection": "imperio-romano",
+  "discoveryHook": "Nunca pensei que essas histórias fossem a mesma história.",
+  "discoveryIntro": "Enquanto organizávamos os registros de Roma… encontrei um fio curioso.",
   "nodeOrder": [
     "democracia-ateniense",
     "republica-romana",

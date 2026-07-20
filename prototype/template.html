@@ -313,6 +313,21 @@
   .cc-title { font-family: Georgia, serif; font-size: 17px; font-weight: 600; }
   .collection { display: flex; flex-direction: column; gap: 6px; border: 1.5px solid var(--line); }
   .collection .bcount:first-child { font-size: 13px; color: var(--ink); }
+  /* "Em preparação": a Biblioteca não escancara o catálogo futuro inteiro —
+     só sinaliza que mais chega (feedback do fundador: viva, não uma prateleira infinita). */
+  .coming-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .coming-chip {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px;
+    color: var(--ink-faint); border: 1px dashed var(--line); border-radius: 999px;
+    padding: 6px 12px; font-style: italic;
+  }
+  /* Descoberta, não desbloqueio: o pergaminho de uma trilha fica fechado até
+     o toque (feedback do fundador — "parece descoberta, não recompensa"). */
+  .scroll-reveal { cursor: pointer; }
+  .scroll-reveal .sr-teaser { display: flex; align-items: center; gap: 10px; }
+  .scroll-reveal .sr-open { display: none; }
+  .scroll-reveal.open .sr-teaser { display: none; }
+  .scroll-reveal.open .sr-open { display: flex; flex-direction: column; gap: 8px; animation: rise .4s ease; }
 
   /* Thoth evolui (GDD §7.1 — diferencial obrigatório VISION §16.1) */
   .thoth { position: relative; transition: box-shadow .6s ease, border-color .6s ease; }
@@ -770,13 +785,13 @@ function renderDomain(d) {
   closeTermBox();
   const due = dueReviews();
 
-  const cards = (d.collections ?? []).map((c) => {
-    if (c.status !== 'open') {
-      return `<div class="jbook sealed" data-locked="1">
-        <div class="jb-title">${c.icon} ${c.title}</div>
-        <div class="jm">🔒 ${c.tagline ?? 'coleção em escrita'} — os escribas já trabalham nela</div>
-      </div>`;
-    }
+  // A Biblioteca não escancara o catálogo futuro inteiro (feedback do
+  // fundador: "viva", não "prateleiras infinitas") — coleções abertas
+  // ganham card completo; o resto vira uma linha compacta de promessa.
+  const openCollections = (d.collections ?? []).filter((c) => c.status === 'open');
+  const comingCollections = (d.collections ?? []).filter((c) => c.status !== 'open');
+
+  const cards = openCollections.map((c) => {
     const mods = collectionModules(c);
     const cN = mods.flatMap(journeyNodes);
     const litC = cN.filter((n) => S.lit[n.id]).length;
@@ -791,6 +806,12 @@ function renderDomain(d) {
     </div>`;
   }).join('');
 
+  const comingHtml = comingCollections.length ? `
+    <div class="divider" aria-hidden="true"></div>
+    <p class="eyebrow">em preparação</p>
+    <div class="coming-chips">${comingCollections.map((c) =>
+      `<span class="coming-chip">${c.icon} ${c.title}</span>`).join('')}</div>` : '';
+
   const mem = memStats();
   screen().innerHTML = `
     ${rescueCardHtml(due)}
@@ -803,8 +824,8 @@ function renderDomain(d) {
       <div class="bcount">${mem.pct}% desta Biblioteca reconstruída — continue explorando</div>
     </div>` : ''}
     ${d.status === 'open' ? '' : `<div class="card domain-sealed"><div class="sealed-note">🔒 ${d.teaser ?? 'ala em escrita'} — os escribas já trabalham nas coleções abaixo.</div></div>`}
-    <p class="eyebrow">coleções</p>
-    ${cards}
+    ${openCollections.length ? `<p class="eyebrow">coleções</p>${cards}` : ''}
+    ${comingHtml}
   `;
 
   wireCommon(due);
@@ -1464,19 +1485,19 @@ function celebrateCollection(c) {
         <p class="eyebrow">esta coleção ecoa em</p>
         ${echoRows.map((to, i) => `<div class="cx" style="animation-delay:${1.8 + i * 0.3}s"><span class="tick">✔</span> ${prettify(to)}</div>`).join('')}
       </div>` : ''}
-      ${unlockedNow ? `
-      <div class="card fade-in" style="animation-delay:2.4s; width:100%; text-align:left; border-color:var(--gold)">
-        <p class="eyebrow">🔓 você desbloqueou uma trilha</p>
-        <p class="serif"><b>${unlockedNow.icon ?? '🏛️'} ${unlockedNow.title}</b></p>
-        <p style="font-size:13.5px; color:var(--ink-soft); margin-top:4px">${unlockedNow.centralQuestion}</p>
-        <button class="cta gold" id="trailBtn" style="margin-top:8px">▶ seguir o fio agora</button>
-      </div>
-      <button class="cta ghost fade-in" style="animation-delay:3s" id="go">depois — fechar a sessão</button>`
-      : `<button class="cta gold fade-in" style="animation-delay:2.4s" id="go">fechar a sessão</button>`}
+      ${unlockedNow ? scrollDiscoveryHtml(unlockedNow) : ''}
+      <button class="cta ${unlockedNow ? 'ghost' : 'gold'} fade-in" style="animation-delay:${unlockedNow ? 3 : 2.4}s" id="go">${unlockedNow ? 'depois — fechar a sessão' : 'fechar a sessão'}</button>
     </div>`);
+  const scroll = screen().querySelector('.scroll-reveal');
+  if (scroll) {
+    const open = () => scroll.classList.add('open');
+    scroll.addEventListener('click', open, { once: true });
+    scroll.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') open(); }, { once: true });
+  }
   const trailBtn = $('trailBtn');
-  if (trailBtn) trailBtn.addEventListener('click', () => {
-    S.events.push({ t: Date.now(), e: 'trail_unlocked_entered', trail: unlockedNow.id });
+  if (trailBtn) trailBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    S.events.push({ t: Date.now(), e: 'trail_discovered_entered', trail: unlockedNow.id });
     persist();
     maybeEvolve(() => renderTrail(unlockedNow));
   });
@@ -1485,6 +1506,27 @@ function celebrateCollection(c) {
     persist();
     maybeEvolve(renderSessionClose);
   });
+}
+
+/* Descoberta, não desbloqueio (feedback do fundador): a trilha se revela
+   como um pergaminho encontrado por Thoth, não como uma notificação de
+   "unlock" — a curiosidade abre o cartão, a recompensa não empurra. */
+function scrollDiscoveryHtml(t) {
+  const places = (t.thread ?? '').split('→').map((s) => s.trim()).filter((s) => s && s.toLowerCase() !== 'você');
+  return `
+    <div class="card scroll-reveal fade-in" style="animation-delay:2.4s; width:100%; text-align:left; border-color:var(--gold)" role="button" tabindex="0" aria-label="abrir o pergaminho encontrado">
+      <p class="eyebrow">${t.discoveryIntro ?? 'Thoth encontrou algo no Arquivo'}</p>
+      <div class="sr-teaser">
+        <span style="font-size:26px">📜</span>
+        <span style="font-style:italic; color:var(--ink-soft); font-size:13.5px">um pergaminho antigo, ainda fechado — toque para abrir</span>
+      </div>
+      <div class="sr-open">
+        <p class="serif"><b>${t.icon ?? '🏛️'} ${t.title}</b></p>
+        <div style="display:flex; flex-direction:column; align-items:flex-start; gap:2px; font-size:12px; color:var(--ink-faint)">${places.map((p) => `<span>${p}.</span>`).join('')}</div>
+        <p class="serif" style="font-style:italic; color:var(--ink-soft)">${t.discoveryHook ?? ''}</p>
+        <button class="cta gold" id="trailBtn" style="margin-top:4px">▶ seguir o fio</button>
+      </div>
+    </div>`;
 }
 
 function celebrateTrail(t) {
