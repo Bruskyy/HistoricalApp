@@ -26,11 +26,10 @@
           "title": "Império Romano",
           "tagline": "Como uma aldeia de pastores virou dona do Mediterrâneo",
           "status": "open",
-          "modules": ["mod-republica-imperio", "mod-auge-romano"],
+          "modules": ["mod-republica-imperio", "mod-auge-romano", "mod-estado-romano"],
           "upcomingModules": [
-            { "icon": "🏛️", "title": "Estado Romano — a máquina por trás do império" },
             { "icon": "✝️", "title": "Religião e Cultura — a seita perseguida que conquistou o império perseguidor" },
-            { "icon": "🔥", "title": "Crises — 23 facadas: por que os amigos de César o mataram?" },
+            { "icon": "🔥", "title": "Crises — o meio século em que Roma quase morreu sem ninguém invadir" },
             { "icon": "🏚️", "title": "Queda do Ocidente — Roma caiu, ou nunca acabou?" },
             { "icon": "👑", "title": "Império Bizantino — a metade de Roma que não caiu" }
           ]

@@ -1,0 +1,114 @@
+{
+  "id": "sucessao-imperial",
+  "domain": "history",
+  "era": "antiguidade",
+  "place": "O Palácio",
+  "emblem": "👑",
+  "name": "Quem faz um imperador?",
+  "sensitive": false,
+  "journeys": ["mod-estado-romano"],
+  "positionInJourney": {
+    "mod-estado-romano": 1
+  },
+  "claims": [
+    {
+      "id": "sem-lei-de-sucessao",
+      "text": "Roma nunca desenvolveu uma lei de sucessão imperial fixa e vinculante; a transmissão do poder dependia de uma combinação instável de preferência hereditária do imperador, ratificação do Senado e, decisivamente, aclamação do exército.",
+      "epistemicClass": "established_fact",
+      "consensusPct": 92,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Campbell, J. B. The Emperor and the Roman Army, 31 BC–AD 235. Oxford University Press, 1984."
+        },
+        {
+          "type": "academic_book",
+          "ref": "Hekster, O. Emperors and Ancestors: Roman Rulers and the Constraints of Tradition. Oxford University Press, 2015."
+        }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "causal",
+          "objective": true,
+          "prompt": "Um imperador romano morre sem deixar instruções claras. O que decide quem herda o trono?",
+          "options": [
+            "Uma disputa real entre herdeiro preferido, aval do Senado e, acima de tudo, quem o exército aclamar",
+            "Uma lei escrita de sucessão hereditária direta, do pai para o filho mais velho",
+            "Uma eleição popular nas assembleias, como na antiga República"
+          ],
+          "correct": 0,
+          "errorPath": "Diferente de uma monarquia hereditária clássica, Roma nunca fixou uma regra. Na prática, quem tivesse a lealdade das legiões tinha a vantagem decisiva — o Senado geralmente só formalizava depois."
+        }
+      ]
+    },
+    {
+      "id": "exercito-faz-imperador",
+      "text": "O ano de 69 d.C. (\"ano dos quatro imperadores\") demonstrou publicamente que legiões provinciais podiam aclamar seu próprio comandante como imperador e marchar sobre Roma — um padrão que se repetiu ao longo da história imperial, sobretudo em momentos de sucessão contestada.",
+      "epistemicClass": "established_fact",
+      "consensusPct": 93,
+      "sources": [
+        {
+          "type": "primary_source",
+          "ref": "Tácito. Histórias, Livro I (relato contemporâneo de 69 d.C.)."
+        },
+        {
+          "type": "academic_book",
+          "ref": "Morgan, G. 69 A.D.: The Year of Four Emperors. Oxford University Press, 2006."
+        }
+      ],
+      "reviewVariants": [
+        {
+          "id": "rv1",
+          "type": "application",
+          "objective": true,
+          "prompt": "Um general romano popular entre suas legiões, mas sem apoio do Senado, tinha na prática…",
+          "options": [
+            "Uma vantagem real para tentar o trono — o exército, não o Senado, era quem decidia na hora da força",
+            "Nenhuma chance: sem aval do Senado, nenhum general jamais se tornou imperador",
+            "Que renunciar ao comando antes de qualquer disputa política"
+          ],
+          "correct": 0,
+          "errorPath": "69 d.C. provou o oposto do que a fachada republicana sugeria: quatro homens reivindicaram o trono naquele ano, e o vencedor (Vespasiano) foi decidido pelas legiões, não por votação do Senado."
+        }
+      ]
+    },
+    {
+      "id": "fraqueza-estrutural-debate",
+      "text": "O quanto essa ausência de regra de sucessão fixa foi uma fraqueza estrutural que condenou o império a crises cíclicas, versus uma flexibilidade que permitiu adaptação e sobrevivência por séculos, é debatido entre historiadores.",
+      "epistemicClass": "historiographical_interpretation",
+      "consensusPct": 50,
+      "sources": [
+        {
+          "type": "academic_book",
+          "ref": "Hekster, O. Emperors and Ancestors: Roman Rulers and the Constraints of Tradition. Oxford University Press, 2015."
+        },
+        {
+          "type": "academic_book",
+          "ref": "Grant, M. The Roman Emperors. Barnes & Noble, 1985."
+        }
+      ],
+      "debate": {
+        "question": "A ausência de uma lei de sucessão foi um defeito de design fatal, ou uma flexibilidade que ajudou o império a durar séculos?",
+        "positions": [
+          {
+            "view": "Foi uma fraqueza estrutural real: cada sucessão sem herdeiro claro abria risco de guerra civil, como ficou brutalmente evidente em 69 d.C. e, mais tarde, na Crise do Século III.",
+            "acceptance": "majoritária"
+          },
+          {
+            "view": "A flexibilidade permitiu correção: dinastias fracas podiam ser substituídas por adoção de herdeiros capazes (os \"imperadores adotivos\" do séc. II) ou por aclamação militar — mecanismos que uma lei rígida de primogenitura não ofereceria.",
+            "acceptance": "minoritária influente"
+          }
+        ]
+      }
+    }
+  ],
+  "connections": [
+    { "to": "pax-romana", "type": "contrast" },
+    { "to": "governo-provincial", "type": "influence" }
+  ],
+  "lessons": [
+    { "id": "quem-faz-um-imperador", "file": "lesson-1.md" },
+    { "id": "o-ano-dos-quatro-imperadores", "file": "lesson-2.md" }
+  ]
+}

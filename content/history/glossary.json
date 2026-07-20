@@ -224,5 +224,31 @@
       "cidadãos romanos"
     ],
     "definition": "Status legal que garantia proteção sob o direito romano e o direito de apelar a um tribunal romano. Começou restrita a quem nascia em Roma; em 212 d.C., o Edito de Caracala a estendeu a quase todo homem livre do império."
+  },
+  {
+    "id": "legado",
+    "term": "Legado",
+    "match": [
+      "legado",
+      "legados"
+    ],
+    "definition": "Governador de uma província imperial, nomeado diretamente pelo imperador — geralmente uma província de fronteira, com legiões estacionadas sob seu comando."
+  },
+  {
+    "id": "proconsul",
+    "term": "Proconsul",
+    "match": [
+      "proconsul",
+      "proconsules"
+    ],
+    "definition": "Governador de uma província senatorial, indicado pelo Senado — geralmente províncias mais pacíficas, sem tropas numerosas estacionadas."
+  },
+  {
+    "id": "tributum",
+    "term": "Tributum",
+    "match": [
+      "tributum"
+    ],
+    "definition": "O tributo direto cobrado nas províncias romanas, com duas faces: imposto sobre a terra cultivada e imposto per capita (sobre a própria existência da pessoa)."
   }
 ]

@@ -226,6 +226,32 @@
         "cidadãos romanos"
       ],
       "definition": "Status legal que garantia proteção sob o direito romano e o direito de apelar a um tribunal romano. Começou restrita a quem nascia em Roma; em 212 d.C., o Edito de Caracala a estendeu a quase todo homem livre do império."
+    },
+    {
+      "id": "legado",
+      "term": "Legado",
+      "match": [
+        "legado",
+        "legados"
+      ],
+      "definition": "Governador de uma província imperial, nomeado diretamente pelo imperador — geralmente uma província de fronteira, com legiões estacionadas sob seu comando."
+    },
+    {
+      "id": "proconsul",
+      "term": "Proconsul",
+      "match": [
+        "proconsul",
+        "proconsules"
+      ],
+      "definition": "Governador de uma província senatorial, indicado pelo Senado — geralmente províncias mais pacíficas, sem tropas numerosas estacionadas."
+    },
+    {
+      "id": "tributum",
+      "term": "Tributum",
+      "match": [
+        "tributum"
+      ],
+      "definition": "O tributo direto cobrado nas províncias romanas, com duas faces: imposto sobre a terra cultivada e imposto per capita (sobre a própria existência da pessoa)."
     }
   ],
   "journeys": [
@@ -262,6 +288,42 @@
         "shift": {
           "before": "Pax Romana: duzentos anos de paz no império romano",
           "after": "Pax Romana: um acordo de poder sustentado por estradas e cidadania — paz de verdade para uns, conquista contínua para outros"
+        }
+      }
+    },
+    {
+      "id": "mod-estado-romano",
+      "kind": "module",
+      "collectionId": "imperio-romano",
+      "order": 3,
+      "title": "Estado Romano",
+      "centralQuestion": "Como um homem só conseguia governar um território do tamanho de toda a Europa?",
+      "nodeOrder": [
+        "sucessao-imperial",
+        "governo-provincial"
+      ],
+      "comingNext": "Religião e Cultura, Crises, Queda do Ocidente, Império Bizantino — em escrita",
+      "synthesis": {
+        "question": {
+          "id": "sintese-estado-romano",
+          "type": "connection",
+          "objective": true,
+          "prompt": "Última pergunta deste módulo: o que a ausência de lei de sucessão fixa e o modelo de governadores provinciais têm em comum?",
+          "options": [
+            "As duas coisas resolviam o mesmo problema pela mesma lógica: confiar poder concentrado a uma pessoa e torcer para que a lealdade dela (do exército, do governador) segurasse o sistema — sem nenhuma regra escrita garantindo isso",
+            "Nada em comum — sucessão era um problema só de Roma, governo provincial só das fronteiras",
+            "As duas coisas eram reguladas por leis escritas e rígidas, sem espaço para disputa"
+          ],
+          "correct": 0,
+          "errorPath": "Repare no padrão: nem a coroa nem o comando de uma província tinham uma regra fixa e vinculante por trás. Os dois dependiam de confiança pessoal e lealdade militar — o que explica por que o mesmo ano, 69 d.C., expôs a fragilidade dos dois ao mesmo tempo."
+        },
+        "reframe": [
+          "Você começou este módulo com uma pergunta: como um homem só governava um território do tamanho da Europa? A resposta tem uma face impressionante — estradas, direito, governadores, tributos, uma máquina real de administração — e uma face frágil: quase nada disso tinha regra fixa por trás. O imperador confiava no exército para não se voltar contra ele; o governador de fronteira era escolhido por lealdade pessoal, não por processo.",
+          "É um império que parecia sólido como pedra e, por dentro, dependia inteiro de relações de confiança que podiam quebrar de um dia para o outro — como quebraram, repetidamente, ao longo de sua história."
+        ],
+        "shift": {
+          "before": "O império romano era governado por uma burocracia sólida e previsível",
+          "after": "O império romano era uma máquina real de administração apoiada sobre confiança pessoal e lealdade militar — sólida até que alguém decidisse que não devia mais ser"
         }
       }
     },
@@ -829,6 +891,221 @@
             }
           ],
           "connection": "Agora você entende melhor: ✔ por que \"democracia\" antiga e moderna não são a mesma coisa ✔ os séculos de lutas por sufrágio que viriam ✔ por que a Constituição de 1988 diz \"todos\"."
+        }
+      ]
+    },
+    {
+      "id": "governo-provincial",
+      "domain": "history",
+      "era": "antiguidade",
+      "place": "O Tesouro",
+      "emblem": "💰",
+      "name": "Um homem só, um império inteiro",
+      "sensitive": false,
+      "journeys": [
+        "mod-estado-romano"
+      ],
+      "positionInJourney": {
+        "mod-estado-romano": 2
+      },
+      "claims": [
+        {
+          "id": "governadores-provinciais",
+          "text": "Cada província era administrada por um governador nomeado — proconsul em províncias senatoriais, legado do próprio imperador em províncias imperiais (geralmente as de fronteira, com legiões estacionadas) — combinando autoridade militar e judicial numa só pessoa.",
+          "epistemicClass": "established_fact",
+          "consensusPct": 94,
+          "sources": [
+            {
+              "type": "academic_book",
+              "ref": "Millar, F. The Emperor in the Roman World. Duckworth, 1977."
+            },
+            {
+              "type": "academic_book",
+              "ref": "Lintott, A. Imperium Romanum: Politics and Administration. Routledge, 1993."
+            }
+          ],
+          "reviewVariants": [
+            {
+              "id": "rv1",
+              "type": "causal",
+              "objective": true,
+              "prompt": "Por que as províncias de fronteira, com legiões estacionadas, eram governadas diretamente por um legado do imperador — e não por um proconsul indicado pelo Senado?",
+              "options": [
+                "O imperador não podia deixar tropas numerosas sob o comando de alguém fora de seu controle direto — era um risco de golpe demais grande",
+                "O Senado se recusava a administrar províncias de fronteira",
+                "Não havia diferença real entre os dois tipos de província"
+              ],
+              "correct": 0,
+              "errorPath": "Quem comandava legiões podia tentar virar imperador (como em 69 d.C.). Manter as províncias com mais tropas sob legados de sua confiança direta era a forma do imperador se proteger de generais ambiciosos demais."
+            }
+          ]
+        },
+        {
+          "id": "tributacao-imperial",
+          "text": "A receita do império vinha principalmente de tributos diretos sobre terra e população (tributum) cobrados nas províncias, complementados por taxas alfandegárias — um sistema que, sob o Principado, era administrado de forma mais direta e menos sujeita a abusos do que o antigo modelo republicano de arrendar a cobrança a publicani privados.",
+          "epistemicClass": "accepted_hypothesis",
+          "consensusPct": 80,
+          "sources": [
+            {
+              "type": "academic_book",
+              "ref": "Duncan-Jones, R. Money and Government in the Roman Empire. Cambridge University Press, 1994."
+            },
+            {
+              "type": "academic_book",
+              "ref": "Hopkins, K. Conquerors and Slaves. Cambridge University Press, 1978."
+            }
+          ],
+          "reviewVariants": [
+            {
+              "id": "rv1",
+              "type": "application",
+              "objective": true,
+              "prompt": "Um camponês numa província romana pagava tributo principalmente sobre…",
+              "options": [
+                "A terra que cultivava e o simples fato de existir (imposto per capita) — os dois pilares do tributum",
+                "Apenas o que vendia nos mercados urbanos",
+                "Nada — províncias conquistadas eram isentas de qualquer tributo"
+              ],
+              "correct": 0,
+              "errorPath": "O tributum tinha duas faces: tributo sobre a terra (produção) e tributo per capita (a própria existência da pessoa livre ou não). Impostos sobre comércio existiam, mas eram complemento, não a base do sistema."
+            }
+          ]
+        },
+        {
+          "id": "fardo-fiscal-debate",
+          "text": "O quanto a carga tributária provincial era, na prática, mais leve ou mais pesada do que sob os poderes locais anteriores à conquista romana — e portanto se a integração ao sistema fiscal romano era sentida como alívio ou como extração — é disputado entre historiadores, com poucas fontes quantitativas confiáveis para decidir.",
+          "epistemicClass": "historiographical_interpretation",
+          "consensusPct": 45,
+          "sources": [
+            {
+              "type": "academic_book",
+              "ref": "Hopkins, K. Conquerors and Slaves. Cambridge University Press, 1978."
+            },
+            {
+              "type": "academic_book",
+              "ref": "Duncan-Jones, R. Structure and Scale in the Roman Economy. Cambridge University Press, 1990."
+            }
+          ],
+          "debate": {
+            "question": "Para uma província recém-conquistada, o tributo romano era um alívio em relação ao poder anterior, ou uma extração a mais?",
+            "positions": [
+              {
+                "view": "Alívio relativo: o sistema romano era mais previsível e menos arbitrário que muitos poderes locais anteriores, e a integração ao mercado imperial trazia ganhos reais que compensavam o tributo.",
+                "acceptance": "influente, não majoritária"
+              },
+              {
+                "view": "Extração líquida: o tributo romano se somava, não substituía, obrigações locais preexistentes — e o excedente extraído financiava sobretudo Roma e o exército, não a província que o pagava.",
+                "acceptance": "também influente — sem consenso decisivo"
+              }
+            ]
+          }
+        }
+      ],
+      "connections": [
+        {
+          "to": "sucessao-imperial",
+          "type": "influence"
+        },
+        {
+          "to": "administracao-romana",
+          "type": "influence"
+        },
+        {
+          "to": "revolucoes-atlanticas",
+          "type": "echo"
+        }
+      ],
+      "lessons": [
+        {
+          "id": "um-homem-so-um-imperio-inteiro",
+          "title": "Um homem só, um império inteiro",
+          "hook": "Você acaba de ser nomeado governador de uma província a três meses de viagem de Roma. Não há telefone, não há e-mail — só cartas que demoram semanas. Você tem legiões sob seu comando, poder de julgar processos e cobrar impostos. O que impede você de simplesmente virar um rei local?",
+          "narrative": [
+            "A resposta de Roma para \"como governar um território do tamanho de toda a Europa com a tecnologia da Antiguidade\" foi engenhosa e arriscada ao mesmo tempo: delegar poder quase total a um único homem por província — e confiar na lealdade dele.",
+            "Havia dois tipos de província. As **senatoriais**, mais pacíficas, eram governadas por um proconsul indicado pelo Senado, geralmente sem legiões relevantes. As **imperiais** — de fronteira, com tropas numerosas — ficavam sob um legado escolhido diretamente pelo imperador, alguém em quem ele confiasse pessoalmente.",
+            "Essa divisão não era burocracia por burocracia: era proteção política. Deixar um exército grande sob o comando de alguém fora do controle direto do imperador era, como 69 d.C. provaria, um convite ao golpe."
+          ],
+          "echoes": [],
+          "interactions": [
+            {
+              "id": "i1",
+              "type": "situated_decision",
+              "claimId": "governadores-provinciais",
+              "objective": false,
+              "prompt": "Você é o imperador. Uma província de fronteira tem três legiões estacionadas. Quem você coloca no comando dela?",
+              "options": [
+                "Alguém indicado pelo Senado, sem ligação direta comigo",
+                "Um legado de minha confiança pessoal direta",
+                "Deixo a província se autogovernar"
+              ],
+              "errorPath": "Legiões numerosas sob comando de alguém fora do seu controle direto eram um risco de golpe demais grande — foi exatamente assim que generais viraram imperadores em 69 d.C. A confiança pessoal, não o protocolo, decidia quem comandava a fronteira."
+            },
+            {
+              "id": "i2",
+              "type": "causal",
+              "claimId": "governadores-provinciais",
+              "objective": true,
+              "prompt": "Por que as províncias de fronteira, com legiões estacionadas, eram governadas diretamente por um legado do imperador — e não por um proconsul indicado pelo Senado?",
+              "options": [
+                "O imperador não podia deixar tropas numerosas sob o comando de alguém fora de seu controle direto — era um risco de golpe demais grande",
+                "O Senado se recusava a administrar províncias de fronteira",
+                "Não havia diferença real entre os dois tipos de província"
+              ],
+              "correct": 0,
+              "errorPath": "Quem comandava legiões podia tentar virar imperador (como em 69 d.C.). Manter as províncias com mais tropas sob legados de sua confiança direta era a forma do imperador se proteger de generais ambiciosos demais."
+            },
+            {
+              "id": "i3",
+              "type": "application",
+              "claimId": "tributacao-imperial",
+              "objective": true,
+              "prompt": "Um camponês numa província romana pagava tributo principalmente sobre…",
+              "options": [
+                "A terra que cultivava e o simples fato de existir (imposto per capita) — os dois pilares do tributum",
+                "Apenas o que vendia nos mercados urbanos",
+                "Nada — províncias conquistadas eram isentas de qualquer tributo"
+              ],
+              "correct": 0,
+              "errorPath": "O tributum tinha duas faces: tributo sobre a terra (produção) e tributo per capita (a própria existência da pessoa livre ou não). Impostos sobre comércio existiam, mas eram complemento, não a base do sistema."
+            }
+          ],
+          "connection": "Agora você entende melhor: ✔ por que Roma dividia suas províncias em dois tipos diferentes de governo ✔ como o medo de golpe moldava até a burocracia ✔ de onde vinha o dinheiro que sustentava o império inteiro."
+        },
+        {
+          "id": "o-preco-de-pertencer-ao-imperio",
+          "title": "O preço de pertencer ao império",
+          "hook": "Séculos depois, colonos do outro lado do Atlântico vão gritar \"sem tributação sem representação\" contra um império diferente. Mas a pergunta é mais antiga: uma província romana recém-conquistada pagava tributo a Roma — isso era pior, melhor, ou igual ao que ela já pagava antes de ser conquistada?",
+          "narrative": [
+            "Aqui a história para de ter resposta fácil. Alguns historiadores apontam que o sistema fiscal romano, sob o Principado, era mais previsível que muitos poderes locais anteriores — sem cobradores privados abusando à vontade, como acontecia às vezes na República. Integrar-se ao mercado imperial trazia estradas, proteção militar e trocas comerciais que geravam riqueza real.",
+            "Outros apontam o oposto: o tributo romano raramente **substituía** obrigações locais — ele se **somava**. E o excedente extraído das províncias financiava, sobretudo, Roma e suas legiões — não a infraestrutura da própria província que pagava a conta.",
+            "Não existem registros fiscais completos o bastante para decidir esse debate com números. O que sobra é uma pergunta que atravessa impérios: quando alguém diz que a integração compensa o tributo, compensa **para quem**?"
+          ],
+          "echoes": [],
+          "interactions": [
+            {
+              "id": "i1",
+              "type": "source_interpretation",
+              "claimId": "fardo-fiscal-debate",
+              "objective": false,
+              "prompt": "Um economista imperial diria que a província ganhou com a integração fiscal romana. Um camponês local talvez discordasse. Explore por que os historiadores hoje não conseguem fechar esse debate com números.",
+              "errorPath": "Debate historiográfico real, sem resposta fechada: as fontes fiscais da Antiguidade são fragmentárias demais para uma resposta quantitativa definitiva — o que resta é entender os dois lados do argumento, não escolher um vencedor."
+            },
+            {
+              "id": "i2",
+              "type": "causal",
+              "claimId": "tributacao-imperial",
+              "objective": true,
+              "prompt": "Por que o sistema de tributum direto, sob o Principado, era considerado uma melhoria em relação ao modelo republicano de arrendar a cobrança a publicani privados?",
+              "options": [
+                "Cobradores privados tinham incentivo para extrair o máximo possível para lucro próprio; a administração mais direta reduzia esse abuso",
+                "O tributum eliminou totalmente qualquer forma de corrupção fiscal no império",
+                "Os publicani continuaram exatamente com o mesmo papel sob o Principado"
+              ],
+              "correct": 0,
+              "errorPath": "Publicani privados lucravam com a diferença entre o que arrecadavam e o que repassavam a Roma — um incentivo direto para extorquir. Isso não significa que o sistema imperial fosse justo, só que reduziu esse tipo específico de abuso."
+            }
+          ],
+          "connection": "Agora você entende melhor: ✔ por que \"integração\" e \"extração\" podem ser a mesma coisa vista de ângulos diferentes ✔ como o sistema fiscal romano mudou entre República e Império ✔ que a pergunta sobre quem paga a conta de um império atravessa séculos — inclusive até 1776."
         }
       ]
     },
@@ -2069,6 +2346,217 @@
             }
           ],
           "connection": "Agora você entende melhor: ✔ a genealogia completa do art. 1º da Constituição ✔ por que até tiranos falam em nome do povo ✔ o que 1789 deve a Atenas ✔ que o próximo elo do fio é a sua época."
+        }
+      ]
+    },
+    {
+      "id": "sucessao-imperial",
+      "domain": "history",
+      "era": "antiguidade",
+      "place": "O Palácio",
+      "emblem": "👑",
+      "name": "Quem faz um imperador?",
+      "sensitive": false,
+      "journeys": [
+        "mod-estado-romano"
+      ],
+      "positionInJourney": {
+        "mod-estado-romano": 1
+      },
+      "claims": [
+        {
+          "id": "sem-lei-de-sucessao",
+          "text": "Roma nunca desenvolveu uma lei de sucessão imperial fixa e vinculante; a transmissão do poder dependia de uma combinação instável de preferência hereditária do imperador, ratificação do Senado e, decisivamente, aclamação do exército.",
+          "epistemicClass": "established_fact",
+          "consensusPct": 92,
+          "sources": [
+            {
+              "type": "academic_book",
+              "ref": "Campbell, J. B. The Emperor and the Roman Army, 31 BC–AD 235. Oxford University Press, 1984."
+            },
+            {
+              "type": "academic_book",
+              "ref": "Hekster, O. Emperors and Ancestors: Roman Rulers and the Constraints of Tradition. Oxford University Press, 2015."
+            }
+          ],
+          "reviewVariants": [
+            {
+              "id": "rv1",
+              "type": "causal",
+              "objective": true,
+              "prompt": "Um imperador romano morre sem deixar instruções claras. O que decide quem herda o trono?",
+              "options": [
+                "Uma disputa real entre herdeiro preferido, aval do Senado e, acima de tudo, quem o exército aclamar",
+                "Uma lei escrita de sucessão hereditária direta, do pai para o filho mais velho",
+                "Uma eleição popular nas assembleias, como na antiga República"
+              ],
+              "correct": 0,
+              "errorPath": "Diferente de uma monarquia hereditária clássica, Roma nunca fixou uma regra. Na prática, quem tivesse a lealdade das legiões tinha a vantagem decisiva — o Senado geralmente só formalizava depois."
+            }
+          ]
+        },
+        {
+          "id": "exercito-faz-imperador",
+          "text": "O ano de 69 d.C. (\"ano dos quatro imperadores\") demonstrou publicamente que legiões provinciais podiam aclamar seu próprio comandante como imperador e marchar sobre Roma — um padrão que se repetiu ao longo da história imperial, sobretudo em momentos de sucessão contestada.",
+          "epistemicClass": "established_fact",
+          "consensusPct": 93,
+          "sources": [
+            {
+              "type": "primary_source",
+              "ref": "Tácito. Histórias, Livro I (relato contemporâneo de 69 d.C.)."
+            },
+            {
+              "type": "academic_book",
+              "ref": "Morgan, G. 69 A.D.: The Year of Four Emperors. Oxford University Press, 2006."
+            }
+          ],
+          "reviewVariants": [
+            {
+              "id": "rv1",
+              "type": "application",
+              "objective": true,
+              "prompt": "Um general romano popular entre suas legiões, mas sem apoio do Senado, tinha na prática…",
+              "options": [
+                "Uma vantagem real para tentar o trono — o exército, não o Senado, era quem decidia na hora da força",
+                "Nenhuma chance: sem aval do Senado, nenhum general jamais se tornou imperador",
+                "Que renunciar ao comando antes de qualquer disputa política"
+              ],
+              "correct": 0,
+              "errorPath": "69 d.C. provou o oposto do que a fachada republicana sugeria: quatro homens reivindicaram o trono naquele ano, e o vencedor (Vespasiano) foi decidido pelas legiões, não por votação do Senado."
+            }
+          ]
+        },
+        {
+          "id": "fraqueza-estrutural-debate",
+          "text": "O quanto essa ausência de regra de sucessão fixa foi uma fraqueza estrutural que condenou o império a crises cíclicas, versus uma flexibilidade que permitiu adaptação e sobrevivência por séculos, é debatido entre historiadores.",
+          "epistemicClass": "historiographical_interpretation",
+          "consensusPct": 50,
+          "sources": [
+            {
+              "type": "academic_book",
+              "ref": "Hekster, O. Emperors and Ancestors: Roman Rulers and the Constraints of Tradition. Oxford University Press, 2015."
+            },
+            {
+              "type": "academic_book",
+              "ref": "Grant, M. The Roman Emperors. Barnes & Noble, 1985."
+            }
+          ],
+          "debate": {
+            "question": "A ausência de uma lei de sucessão foi um defeito de design fatal, ou uma flexibilidade que ajudou o império a durar séculos?",
+            "positions": [
+              {
+                "view": "Foi uma fraqueza estrutural real: cada sucessão sem herdeiro claro abria risco de guerra civil, como ficou brutalmente evidente em 69 d.C. e, mais tarde, na Crise do Século III.",
+                "acceptance": "majoritária"
+              },
+              {
+                "view": "A flexibilidade permitiu correção: dinastias fracas podiam ser substituídas por adoção de herdeiros capazes (os \"imperadores adotivos\" do séc. II) ou por aclamação militar — mecanismos que uma lei rígida de primogenitura não ofereceria.",
+                "acceptance": "minoritária influente"
+              }
+            ]
+          }
+        }
+      ],
+      "connections": [
+        {
+          "to": "pax-romana",
+          "type": "contrast"
+        },
+        {
+          "to": "governo-provincial",
+          "type": "influence"
+        }
+      ],
+      "lessons": [
+        {
+          "id": "quem-faz-um-imperador",
+          "title": "Quem faz um imperador?",
+          "hook": "O imperador morreu esta manhã, sem deixar herdeiro claro. Você é um senador, um general com três legiões leais, e um sobrinho do imperador estão todos a caminho do palácio ao mesmo tempo. Não existe lei escrita dizendo quem herda o trono. O que decide quem vence?",
+          "narrative": [
+            "Aqui está o segredo incômodo do \"império\" romano: ele nunca foi, no papel, uma monarquia hereditária como as que vieram depois na Europa. Não havia lei fixando que o trono passava do pai para o filho mais velho, nem um processo formal e vinculante de escolha.",
+            "Na prática, três forças competiam: a **preferência do próprio imperador** (que podia indicar ou adotar um sucessor), a **ratificação do Senado** (que formalizava, mas raramente decidia sozinho) e, acima de tudo, a **lealdade do exército**. Um general com legiões dispostas a marchar sobre Roma tinha uma vantagem que nenhum título ou parentesco garantia sozinho.",
+            "Esse arranjo instável funcionou bem quando um imperador forte escolhia um sucessor competente — e explodiu em guerra civil quando não escolhia, ou quando morria de repente."
+          ],
+          "echoes": [],
+          "interactions": [
+            {
+              "id": "i1",
+              "type": "situated_decision",
+              "claimId": "sem-lei-de-sucessao",
+              "objective": false,
+              "prompt": "O imperador morreu sem herdeiro claro. Um sobrinho, um senador e um general com três legiões disputam o trono. Quem tem, na prática, a vantagem decisiva?",
+              "options": [
+                "O sobrinho — sangue do imperador sempre vence",
+                "O senador — o Senado é quem legalmente escolhe",
+                "O general — quem tem o exército, tem o trono"
+              ],
+              "errorPath": "Título e parentesco pesavam, mas não decidiam sozinhos. Na hora da força, era o exército — não a genealogia nem o Senado — quem costumava definir o resultado."
+            },
+            {
+              "id": "i2",
+              "type": "causal",
+              "claimId": "sem-lei-de-sucessao",
+              "objective": true,
+              "prompt": "Um imperador romano morre sem deixar instruções claras. O que decide, na prática, quem herda o trono?",
+              "options": [
+                "Uma disputa real entre herdeiro preferido, aval do Senado e, acima de tudo, quem o exército aclamar",
+                "Uma lei escrita de sucessão hereditária direta, do pai para o filho mais velho",
+                "Uma eleição popular nas assembleias, como na antiga República"
+              ],
+              "correct": 0,
+              "errorPath": "Diferente de uma monarquia hereditária clássica, Roma nunca fixou uma regra. Na prática, quem tivesse a lealdade das legiões tinha a vantagem decisiva — o Senado geralmente só formalizava depois."
+            },
+            {
+              "id": "i3",
+              "type": "source_interpretation",
+              "claimId": "fraqueza-estrutural-debate",
+              "objective": false,
+              "prompt": "Sem uma lei de sucessão fixa, o império viveu séculos de crises de trono — mas também séculos de correção por adoção de herdeiros capazes. Explore por que os historiadores discordam sobre se isso foi defeito ou virtude do sistema.",
+              "errorPath": "Debate historiográfico real, sem resposta fechada: o valor está em ver que a mesma ausência de regra que causou guerras civis também permitiu que Roma, às vezes, escolhesse o melhor sucessor disponível — não necessariamente o mais próximo por sangue."
+            }
+          ],
+          "connection": "Agora você entende melhor: ✔ por que a \"dinastia\" romana era mais frágil do que parecia ✔ o papel real do exército na política imperial ✔ por que a paz de um reinado não garantia paz nenhuma na sucessão seguinte."
+        },
+        {
+          "id": "o-ano-dos-quatro-imperadores",
+          "title": "O ano dos quatro imperadores",
+          "hook": "Ano 69 d.C. Em doze meses, quatro homens diferentes se sentam no trono de Roma — Galba, Oto, Vitélio, Vespasiano — cada um proclamado por legiões diferentes, em fronteiras diferentes. Nenhum deles foi eleito por assembleia nenhuma. O que isso revela sobre quem realmente mandava em Roma?",
+          "narrative": [
+            "O ano de 69 d.C. arrancou de vez a máscara republicana que Augusto tinha vestido cem anos antes. Depois da morte do imperador Nero, sem sucessor claro, um governador na Espanha foi aclamado imperador por suas tropas. Meses depois, outra legião aclamou outro general. Depois outra.",
+            "Não houve votação, não houve debate no Senado decidindo o vencedor — houve batalhas. O Senado, ano após ano, apenas ratificava quem já tinha vencido no campo. Vespasiano, o quarto e último, só consolidou o trono porque suas legiões no Oriente eram as mais fortes.",
+            "O episódio ficou marcado como prova histórica de um segredo que todos suspeitavam: o verdadeiro \"eleitorado\" do império não usava toga — usava armadura."
+          ],
+          "echoes": [],
+          "interactions": [
+            {
+              "id": "i1",
+              "type": "causal",
+              "claimId": "exercito-faz-imperador",
+              "objective": true,
+              "prompt": "Em 69 d.C., por que o Senado acabava sempre ratificando quem já tinha vencido no campo de batalha, em vez de decidir antes quem seria imperador?",
+              "options": [
+                "A força militar decidia primeiro; a legitimação institucional do Senado vinha depois, como formalidade sobre um resultado já dado",
+                "O Senado sempre escolhia antes, e o exército só confirmava a escolha",
+                "Não havia relação entre as batalhas e as decisões do Senado naquele ano"
+              ],
+              "correct": 0,
+              "errorPath": "A ordem real inverte a fachada republicana: a força militar decidia primeiro, e a legitimação institucional vinha depois, como formalidade. O Senado de 69 d.C. não escolheu nenhum dos quatro — só reconheceu quem já tinha vencido."
+            },
+            {
+              "id": "i2",
+              "type": "application",
+              "claimId": "exercito-faz-imperador",
+              "objective": true,
+              "prompt": "Um general romano popular entre suas legiões, mas sem apoio do Senado, tinha na prática…",
+              "options": [
+                "Uma vantagem real para tentar o trono — o exército, não o Senado, era quem decidia na hora da força",
+                "Nenhuma chance: sem aval do Senado, nenhum general jamais se tornou imperador",
+                "Que renunciar ao comando antes de qualquer disputa política"
+              ],
+              "correct": 0,
+              "errorPath": "69 d.C. provou o oposto do que a fachada republicana sugeria: quatro homens reivindicaram o trono naquele ano, e o vencedor (Vespasiano) foi decidido pelas legiões, não por votação do Senado."
+            }
+          ],
+          "connection": "Agora você entende melhor: ✔ por que 69 d.C. é um ano-chave para entender o poder real em Roma ✔ que o Senado ratificava mais do que decidia ✔ como o mesmo padrão de sucessão pela força voltaria a assombrar o império em crises futuras."
         }
       ]
     }
