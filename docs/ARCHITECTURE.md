@@ -68,22 +68,25 @@ Módulos (assemblies separados, comunicação interna por interfaces — frontei
 
 ### 5.1 Conteúdo (publicado pelo pipeline, indexado no banco)
 
-> **v2 (pivô "Biblioteca de Alexandria", LDD §1-2):** dois níveis novos entre domínio e nó — `subject` (Coleção, porta de entrada e busca) e `module` (Módulo, grande tema de compreensão). `journey` não desaparece: passa a representar exclusivamente **Trilha** (LDD §2.2), o formato secundário que atravessa várias coleções. `node_journey` já era N:N ordenado — é o que permite um nó pertencer ao seu módulo nativo *e* a uma ou mais trilhas sem duplicar conteúdo.
+> **v2 (pivô "Biblioteca de Alexandria", LDD §1-2):** dois níveis novos entre domínio e nó — `subject` (Coleção, porta de entrada e busca) e `module` (grande tema de compreensão). `journey` não desaparece: passa a representar exclusivamente **Trilha** (LDD §2.2), o formato secundário que atravessa várias coleções. `node_journey` já era N:N ordenado — é o que permite um nó pertencer ao seu nível nativo *e* a uma ou mais trilhas sem duplicar conteúdo.
+>
+> **v4 (crítica do fundador à forma do conteúdo):** o produto passa a chamar o nível `module` de **Jornada** (LDD v4) — uma pergunta com começo, clímax e fim, não um capítulo de livro. **O nome da tabela/schema continua `module`** (mudar nomes de coluna/tabela é custo de migração sem benefício de produto neste estágio de prototipagem); só o vocabulário voltado ao produto e à documentação muda. Não confundir com `journey`, que continua sendo o schema da Trilha.
 
 ```
 domain(id, slug, name, ...)                    -- "history" é linha, não schema
 subject(id, domain_id, slug, name,             -- Coleção: porta de entrada e busca
         tagline, status, ...)                  -- ("Império Romano", "Estoicismo")
-module(id, subject_id, order, central_question,-- Módulo: grande tema de compreensão
-       title, synthesis_json, ...)             -- dentro da coleção (LDD §2, passo 2)
+module(id, subject_id, order, central_question,-- Jornada (produto) / "module" (schema):
+       title, synthesis_json, ...)             -- pergunta com começo/clímax/fim,
+                                               -- dentro da coleção (LDD §2, passo 2)
 era(id, domain_id, order, name, color, ...)    -- contexto cronológico do nó (tag, não
                                                -- mais container de navegação)
-node(id, module_id, era_id, name,              -- nó da timeline, pertence a 1 módulo
+node(id, module_id, era_id, name,              -- nó da timeline, pertence a 1 jornada
      sensitive:bool, ...)                      -- (dono primário — não N:N)
 journey(id, domain_id, central_question,       -- Trilha (LDD §2.2): formato secundário
         synthesis_json, ...)                   -- cross-coleção, rotulado como tal
-node_journey(journey_id, node_id, position)    -- trilha reaproveita nós de módulos
-                                               -- distintos (N:N ordenado)
+node_journey(journey_id, node_id, position)    -- trilha reaproveita nós de jornadas
+                                               -- distintas (N:N ordenado)
 lesson(id, node_id, position, ...)             -- lição
 interaction(id, lesson_id, type, payload_ref)  -- 7 tipos do LDD §7
 claim(id, node_id, epistemic_class,            -- fato|hipótese|interpretação|debate
@@ -93,7 +96,7 @@ claim_variant(id, claim_id, type, payload_ref) -- variantes de pergunta p/ revis
 connection(from_node, to_node, type, ...)      -- conhecimento conectado / Ecos
 ```
 
-Diferença estrutural chave: **um nó pertence a exatamente um módulo** (dono primário, FK direta — é a curadoria da Coleção, LDD §2 passo 4), mas pode aparecer em **zero ou mais trilhas** (N:N via `node_journey`, LDD §2.2 — reaproveite, não duplique). O *payload* pesado (textos, mídia, story cards) vive nos arquivos publicados na CDN, referenciado por hash/versão; o banco guarda o índice e os metadados necessários para agendamento e progressão.
+Diferença estrutural chave: **um nó pertence a exatamente uma jornada** (dono primário, FK direta — é a curadoria da Coleção, LDD §2 passo 4), mas pode aparecer em **zero ou mais trilhas** (N:N via `node_journey`, LDD §2.2 — reaproveite, não duplique). O *payload* pesado (textos, mídia, story cards) vive nos arquivos publicados na CDN, referenciado por hash/versão; o banco guarda o índice e os metadados necessários para agendamento e progressão.
 
 ### 5.2 Progresso (o log de eventos + projeções)
 
@@ -162,7 +165,7 @@ Eventos têm ID gerado no cliente (ULID) → ingestão idempotente; reenvio apó
 | ADR-6 | PostgreSQL único (relacional + JSONB nos payloads) | Banco de documentos separado | Um banco para operar; JSONB cobre payloads flexíveis de interação |
 | ADR-7 | Container Apps | AKS / App Service clássico | Escala a zero no piloto, Docker nativo, upgrade de escala sem re-arquitetura |
 | ADR-8 | IA só na autoria no MVP (API Claude em scripts) | Tutor IA em produção no MVP | VISION §22/16.2: IA de runtime é V1+; autoria assistida entrega valor imediato sem custo por usuário |
-| ADR-9 | `subject`/`module` como níveis primários; `journey` retido só para Trilha (N:N) | Manter `journey` como unidade primária (modelo v1) | VISION v6/LDD §1-2: a porta de entrada é a Coleção, não a Jornada; nó pertence a um módulo por FK direta (curadoria), trilha reaproveita via N:N já existente — menor mudança de schema possível para o pivô |
+| ADR-9 | `subject`/`module` como níveis primários; `journey` retido só para Trilha (N:N) | Manter `journey` como unidade primária (modelo v1) | VISION v6/LDD §1-2: a porta de entrada é a Coleção, não a Trilha; nó pertence a uma jornada (schema: `module`) por FK direta (curadoria), trilha reaproveita via N:N já existente — menor mudança de schema possível para o pivô. Produto chama esse nível de "Jornada" (LDD v4); schema mantém `module` como nome de tabela. |
 
 ---
 

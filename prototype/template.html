@@ -412,14 +412,18 @@
 /* Conteúdo compilado, injetado por tools/build-prototype.ts — NÃO editar à mão. */
 const PACKAGE = __PACKAGE_JSON__;
 
-/* Coleção → Módulo → Nó (LDD §1-2, pivô "Biblioteca de Alexandria" v6).
-   `journeys` no pacote compilado guarda dois tipos, distinguidos por `kind`:
-   "module" (a forma de aprender dentro de uma coleção) e "trail" (formato
-   secundário que atravessa várias coleções — LDD §2.2). */
+/* Coleção → Jornada → Nó (LDD §1-2/v4). "module" no schema = "Jornada" no
+   produto (renomeado v4: uma pergunta com começo, clímax e fim, não um
+   capítulo de livro — ver LDD §1). `journeys` no pacote compilado guarda
+   dois tipos, distinguidos por `kind`: "module" (a forma de aprender dentro
+   de uma coleção — produto: Jornada) e "trail" (formato secundário que
+   atravessa várias coleções — produto: Trilha, LDD §2.2). Nomes internos
+   (MODULES, moduleOfNode etc.) mantêm o schema `module` por não terem custo
+   de migração; só o texto voltado ao usuário muda. */
 const MODULES = PACKAGE.journeys.filter((j) => j.kind === 'module').sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 const TRAILS = PACKAGE.journeys.filter((j) => j.kind === 'trail');
 const nodeOf = (id) => PACKAGE.nodes.find((n) => n.id === id);
-const journeyNodes = (j) => j.nodeOrder.map(nodeOf); // funciona para módulo ou trilha
+const journeyNodes = (j) => j.nodeOrder.map(nodeOf); // funciona para jornada (module) ou trilha
 const NODES = PACKAGE.nodes;
 const journeyDone = (j) => journeyNodes(j).every((n) => S.lit[n.id]);
 
@@ -447,8 +451,8 @@ function moduleUnlocked(m) {
   const ix = mods.findIndex((x) => x.id === m.id);
   return ix <= 0 || journeyDone(mods[ix - 1]);
 }
-/* Coleção completa = todo módulo já ABERTO nela está concluído — não exige
-   os módulos "em breve" (LDD §9.2: incompleto e honesto é o modelo). */
+/* Coleção completa = toda jornada já ABERTA nela está concluída — não exige
+   as jornadas "em breve" (LDD §9.2: incompleto e honesto é o modelo). */
 function collectionDone(c) {
   const mods = collectionModules(c);
   return mods.length > 0 && mods.every(journeyDone);
@@ -462,9 +466,9 @@ function trailUnlocked(t) {
   return c ? collectionDone(c) : false;
 }
 
-/* Caminho em curso (módulo OU trilha) — fonte única de verdade de "onde o
+/* Caminho em curso (jornada OU trilha) — fonte única de verdade de "onde o
    usuário está" para startNode/celebrateNode/etc.; um nó pode pertencer a
-   um módulo nativo e a uma ou mais trilhas ao mesmo tempo (ARCHITECTURE §5.1). */
+   uma jornada nativa e a uma ou mais trilhas ao mesmo tempo (ARCHITECTURE §5.1). */
 let CURRENT_PATH = null;
 
 const CONNECTION_LABELS = Object.fromEntries(
@@ -598,7 +602,7 @@ let rightIx = 0;
 const verdictRight = () => `<div class="verdict right">✓ ${RIGHT_WORDS[rightIx++ % RIGHT_WORDS.length]}</div>`;
 const verdictMiss = () => `<div class="verdict miss">✕ Ainda não…</div>`;
 
-/* ---------- Corredor & Biblioteca (GDD §4.0: Biblioteca → Coleção → Módulo → Salões) ---------- */
+/* ---------- Corredor & Biblioteca (GDD §4.0: Biblioteca → Coleção → Jornada → Salões) ---------- */
 function dueReviews() {
   return Object.entries(S.reviews)
     .filter(([, r]) => r.dueAt <= now())
@@ -645,7 +649,7 @@ function memStatsFor(nodeList) {
 }
 const memStats = () => memStatsFor(NODES);
 
-/* % de um caminho (módulo/trilha) em lições: salão aceso conta cheio; salão
+/* % de um caminho (jornada/trilha) em lições: salão aceso conta cheio; salão
    pela metade conta o que foi feito. */
 function pathLessonPct(path) {
   let done = 0, total = 0;
@@ -778,7 +782,7 @@ function wireTrailCards() {
 }
 
 /* Uma biblioteca por vez: coleções como porta de entrada (LDD §2 — o que a
-   pessoa já busca), cada uma com seus módulos. */
+   pessoa já busca), cada uma com suas jornadas. */
 function renderDomain(d) {
   nav(renderLibrary, `biblioteca de ${d.title.toLowerCase()}`);
   setProgress(null);
@@ -799,7 +803,7 @@ function renderDomain(d) {
     return `<div class="jbook ${doneC ? 'done' : ''}" data-collection="${c.id}" role="button" tabindex="0">
       <div class="jb-title">${c.icon} ${c.title}</div>
       <div class="jb-q">${c.tagline ?? ''}</div>
-      <div class="jb-stats">📚 ${mods.length} ${mods.length === 1 ? 'módulo aberto' : 'módulos abertos'} · ${(c.upcomingModules ?? []).length} em escrita</div>
+      <div class="jb-stats">📚 ${mods.length} ${mods.length === 1 ? 'jornada aberta' : 'jornadas abertas'} · ${(c.upcomingModules ?? []).length} em escrita</div>
       ${doneC
         ? `<div class="jm"><span class="selo">✔ coleção completa</span> <span>${cN.map((n) => n.emblem ?? '🔥').join(' ')}</span></div>`
         : `<div class="bcount">🕯️ ${litC} de ${cN.length} salões acesos${litC ? ` · ${memStatsFor(cN).pct}% recuperado` : ''}</div>`}
@@ -836,7 +840,7 @@ function renderDomain(d) {
   });
 }
 
-/* A Coleção: o conteúdo (o quê). Mostra os módulos — a forma de aprender —
+/* A Coleção: o conteúdo (o quê). Mostra as jornadas — a forma de aprender —
    como cards-livro, mais o "ainda escondidos" (mistério, não catálogo). */
 function renderCollection(c) {
   const d = domainOfCollection(c.id);
@@ -870,7 +874,7 @@ function renderCollection(c) {
       <div class="jb-q">${m.centralQuestion}</div>
       <div class="jb-stats">🚪 ${mN.length} salões · 📖 ${lessons} lições · ⏱ ~${mins} min</div>
       ${doneM
-        ? `<div class="jm"><span class="selo">✔ módulo concluído</span> <span>${mN.map((n) => n.emblem ?? '🔥').join(' ')}</span></div>`
+        ? `<div class="jm"><span class="selo">✔ jornada concluída</span> <span>${mN.map((n) => n.emblem ?? '🔥').join(' ')}</span></div>`
         : `<div class="pctbar"><div style="width:${pct}%"></div></div>
            <div class="jb-cta">▶ ${pct > 0 ? `continuar — ${pct}%` : 'começar'}</div>`}
     </div>`;
@@ -892,7 +896,7 @@ function renderCollection(c) {
       <div class="pctbar"><div style="width:${mem.pct}%"></div></div>
       <div class="bcount">${mem.pct}% desta coleção reconstruída${doneC ? ' — coleção completa ✔' : ''}</div>
     </div>` : ''}
-    <p class="eyebrow">módulos</p>
+    <p class="eyebrow">jornadas</p>
     ${modCards}
     ${soon}
   `;
@@ -905,8 +909,8 @@ function renderCollection(c) {
   });
 }
 
-/* O Corredor: a timeline de UM módulo (ou de UMA trilha) por vez — não a
-   home (feedback do fundador). Genérico sobre `j` (módulo ou trilha). */
+/* O Corredor: a timeline de UMA jornada (ou de UMA trilha) por vez — não a
+   home (feedback do fundador). Genérico sobre `j` (jornada ou trilha). */
 function renderCorridor(j) {
   CURRENT_PATH = j;
   const isTrail = j.kind === 'trail';
@@ -1053,8 +1057,8 @@ function maybeEvolve(next) {
       <p class="eyebrow fade-in" style="animation-delay:.4s">seu companheiro evoluiu</p>
       <h1 class="fade-in" style="animation-delay:.6s">${THOTH_STAGES[st - 1]}</h1>
       <div class="fade-in" style="animation-delay:1.3s; width:100%; text-align:left">${thoth(st === 2
-        ? 'Guardião… minha pena mudou. Um módulo inteiro no pergaminho — eu não era capaz de desenhar assim antes de você. O Arquivo me deu um selo novo.'
-        : 'Dois módulos completos. Os outros escribas agora me chamam de Escriba do Arquivo — mas nós dois sabemos de quem são essas chamas.', true)}</div>
+        ? 'Guardião… minha pena mudou. Uma jornada inteira no pergaminho — eu não era capaz de desenhar assim antes de você. O Arquivo me deu um selo novo.'
+        : 'Duas jornadas completas. Os outros escribas agora me chamam de Escriba do Arquivo — mas nós dois sabemos de quem são essas chamas.', true)}</div>
       <div class="mural small fade-in" style="animation-delay:2s">${NODES.filter((n) => S.lit[n.id]).map((n) =>
         `<div class="arch lit">${n.emblem ?? '🔥'}</div>`).join('')}</div>
       <button class="cta gold fade-in" style="animation-delay:2.5s" id="go">continuar</button>
@@ -1251,7 +1255,7 @@ function renderWelcomeBack() {
   setProgress(null);
   stepScreen(`
     <p class="eyebrow">bem-vindo de volta, Guardião</p>
-    ${thoth(`Guardei tudo exatamente onde você deixou: <b>${node.place}</b>, lição ${r.lessonIx + 1} de ${node.lessons.length}. ${remainingSaloes === 1 ? 'Falta só este salão para concluir o módulo.' : `Faltam ${remainingSaloes} salões neste módulo.`}`)}
+    ${thoth(`Guardei tudo exatamente onde você deixou: <b>${node.place}</b>, lição ${r.lessonIx + 1} de ${node.lessons.length}. ${remainingSaloes === 1 ? 'Falta só este salão para concluir a jornada.' : `Faltam ${remainingSaloes} salões nesta jornada.`}`)}
     <button class="cta gold" id="go">▶ continuar de onde parei</button>
     <button class="cta ghost" id="map">ver a Biblioteca</button>`);
   $('go').addEventListener('click', () => { CURRENT_PATH = m; startNode(node.id); });
@@ -1379,7 +1383,7 @@ function renderSynthesis(j) {
   nav(null, 'síntese');
   setProgress(null);
   stepScreen(`
-    <p class="eyebrow">síntese · a pergunta que atravessa ${j.kind === 'trail' ? 'a trilha' : 'o módulo'}</p>
+    <p class="eyebrow">síntese · a pergunta que atravessa ${j.kind === 'trail' ? 'a trilha' : 'a jornada'}</p>
     <div class="card" id="ic"></div>`);
   renderInteraction(syn.question, { claims: [] }, $('ic'), () => renderReframe(j));
 }
@@ -1399,7 +1403,7 @@ function renderReframe(j) {
   $('go').addEventListener('click', () => afterSynthesis(j));
 }
 
-/* Depois da síntese: módulo → checa se a coleção inteira ficou completa
+/* Depois da síntese: jornada → checa se a coleção inteira ficou completa
    (GDD §9.1, o maior marco de conteúdo); trilha → celebração de trilha. */
 function afterSynthesis(j) {
   if (j.kind === 'trail') { celebrateTrail(j); return; }
@@ -1418,7 +1422,7 @@ function celebrateModule(j) {
   stepScreen(`
     <div class="celebrate">
       <div class="jcard fade-in">
-        <p class="eyebrow">módulo concluído</p>
+        <p class="eyebrow">jornada concluída</p>
         <div class="jt">${j.title}</div>
         <div class="mural small">${jNodes.map((n) =>
           `<div class="arch lit" title="${n.place}">${n.emblem ?? '🔥'}</div>`).join('')}</div>
@@ -1429,7 +1433,7 @@ function celebrateModule(j) {
         </div>
       </div>
       <div class="fade-in" style="animation-delay:.8s; width:100%; text-align:left">
-        ${thoth('Você respondeu a pergunta do módulo, Guardião: <b>' + j.centralQuestion + '</b>', true)}
+        ${thoth('Você respondeu a pergunta da jornada, Guardião: <b>' + j.centralQuestion + '</b>', true)}
       </div>
       <div class="card fade-in" style="animation-delay:1.6s; width:100%; text-align:left">
         <p class="eyebrow">o Arquivo continua</p>

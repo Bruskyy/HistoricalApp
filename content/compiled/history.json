@@ -260,19 +260,19 @@
       "kind": "module",
       "collectionId": "imperio-romano",
       "order": 2,
-      "title": "Auge Romano",
+      "title": "Como Roma manteve a paz por 200 anos?",
       "centralQuestion": "Como um império do tamanho da Europa inteira se sustentou por 200 anos de relativa paz?",
       "nodeOrder": [
         "pax-romana",
         "administracao-romana"
       ],
-      "comingNext": "Estado Romano, Religião e Cultura, Crises, Queda do Ocidente, Império Bizantino — em escrita",
+      "comingNext": "\"Como um punhado de romanos governava um continente inteiro?\" — a próxima jornada já espera",
       "synthesis": {
         "question": {
           "id": "sintese-auge-romano",
           "type": "connection",
           "objective": true,
-          "prompt": "Última pergunta deste módulo: o que realmente segurou duzentos anos de Pax Romana de pé — o acordo de poder de Augusto, ou a máquina de estradas e cidadania que vinha depois dele?",
+          "prompt": "Última pergunta desta jornada: o que realmente segurou duzentos anos de Pax Romana de pé — o acordo de poder de Augusto, ou a máquina de estradas e cidadania que vinha depois dele?",
           "options": [
             "As duas coisas juntas: o acordo político deu a paz interna que permitiu construir a máquina, e a máquina (estradas, direito, cidadania) tornou essa paz sustentável — uma sem a outra não teria durado 200 anos",
             "Só o exército: Roma se sustentava por puro medo da força militar, nada mais",
@@ -282,7 +282,7 @@
           "errorPath": "Nenhuma das duas peças bastava sozinha. O acordo de Augusto parou a guerra civil — mas sem estradas para mover legiões e sem um direito comum que desse às províncias um motivo para cooperar, a paz teria durado uma geração, não duzentos anos."
         },
         "reframe": [
-          "Você começou este módulo com uma pergunta: como um império tão grande se sustentou por tanto tempo? A resposta não é uma coisa só — é um acordo político (Augusto trocando o título de rei pelo poder de rei) somado a uma infraestrutura física e legal que tornou esse acordo funcional em escala: estradas que moviam legiões em semanas, direito que dava a um provincial um motivo real para preferir Roma a se revoltar.",
+          "Você começou esta jornada com uma pergunta: como um império tão grande se sustentou por tanto tempo? A resposta não é uma coisa só — é um acordo político (Augusto trocando o título de rei pelo poder de rei) somado a uma infraestrutura física e legal que tornou esse acordo funcional em escala: estradas que moviam legiões em semanas, direito que dava a um provincial um motivo real para preferir Roma a se revoltar.",
           "E você viu também a borda dessa história: a mesma paz que os historiadores medem em estradas e comércio foi, para quem estava do lado errado da conquista, o nome dado à derrota. As duas coisas são verdadeiras ao mesmo tempo — e é isso que torna esse período mais interessante que um simples \"a paz durou 200 anos\"."
         ],
         "shift": {
@@ -296,19 +296,19 @@
       "kind": "module",
       "collectionId": "imperio-romano",
       "order": 3,
-      "title": "Estado Romano",
+      "title": "Como um punhado de romanos governava um continente inteiro?",
       "centralQuestion": "Como um homem só conseguia governar um território do tamanho de toda a Europa?",
       "nodeOrder": [
         "sucessao-imperial",
         "governo-provincial"
       ],
-      "comingNext": "Religião e Cultura, Crises, Queda do Ocidente, Império Bizantino — em escrita",
+      "comingNext": "Duas jornadas fecham o arco de Império Romano: a queda, e o que ficou depois — em escrita",
       "synthesis": {
         "question": {
           "id": "sintese-estado-romano",
           "type": "connection",
           "objective": true,
-          "prompt": "Última pergunta deste módulo: o que a ausência de lei de sucessão fixa e o modelo de governadores provinciais têm em comum?",
+          "prompt": "Última pergunta desta jornada: o que a ausência de lei de sucessão fixa e o modelo de governadores provinciais têm em comum?",
           "options": [
             "As duas coisas resolviam o mesmo problema pela mesma lógica: confiar poder concentrado a uma pessoa e torcer para que a lealdade dela (do exército, do governador) segurasse o sistema — sem nenhuma regra escrita garantindo isso",
             "Nada em comum — sucessão era um problema só de Roma, governo provincial só das fronteiras",
@@ -318,7 +318,7 @@
           "errorPath": "Repare no padrão: nem a coroa nem o comando de uma província tinham uma regra fixa e vinculante por trás. Os dois dependiam de confiança pessoal e lealdade militar — o que explica por que o mesmo ano, 69 d.C., expôs a fragilidade dos dois ao mesmo tempo."
         },
         "reframe": [
-          "Você começou este módulo com uma pergunta: como um homem só governava um território do tamanho da Europa? A resposta tem uma face impressionante — estradas, direito, governadores, tributos, uma máquina real de administração — e uma face frágil: quase nada disso tinha regra fixa por trás. O imperador confiava no exército para não se voltar contra ele; o governador de fronteira era escolhido por lealdade pessoal, não por processo.",
+          "Você começou esta jornada com uma pergunta: como um homem só governava um território do tamanho da Europa? A resposta tem uma face impressionante — estradas, direito, governadores, tributos, uma máquina real de administração — e uma face frágil: quase nada disso tinha regra fixa por trás. O imperador confiava no exército para não se voltar contra ele; o governador de fronteira era escolhido por lealdade pessoal, não por processo.",
           "É um império que parecia sólido como pedra e, por dentro, dependia inteiro de relações de confiança que podiam quebrar de um dia para o outro — como quebraram, repetidamente, ao longo de sua história."
         ],
         "shift": {
@@ -344,12 +344,12 @@
       "kind": "module",
       "collectionId": "imperio-romano",
       "order": 1,
-      "title": "Nascimento do Império",
+      "title": "Como Roma deixou de ser uma República?",
       "centralQuestion": "Se a democracia já existia em Atenas, por que Roma inventou outra máquina de poder?",
       "nodeOrder": [
         "republica-romana"
       ],
-      "comingNext": "Auge Romano, Estado Romano, Crises, Queda do Ocidente, Império Bizantino — em escrita"
+      "comingNext": "\"Como Roma manteve a paz por 200 anos?\" — a próxima jornada já espera"
     },
     {
       "id": "mod-resgate-luzes",
@@ -362,13 +362,13 @@
         "resgate-dos-antigos",
         "iluminismo"
       ],
-      "comingNext": "Novos módulos do Iluminismo em escrita — o Arquivo não para",
+      "comingNext": "Novas jornadas do Iluminismo em escrita — o Arquivo não para",
       "synthesis": {
         "question": {
           "id": "sintese-resgate-luzes",
           "type": "connection",
           "objective": true,
-          "prompt": "Última pergunta deste módulo: o que copistas medievais, humanistas do Renascimento e filósofos como Locke e Montesquieu fizeram com as ideias antigas foi…",
+          "prompt": "Última pergunta desta jornada: o que copistas medievais, humanistas do Renascimento e filósofos como Locke e Montesquieu fizeram com as ideias antigas foi…",
           "options": [
             "Religar um fio que o tempo tinha cortado: preservar, redescobrir e depois reler os textos antigos com perguntas novas — nunca inventar do zero",
             "Inventar ideias completamente novas, sem relação com o mundo antigo",
@@ -378,7 +378,7 @@
           "errorPath": "Nada aqui nasceu do nada nem ficou intacto. Mosteiros e o mundo islâmico guardaram os textos; humanistas os caçaram e imprimiram; Locke e Montesquieu os leram de novo — e mudaram a pergunta de \"quem deve mandar\" para \"o que autoriza o poder\". Preservar, redescobrir, reler: esse é o fio."
         },
         "reframe": [
-          "Você começou este módulo com uma pergunta: como uma ideia apagada por mil anos volta a acender o mundo? A resposta é que ela nunca ficou de fato apagada — ficou guardada, à espera de alguém que a lesse de novo com os problemas do seu próprio tempo.",
+          "Você começou esta jornada com uma pergunta: como uma ideia apagada por mil anos volta a acender o mundo? A resposta é que ela nunca ficou de fato apagada — ficou guardada, à espera de alguém que a lesse de novo com os problemas do seu próprio tempo.",
           "Montesquieu não copiou Políbio: ele o leu perguntando por que reis absolutos deveriam temer um poder que se freia sozinho. É essa releitura — não a cópia — que vira Revolução."
         ],
         "shift": {
@@ -397,7 +397,7 @@
       "nodeOrder": [
         "revolucoes-atlanticas"
       ],
-      "comingNext": "Mais módulos das Revoluções Atlânticas em escrita — o Arquivo não para"
+      "comingNext": "Mais jornadas das Revoluções Atlânticas em escrita — o Arquivo não para"
     },
     {
       "id": "trilha-como-nasceu-a-democracia",

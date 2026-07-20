@@ -5,7 +5,7 @@
 ## Fases
 
 ```
-R0  Protótipo navegável (Figma)      → valida Corredor + escolha de módulo
+R0  Protótipo navegável (Figma)      → valida Corredor + escolha de jornada
 R1  Piloto fechado (coorte convidada)→ valida o loop (O1-O5 do PRD) + experimentos
 R2  MVP público (lojas)              → valida em coorte aberta; naming resolvido
 V1  Identidade                       → Museu, Atlas Vivo, colecionáveis, IA explicativa,
@@ -25,6 +25,6 @@ V3+ Plataforma                       → quiz mundial, IA persistente, 2º domí
 
 ## Regras de passagem
 
-- R0 → R1: usuários entendem o Corredor sem explicação e escolhem módulo com interesse genuíno.
+- R0 → R1: usuários entendem o Corredor sem explicação e escolhem jornada com interesse genuíno.
 - R1 → R2: O1-O2 do PRD atingidos ou recalibrados com justificativa; experimentos decididos; calibração revisada.
 - R2 → V1: retenção confirmada em coorte aberta; só então a pergunta "a identidade aprofunda?" é aberta.

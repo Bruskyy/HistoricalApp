@@ -28,10 +28,8 @@
           "status": "open",
           "modules": ["mod-republica-imperio", "mod-auge-romano", "mod-estado-romano"],
           "upcomingModules": [
-            { "icon": "✝️", "title": "Religião e Cultura — a seita perseguida que conquistou o império perseguidor" },
-            { "icon": "🔥", "title": "Crises — o meio século em que Roma quase morreu sem ninguém invadir" },
-            { "icon": "🏚️", "title": "Queda do Ocidente — Roma caiu, ou nunca acabou?" },
-            { "icon": "👑", "title": "Império Bizantino — a metade de Roma que não caiu" }
+            { "icon": "🏚️", "title": "Roma realmente caiu, ou nunca acabou?" },
+            { "icon": "🌍", "title": "O que sobrou de Roma no mundo que você vive hoje?" }
           ]
         },
         {

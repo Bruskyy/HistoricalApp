@@ -6,13 +6,13 @@
   "title": "O Resgate e as Luzes",
   "centralQuestion": "Como uma ideia apagada por mil anos volta a acender o mundo?",
   "nodeOrder": ["resgate-dos-antigos", "iluminismo"],
-  "comingNext": "Novos módulos do Iluminismo em escrita — o Arquivo não para",
+  "comingNext": "Novas jornadas do Iluminismo em escrita — o Arquivo não para",
   "synthesis": {
     "question": {
       "id": "sintese-resgate-luzes",
       "type": "connection",
       "objective": true,
-      "prompt": "Última pergunta deste módulo: o que copistas medievais, humanistas do Renascimento e filósofos como Locke e Montesquieu fizeram com as ideias antigas foi…",
+      "prompt": "Última pergunta desta jornada: o que copistas medievais, humanistas do Renascimento e filósofos como Locke e Montesquieu fizeram com as ideias antigas foi…",
       "options": [
         "Religar um fio que o tempo tinha cortado: preservar, redescobrir e depois reler os textos antigos com perguntas novas — nunca inventar do zero",
         "Inventar ideias completamente novas, sem relação com o mundo antigo",
@@ -22,7 +22,7 @@
       "errorPath": "Nada aqui nasceu do nada nem ficou intacto. Mosteiros e o mundo islâmico guardaram os textos; humanistas os caçaram e imprimiram; Locke e Montesquieu os leram de novo — e mudaram a pergunta de \"quem deve mandar\" para \"o que autoriza o poder\". Preservar, redescobrir, reler: esse é o fio."
     },
     "reframe": [
-      "Você começou este módulo com uma pergunta: como uma ideia apagada por mil anos volta a acender o mundo? A resposta é que ela nunca ficou de fato apagada — ficou guardada, à espera de alguém que a lesse de novo com os problemas do seu próprio tempo.",
+      "Você começou esta jornada com uma pergunta: como uma ideia apagada por mil anos volta a acender o mundo? A resposta é que ela nunca ficou de fato apagada — ficou guardada, à espera de alguém que a lesse de novo com os problemas do seu próprio tempo.",
       "Montesquieu não copiou Políbio: ele o leu perguntando por que reis absolutos deveriam temer um poder que se freia sozinho. É essa releitura — não a cópia — que vira Revolução."
     ],
     "shift": {
